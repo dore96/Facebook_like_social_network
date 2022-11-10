@@ -1,13 +1,13 @@
 #include "Status.h"
 
-Status::Status(char* text)
+Status::Status(char* inputText)
 {
-								//בדיקת קלט
 	textLen = strlen(text) + 1;
 	text = new char[textLen];
+	strcpy(text, inputText);
 }
 
-Status::Status(const Status& other)//copy ctor
+Status::Status(const Status& other)  //copy ctor
 {
 	textLen = other.textLen;
 	text = new char[textLen];

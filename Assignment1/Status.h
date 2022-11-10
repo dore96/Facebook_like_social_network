@@ -7,7 +7,7 @@ using namespace std;
 class Status
 {
 public:
-	Status(char* text);
+	Status(char* inputText);
 	Status(const Status& other);
 	char* GetText() const;   //האם צריך 2 ? פונקציות שעושות אותו הדבר בערך
 	void ShowText() const;
