@@ -8,6 +8,7 @@ class Status
 {
 public:
 	Status(char* text);
+	Status(const Status& other);
 	char* GetText() const;   //האם צריך 2 ? פונקציות שעושות אותו הדבר בערך
 	void ShowText() const;
 	~Status();

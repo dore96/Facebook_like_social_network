@@ -7,6 +7,12 @@ Status::Status(char* text)
 	text = new char[textLen];
 }
 
+Status::Status(const Status& other)//copy ctor
+{
+	textLen = other.textLen;
+	text = new char[textLen];
+	strcpy(text, other.text);
+}
 char* Status::GetText() const
 {
 	return text;
