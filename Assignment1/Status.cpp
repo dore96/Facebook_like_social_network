@@ -2,16 +2,20 @@
 
 Status::Status(char* inputText)
 {
-	textLen = strlen(text) + 1;
+
+	statusTime = localtime(nullptr);
+	textLen = strlen(inputText) + 1;
 	text = new char[textLen];
 	strcpy(text, inputText);
+	dateOfStatus.setDate(statusTime->tm_mday, (statusTime->tm_mon) + 1, (statusTime->tm_year + 1900));//this is bullshit way of initializing constructor
 }
-
 Status::Status(const Status& other)  //copy ctor
 {
+	statusTime = other.statusTime;
 	textLen = other.textLen;
 	text = new char[textLen];
 	strcpy(text, other.text);
+	dateOfStatus.setDate(other.dateOfStatus.getDay(),other.dateOfStatus.getMonth(),other.dateOfStatus.getYear());//this is bullshit way of initializing constructor
 }
 char* Status::GetText() const
 {
@@ -25,5 +29,5 @@ void Status::ShowText() const
 
 Status::~Status()
 {
-	delete text;
+	delete []text;
 }

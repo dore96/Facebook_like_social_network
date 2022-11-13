@@ -57,6 +57,11 @@ bool User::SetName(const char* tryName)
 	strcpy(name, tryName);
 	return true;
 }
+
+bool User::SetDateOfBirth(int day, int month,int year)
+{
+	dateOfBirth.setDate(day, month, year);
+}
 bool User::SetDateOfBirth(const tm& tryDate)
 {
 	return true;              //implementation needed.
@@ -83,6 +88,10 @@ void User::MakeDoubleStatusSpace()
 	}
 	delete[]statusPtrArr;
 	statusPtrArr = newStatusPtrArr;
+}
+Date& User::getBirthDate()
+{
+	return dateOfBirth;
 }
 
 User::~User()		//Destructor
