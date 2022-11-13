@@ -1,37 +1,23 @@
 #ifndef __Date_H
 #define __Date_H
-
-#pragma warning (disable: 4996)
 #include <iostream>
-#include <string.h>
+#include <ctime>
+#include "Status.h"
 using namespace std;
-#include <math.h>
-
-static const char* name[] = { "nothing", "January", "February", "March", "April",
-         "May", "June", "July", "August", "September", "October",
-         "November", "December" };
-
-int max(int a, int b)
-{
-    if (a > b) return(a); else return (b);
-}
-
-int min(int a, int b)
-{
-    if (a > b) return(b); else return (a);
-}
-
+#pragma warning (disable: 4996)
 class Date
 {
 public:
-    Date(int mn, int day, int yr);  // constructor
-    void Display();                   // function to display date
-    int GetMonth();
-    void SetMonth(int mn);
-    ~Date();
+	Date(int inputDay, int inputMonth, int inputYear);
+	bool setDate(int inputDay, int inputMonth, int inputYear);
+	int getYear() const;
+	int getMonth() const;
+	int getDay() const;
 private:
-    int month, day, year;
-    int DaysSoFar();
+	int year;
+	int month;
+	int day;
+	const int monthLen[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
 };
 
 #endif

@@ -1,47 +1,50 @@
 #include "Date.h"
 
-Date::Date(int mn, int dy, int yr)
+
+Date::Date(int inputDay, int inputMonth, int inputYear)
 {
-    static int length[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-
-    month = max(1, mn);         //check input
-    month = min(month, 12);
-
-    day = max(1, dy);
-    day = min(day, length[month]);
-
-    year = max(1, yr);
+	while (!setDate(inputDay, inputMonth, inputYear))
+	{
+		cout << "Date is not legit, please enter new date" << endl;
+		cout << "Please enter the user's bDay (dd/mm/yy): ";
+		cin >> inputDay;
+		getchar();
+		cin >> inputMonth;
+		getchar();
+		cin >> inputYear;
+		cout << endl;
+	}
 }
-
-void Date::Display()
+bool Date::setDate(int inputDay, int inputMonth, int inputYear)
 {
-    cout << '\n' << name[month] << ' ' << day << "," << year << '\n';
-    cout << "Days so far: " << DaysSoFar() << '\n';                   //need second or timespan so far.
+	tm* yearNow;
+	yearNow = localtime(nullptr);
+	if (!(inputMonth < 13 && inputMonth > 0))
+	{
+		return false;
+	}
+	else if (inputDay <= 0 || inputDay > monthLen[inputMonth])
+	{
+		return false;
+	}
+	else if (inputYear < 1900 || inputYear > yearNow->tm_year + 1900)
+	{
+		return false;
+	}
+	year = inputYear;
+	month = inputMonth;
+	day = inputDay;
+	return true;
 }
-
-Date::~Date()
+int Date::getYear() const
 {
-    cout << "Thank You for using DateLine Services and have a nice date\n";
+	return year;
 }
-
-int Date::DaysSoFar()    //need time span so far not only days.
+int Date::getMonth() const
 {
-    int total = 0;
-    static int length[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-
-    for (int i = 1; i < month; i++) 
-        total += length[i];
-    total += day;
-    return (total);
+	return month;
 }
-
-int Date::GetMonth()
+int Date::getDay() const
 {
-    return month;
-}
-
-void Date::SetMonth(int mn)
-{
-    month = max(1, mn);
-    month = min(month, 12);
+	return day;
 }

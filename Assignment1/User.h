@@ -3,7 +3,7 @@
 
 #include "Status.h"
 #include "Date.h"
-#include <ctime> 
+ 
 
 class User
 {
@@ -16,14 +16,13 @@ public:
 	void Unfriend(User& freind)			 const;
 
 	bool SetName(const char* tryName);
-	bool SetDateOfBirth(tm& tryDate) const;
-
-
+	bool SetDateOfBirth(int day, int month, int year);
+	Date& getBirthDate();
 	~User();									//Destructor
 private:
 	int numberOfFreinds, numberOfStatus;
 	int PhisNumberOfFreinds, PhisnumberOfStatus;
-	time_t time, dateOfBirth;
+	Date dateOfBirth;
 	char* strTime, *name;
 	Status** statusPtrArr;
 	const User** friendsPtrArr;     //to linked list ?

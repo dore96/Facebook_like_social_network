@@ -51,9 +51,14 @@ bool User::SetName(const char* tryName)
 	return true;
 }
 
-bool User::SetDateOfBirth(tm& tryDate) const
+bool User::SetDateOfBirth(int day, int month,int year)
 {
+	dateOfBirth.setDate(day, month, year);
 
+}
+Date& User::getBirthDate()
+{
+	return dateOfBirth;
 }
 
 User::~User()		//Destructor
