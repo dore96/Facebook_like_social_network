@@ -1,6 +1,7 @@
 #ifndef __Date_H
 #define __Date_H
 
+#pragma warning (disable: 4996)
 #include <iostream>
 #include <string.h>
 using namespace std;
