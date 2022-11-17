@@ -1,14 +1,21 @@
 #include "Status.h"
 
-Status::Status(char* inputText)
+
+/*
+maor:
+move c'tor
+*/
+Status::Status(char* inputText) 
+	: statusTime(localtime(nullptr)), dateOfStatus(statusTime->tm_mday, (statusTime->tm_mon) + 1, (statusTime->tm_year + 1900))
 {
-	textLen = strlen(text) + 1;
+	textLen = strlen(inputText) + 1;
 	text = new char[textLen];
 	strcpy(text, inputText);
 }
-
-Status::Status(const Status& other)  //copy ctor
+Status::Status(const Status& other)  
+	: dateOfStatus(other.dateOfStatus.getDay(), other.dateOfStatus.getMonth(), other.dateOfStatus.getYear())    //copy ctor
 {
+	statusTime = other.statusTime;
 	textLen = other.textLen;
 	text = new char[textLen];
 	strcpy(text, other.text);
@@ -25,5 +32,5 @@ void Status::ShowText() const
 
 Status::~Status()
 {
-	delete text;
+	delete []text;
 }
