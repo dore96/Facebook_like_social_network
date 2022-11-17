@@ -2,12 +2,12 @@
 
 User::User(char* tryName, tm tryDate)         //constructor
 {
-	SetName(tryName);
+	SetName(tryName);                         
 	//set time , *strTime
 	numberOfFriends = 0;
 	numberOfStatus = 0;		
-	PhisNumberOfFreinds = initNumberOfFriendsStatus;
-	PhisnumberOfStatus = initNumberOfFriendsStatus;
+	PhisNumberOfFreinds = InitNumber;
+	PhisnumberOfStatus = InitNumber;
 	statusPtrArr = new const Status*[PhisnumberOfStatus];
 	friendsPtrArr = new const User*[PhisNumberOfFreinds];
 }
@@ -36,6 +36,14 @@ void User::ShowAllFriend()			  const
 {
 	for (int i = 0; i < numberOfFriends; i++)
 		cout << "Friend number " << (i + 1) << " is: " << friendsPtrArr[i]->name << endl;
+}
+char* User::GetName()				  const
+{
+	return name;
+}
+int User::GetNumberOfStatus()		  const
+{
+	return numberOfStatus;
 }
 void User::Unfriend(const User& friendToRemove)
 {

@@ -4,7 +4,7 @@
 #include "Status.h"
 #include <ctime> 
 
-const int initNumberOfFriendsStatus = 10;
+const int InitNumber = 10;
 
 class User
 {
@@ -14,6 +14,8 @@ public:
 	void AddStatus(const Status& status);
 	void ShowAllStatus()						const;
 	void ShowAllFriend()					    const;
+	char* GetName()								const;
+	int GetNumberOfStatus()		     			const;
 	void Unfriend(const User& friendToRemove);
 	~User();								//Destructor
 private:
