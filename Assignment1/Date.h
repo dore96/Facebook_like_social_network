@@ -14,9 +14,7 @@ public:
 	int getDay() const;
 private:
 	bool setDate(int inputDay, int inputMonth, int inputYear);
-	int year;
-	int month;
-	int day;
+	int year, month, day;
 	const int monthLen[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
 };
 

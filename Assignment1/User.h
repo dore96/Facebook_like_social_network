@@ -2,43 +2,39 @@
 #define __User_H
 
 #include "Status.h"
-#include "Date.h"
- 
-#include <ctime> 
+#include "Date.h" 
 
 const int InitNumber = 10;
 
 class User
 {
 public:
-	User(char* tryName, tm tryDate);         //constructor
-	void AddFriend(const User& addFriend);
+	User(char* tryName, int tryYear, int tryMonth, int tryDay);
+	//constructor
+	void AddFriend(User* addFriend);
+	void AddStatus(Status* status);
 	void AddStatus(Status& status)		 const;
 	void ShowAllStatus()				 const;
 	void ShowAllFriend()				 const;
 	void Unfriend(User& freind)			 const;
 
-	bool SetName(const char* tryName);
-	bool SetDateOfBirth(int day, int month, int year);
 	Date& getBirthDate();
-	~User();									//Destructor
-	void AddStatus(const Status& status);
-	void ShowAllStatus()						const;
-	void ShowAllFriend()					    const;
-	char* GetName()								const;
-	int GetNumberOfStatus()		     			const;
-	void Unfriend(const User& friendToRemove);
+
+	void Unfriend(const char* friendToRemove);
+
+	char* GetName()						const;
+	int GetNumberOfStatus()		     	const;
+
 	~User();								//Destructor
 private:
 	int numberOfFriends, numberOfStatus;
-	int PhisNumberOfFreinds, PhisnumberOfStatus;
+	int PhisNumberOfFriends, PhisnumberOfStatus;
 	Date dateOfBirth;
-	char* strTime, *name;
-	const Status** statusPtrArr;
-	const User** friendsPtrArr;     //to linked list ?
+	char *name;
+	Status** statusPtrArr;
+	User** friendsPtrArr;
 
 	bool SetName(const char* tryName);
-	bool SetDateOfBirth(const tm& tryDate);
 
 	void MakeDoubleFriendsSpace();
 	void MakeDoubleStatusSpace();
