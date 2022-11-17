@@ -2,7 +2,6 @@
 
 Status::Status(char* inputText)
 {
-
 	statusTime = localtime(nullptr);
 	textLen = strlen(inputText) + 1;
 	text = new char[textLen];

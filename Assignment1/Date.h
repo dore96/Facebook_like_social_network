@@ -1,19 +1,19 @@
 #ifndef __Date_H
 #define __Date_H
+
 #include <iostream>
-#include <ctime>
-#include "Status.h"
 using namespace std;
 #pragma warning (disable: 4996)
+
 class Date
 {
 public:
 	Date(int inputDay, int inputMonth, int inputYear);
-	bool setDate(int inputDay, int inputMonth, int inputYear);
 	int getYear() const;
 	int getMonth() const;
 	int getDay() const;
 private:
+	bool setDate(int inputDay, int inputMonth, int inputYear);
 	int year;
 	int month;
 	int day;
