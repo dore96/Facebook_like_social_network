@@ -2,6 +2,8 @@
 #define __User_H
 
 #include "Status.h"
+#include "Date.h"
+ 
 #include <ctime> 
 
 const int InitNumber = 10;
@@ -11,6 +13,15 @@ class User
 public:
 	User(char* tryName, tm tryDate);         //constructor
 	void AddFriend(const User& addFriend);
+	void AddStatus(Status& status)		 const;
+	void ShowAllStatus()				 const;
+	void ShowAllFriend()				 const;
+	void Unfriend(User& freind)			 const;
+
+	bool SetName(const char* tryName);
+	bool SetDateOfBirth(int day, int month, int year);
+	Date& getBirthDate();
+	~User();									//Destructor
 	void AddStatus(const Status& status);
 	void ShowAllStatus()						const;
 	void ShowAllFriend()					    const;
@@ -21,7 +32,7 @@ public:
 private:
 	int numberOfFriends, numberOfStatus;
 	int PhisNumberOfFreinds, PhisnumberOfStatus;
-	time_t time, dateOfBirth;
+	Date dateOfBirth;
 	char* strTime, *name;
 	const Status** statusPtrArr;
 	const User** friendsPtrArr;     //to linked list ?

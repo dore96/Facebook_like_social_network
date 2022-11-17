@@ -1,9 +1,8 @@
 #ifndef __Status_H
 #define __Status_H
-#include <iostream>
 #include <string.h>
-using namespace std;
-#pragma warning (disable: 4996)
+#include "Date.h"
+
 
 class Status
 {
@@ -13,9 +12,12 @@ public:
 	char* GetText() const;   //האם צריך 2 ? פונקציות שעושות אותו הדבר בערך
 	void ShowText() const;
 	~Status();
+	
 private:
+	tm* statusTime;
 	char* text;
 	int textLen;
+	Date dateOfStatus;
 };
 
 #endif // !1
