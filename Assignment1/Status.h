@@ -9,10 +9,11 @@ class Status
 public:
 	Status(char* inputText);
 	Status(const Status& other);
-	char* GetText() const;   
+	Status(Status&& other);
+	char* GetText() const;
 	void ShowText() const;
 	~Status();
-	
+
 private:
 	tm* statusTime;
 	char* text;
@@ -20,5 +21,5 @@ private:
 	Date dateOfStatus;
 };
 
-#endif // !1
+#endif
 

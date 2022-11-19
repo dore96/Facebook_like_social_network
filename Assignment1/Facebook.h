@@ -7,7 +7,8 @@ class Facebook
 {
 public:
 	Facebook();
-	int ChooseFromMenu();
+	void PrintMenu();
+	void ChooseFromMenu(int choice);
 	void AddUser();
 	void AddFanpage();
 	void ShowAllUsers();

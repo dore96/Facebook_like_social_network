@@ -7,9 +7,8 @@ Facebook::Facebook()
 	UsersPtrArr = new User*[phisNumberOfUsers];
 	//fanpage;
 }
-int Facebook::ChooseFromMenu()
+void Facebook::PrintMenu()
 {
-	int choice;
 	cout << "Choose an action number from the above menu:" << endl;
 	cout << "1.Add user" << endl;
 	cout << "2.Add fanpage" << endl;
@@ -23,8 +22,39 @@ int Facebook::ChooseFromMenu()
 	cout << "10.Show all users and fanpage" << endl;
 	cout << "11.Show all frieds/fans of a User/Fanpage" << endl;
 	cout << "12.Exit" << endl;
-	cin >> choice;
-	return choice;
+}
+void  Facebook::ChooseFromMenu(int choice)
+{
+	switch (choice)
+	{
+	case 1: AddUser();
+		break;
+	case 2: AddFanpage();
+		break;
+	case 3:
+		break;
+	case 4:
+		break;
+	case 5:
+		break;
+	case 6:
+		break;
+	case 7:
+		break;
+	case 8:
+		break;
+	case 9:
+		break;
+	case 10:
+		ShowAllUsersAndFanpages();
+		break;
+	case 11: 
+		break;
+	case 12: Exit();
+		break;
+	default: cout << "Invalid choice" << endl;
+		break;
+	}
 }
 void Facebook::AddUser()
 {
@@ -36,6 +66,7 @@ void Facebook::AddFanpage()
 }
 void Facebook::ShowAllUsers()
 {
+	cout << "Users: " << endl;
 	for ( int i = 0; i < numberOfUsers; i++)
 	{
 		cout << i + 1 << "." << UsersPtrArr[i]->GetName() << endl;
@@ -43,7 +74,7 @@ void Facebook::ShowAllUsers()
 }
 void Facebook::ShowAllFanpage()
 {
-
+	cout << "FanPages: " << endl;
 }
 void Facebook::ShowAllUsersAndFanpages()
 {
@@ -52,7 +83,8 @@ void Facebook::ShowAllUsersAndFanpages()
 }
 void Facebook::Exit()
 {
-	
+	cout << "Thank you for using FaceBook" << endl;
+	exit(1);
 }
 Facebook::~Facebook()
 {
