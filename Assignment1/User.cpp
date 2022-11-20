@@ -57,7 +57,6 @@ void User::UnFriend(const char* friendToRemove)
 	{
 		if (friendsPtrArr[i] != nullptr && !strcmp(friendsPtrArr[i]->name, friendToRemove))
 		{
-			delete friendsPtrArr[i];//not sure if needed, check with dor
 			friendsPtrArr[i] = friendsPtrArr[numberOfFriends - 1];
 			numberOfFriends--;
 			break;
@@ -98,6 +97,7 @@ Date& User::GetBirthDate()
 }
 User::~User()		//Destructor
 {
+	delete[]name;
 	for (int i = 0; i < numberOfStatus; i++)
 	{
 		delete statusPtrArr[i];

@@ -3,8 +3,8 @@
 Facebook::Facebook()
 {
 	numberOfUsers = numberOfFanpage = 0;
-	phisNumberOfUsers = phisNumberOfFanpage = InitNumber;
-	UsersPtrArr = new User*[phisNumberOfUsers];
+	physicalNumberOfUsers = physicalNumberOfFanpage = InitNumber;
+	UsersPtrArr = new User*[physicalNumberOfUsers];
 	//fanpage;
 }
 void Facebook::PrintMenu()
@@ -57,8 +57,21 @@ void  Facebook::ChooseFromMenu(int choice)
 	}
 }
 void Facebook::AddUser()
-{
-
+{//לבדוק אם המשתמש כבר קיים ואז לא להוסיף?
+	int day, month, year;
+	char name[USER_NAME_LEN];
+	cout << "Please Enter the users name: ";
+	cin.getline(name, USER_NAME_LEN - 1);
+	CleanBuffer();
+	cout << "Please enter birthdate of the user (dd/mm/yy): ";
+	cin >> day >> month >> year;
+	if (numberOfUsers >= physicalNumberOfUsers)
+	{
+		makeDoubleSpace(UsersPtrArr, sizeof(User*), numberOfUsers);
+	}
+	User* newUser = new User(name,year,month,day);
+	UsersPtrArr[numberOfUsers] = newUser;
+	numberOfUsers++;
 }
 void Facebook::AddFanpage()
 {
@@ -80,6 +93,10 @@ void Facebook::ShowAllUsersAndFanpages()
 {
 	ShowAllUsers();
 	ShowAllFanpage();
+}
+User* FindUser(char* name)
+{
+	
 }
 void Facebook::Exit()
 {
