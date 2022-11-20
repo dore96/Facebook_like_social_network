@@ -188,8 +188,7 @@ Fanpage* Facebook::FindPage(const char* name)
 }
 void Facebook::Exit()
 {
-	cout << "Thank you for using FaceBook" << endl;
-	exit(1);
+	cout << "Thank you for using FaceBook, goodbye !" << endl;
 }
 Facebook::~Facebook()
 {
@@ -199,7 +198,7 @@ Facebook::~Facebook()
 	}
 	for (int j = 0; j < numberOfFanpage; j++)
 	{
-		delete FanpagePtrArr[i];
+		delete FanpagePtrArr[j];
 	}
 	delete[]UsersPtrArr;
 	delete[]FanpagePtrArr;

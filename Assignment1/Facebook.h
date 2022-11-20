@@ -17,7 +17,7 @@ public:
 	void ShowAllUsersAndFanpages();
 	void Exit();
 	void addTextStatus();
-	void Facebook::ShowStatusOfEntity();
+	void ShowStatusOfEntity();
 	User* FindUser(const char* name);
 	Fanpage* FindPage(const char* name);
 	~Facebook();

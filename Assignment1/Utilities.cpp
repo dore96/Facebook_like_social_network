@@ -1,6 +1,7 @@
 #include "Utilities.h"
 #include <iostream>
 using namespace std;
+
 void CleanBuffer()
 {
 	int c;
@@ -10,7 +11,7 @@ void CleanBuffer()
 	} while (c != EOF && c != '\n');
 }
 
-void makeDoubleSpace(void** arr, int sizeOfElement, int& size)//need to check if works
+void makeDoubleSpace(void* arr, int sizeOfElement, int& size)//need to check if works
 {
 	int oldSize = size;
 	size *= 2;

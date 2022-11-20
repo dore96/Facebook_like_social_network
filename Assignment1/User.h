@@ -1,8 +1,7 @@
 #ifndef __User_H
 #define __User_H
 
-#include "Status.h"
-#include "Date.h" 
+#include "Status.h" 
 
 const int InitNumber = 10;
 

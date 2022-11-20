@@ -1,7 +1,6 @@
-#ifndef __FANPAGE_
-#define __FANPAGE_
+#ifndef __FANPAGE_H
+#define __FANPAGE_H
 #include "User.h"
-
 
 class Fanpage
 {

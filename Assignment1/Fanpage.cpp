@@ -1,6 +1,5 @@
 #include "Fanpage.h"
 
-
 Fanpage::Fanpage(char* newName)
 {
 	setName(newName);
@@ -74,10 +73,3 @@ Fanpage::~Fanpage()
 	delete arrOfFans;
 	delete statusPtrArr;
 }
-
-
-
-
-
-
-
