@@ -120,7 +120,7 @@ void Facebook::AddUser()
 	cin >> day >> month >> year;
 	if (numberOfUsers >= physicalNumberOfUsers)
 	{
-		makeDoubleSpace(UsersPtrArr, sizeof(User*), physicalNumberOfUsers);
+		makeDoubleSpace((void**)UsersPtrArr, sizeof(User*), physicalNumberOfUsers);
 	}
 	User* newUser = new User(name, year, month, day);
 	UsersPtrArr[numberOfUsers] = newUser;
@@ -134,7 +134,7 @@ void Facebook::AddFanpage()
 	CleanBuffer();
 	if (numberOfFanpage >= physicalNumberOfFanpage)
 	{
-		makeDoubleSpace(FanpagePtrArr, sizeof(Fanpage*), physicalNumberOfFanpage);
+		makeDoubleSpace((void**)FanpagePtrArr, sizeof(Fanpage*), physicalNumberOfFanpage);
 	}
 	Fanpage* newPage = new Fanpage(name);
 	FanpagePtrArr[numberOfFanpage] = newPage;
