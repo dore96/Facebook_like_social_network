@@ -28,7 +28,7 @@ void Fanpage::addFan(User* fan)
 {
 	if (numberOfFans >= physicalNumberOfFans)
 	{
-		makeDoubleSpace(arrOfFans, sizeof(User*), physicalNumberOfFans);
+		makeDoubleSpace((void**)arrOfFans, sizeof(User*), physicalNumberOfFans);
 	}
 	arrOfFans[numberOfFans] = fan;
 	numberOfFans++;
@@ -37,7 +37,7 @@ void Fanpage::addStatus(Status* status)
 {
 	if(numberOfStatus >= PhysicalNumberOfStatus)
 	{
-		makeDoubleSpace(statusPtrArr, sizeof(Status*), PhysicalNumberOfStatus);
+		makeDoubleSpace((void**)statusPtrArr, sizeof(Status*), PhysicalNumberOfStatus);
 	}
 	statusPtrArr[numberOfStatus] = status;
 	numberOfStatus++;
