@@ -9,6 +9,7 @@ public:
 	char* getName()     const;
 	void printName()    const;
 	void addFan(User* fan);
+	void removeFan(User* fan);
 	void addStatus(Status* status);
 	void showAllFans()  const;
 	void showAllStatus() const;
