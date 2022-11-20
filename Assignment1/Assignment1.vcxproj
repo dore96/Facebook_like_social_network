@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="Facebook.cpp" />
+    <ClCompile Include="Fanpage.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Status.cpp" />
     <ClCompile Include="User.cpp" />
@@ -137,6 +138,7 @@
   <ItemGroup>
     <ClInclude Include="Date.h" />
     <ClInclude Include="Facebook.h" />
+    <ClInclude Include="Fanpage.h" />
     <ClInclude Include="Status.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="Utilities.h" />

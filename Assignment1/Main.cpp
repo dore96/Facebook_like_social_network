@@ -2,7 +2,7 @@
 #define EXIT 12 
 
 //ptr arr const question.
-void main()
+int main()
 {
 	Facebook myFacebook;
 	int choice;
@@ -12,5 +12,6 @@ void main()
 		cin >> choice;
 		myFacebook.ChooseFromMenu(choice);
 	} while (choice != EXIT);
+	return 0;
 }
 
