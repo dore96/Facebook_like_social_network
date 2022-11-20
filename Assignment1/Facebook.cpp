@@ -4,8 +4,8 @@ Facebook::Facebook()
 {
 	numberOfUsers = numberOfFanpage = 0;
 	physicalNumberOfUsers = physicalNumberOfFanpage = InitNumber;
-	UsersPtrArr = new User*[physicalNumberOfUsers];
-	//fanpage;
+	UsersPtrArr = new User * [physicalNumberOfUsers];
+	FanpagePtrArr = new Fanpage * [physicalNumberOfFanpage];
 }
 void Facebook::PrintMenu()
 {
@@ -31,9 +31,9 @@ void  Facebook::ChooseFromMenu(int choice)
 		break;
 	case 2: AddFanpage();
 		break;
-	case 3:
+	case 3:addTextStatus();
 		break;
-	case 4:
+	case 4:ShowStatusOfEntity();
 		break;
 	case 5:
 		break;
@@ -48,7 +48,7 @@ void  Facebook::ChooseFromMenu(int choice)
 	case 10:
 		ShowAllUsersAndFanpages();
 		break;
-	case 11: 
+	case 11:
 		break;
 	case 12: Exit();
 		break;
@@ -56,12 +56,65 @@ void  Facebook::ChooseFromMenu(int choice)
 		break;
 	}
 }
+void Facebook::addTextStatus()
+{
+	bool isPage;
+	char statusStr[STATUS_LEN];
+	cout << "Press 1 to add status for a fanpage or 0 for a user: ";
+	cin >> isPage;
+	if (!isPage)
+	{
+		cout << "Enter user's name: ";
+		char userName[NAME_LEN];
+		cin.getline(userName, NAME_LEN - 1);
+		User* currentUser = FindUser(userName);
+		CleanBuffer();
+		cout << "Enter Status: ";
+		cin.getline(statusStr, STATUS_LEN - 1);
+		Status status(statusStr);
+		currentUser->AddStatus(&status);
+	}
+	else
+	{
+		cout << "Enter page's name: ";
+		char pageName[NAME_LEN];
+		cin.getline(pageName, NAME_LEN - 1);
+		Fanpage* currentPage = FindPage(pageName);
+		CleanBuffer();
+		cout << "Enter Status: ";
+		cin.getline(statusStr, STATUS_LEN - 1);
+		Status status(statusStr);
+		currentPage->addStatus(&status);
+	}
+
+}
+void Facebook::ShowStatusOfEntity()
+{
+	bool isPage;
+	cout << "Press 1 to add status for a fanpage or 0 for a user: ";
+	cin >> isPage;
+	CleanBuffer();
+	cout << "Enter your name: ";
+	char name[NAME_LEN];
+	CleanBuffer();
+	cin.getline(name, NAME_LEN - 1);
+	if (isPage)
+	{
+		Fanpage* currentPage = FindPage(name);
+		currentPage->showAllStatus();
+	}
+	else
+	{
+		User* currentUser = FindUser(name);
+		currentUser->ShowAllStatus();
+	}
+}
 void Facebook::AddUser()
 {//לבדוק אם המשתמש כבר קיים ואז לא להוסיף?
 	int day, month, year;
-	char name[USER_NAME_LEN];
-	cout << "Please Enter the users name: ";
-	cin.getline(name, USER_NAME_LEN - 1);
+	char name[NAME_LEN];
+	cout << "Please Enter the user's name: ";
+	cin.getline(name, NAME_LEN - 1);
 	CleanBuffer();
 	cout << "Please enter birthdate of the user (dd/mm/yy): ";
 	cin >> day >> month >> year;
@@ -69,18 +122,28 @@ void Facebook::AddUser()
 	{
 		makeDoubleSpace(UsersPtrArr, sizeof(User*), numberOfUsers);
 	}
-	User* newUser = new User(name,year,month,day);
+	User* newUser = new User(name, year, month, day);
 	UsersPtrArr[numberOfUsers] = newUser;
 	numberOfUsers++;
 }
 void Facebook::AddFanpage()
 {
-
+	char name[NAME_LEN];
+	cout << "Please enter the page's name: ";
+	cin.getline(name, NAME_LEN - 1);
+	CleanBuffer();
+	if (numberOfFanpage >= physicalNumberOfFanpage)
+	{
+		makeDoubleSpace(FanpagePtrArr, sizeof(Fanpage*), physicalNumberOfFanpage);
+	}
+	Fanpage* newPage = new Fanpage(name);
+	FanpagePtrArr[numberOfFanpage] = newPage;
+	numberOfFanpage++;
 }
 void Facebook::ShowAllUsers()
 {
 	cout << "Users: " << endl;
-	for ( int i = 0; i < numberOfUsers; i++)
+	for (int i = 0; i < numberOfUsers; i++)
 	{
 		cout << i + 1 << "." << UsersPtrArr[i]->GetName() << endl;
 	}
@@ -88,15 +151,40 @@ void Facebook::ShowAllUsers()
 void Facebook::ShowAllFanpage()
 {
 	cout << "FanPages: " << endl;
+	for (int i = 0; i < numberOfFanpage; i++)
+	{
+		cout << i + 1 << ".";
+		FanpagePtrArr[i]->printName();
+	}
 }
 void Facebook::ShowAllUsersAndFanpages()
 {
 	ShowAllUsers();
 	ShowAllFanpage();
 }
-User* FindUser(char* name)
+User* Facebook::FindUser(const char* name)
 {
-	
+	for (int i = 0; i < numberOfUsers; i++)
+	{
+		if (!strcmp(name, UsersPtrArr[i]->GetName()))
+		{
+			return UsersPtrArr[i];
+		}
+	}
+	cout << "User not found, nullptr returned" << endl;
+	return nullptr;
+}
+Fanpage* Facebook::FindPage(const char* name)
+{
+	for (int i = 0; i < numberOfFanpage; i++)
+	{
+		if (!strcmp(name, FanpagePtrArr[i]->getName()))
+		{
+			return FanpagePtrArr[i];
+		}
+	}
+	cout << "Page not found, nullptr returned" << endl;
+	return nullptr;
 }
 void Facebook::Exit()
 {
@@ -109,5 +197,5 @@ Facebook::~Facebook()
 	{
 		delete UsersPtrArr[i];
 	}
-	delete []UsersPtrArr;
+	delete[]UsersPtrArr;
 }

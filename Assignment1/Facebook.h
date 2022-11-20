@@ -1,9 +1,8 @@
 #ifndef __Facebook_H
 #define __Facebook_H
-#include "User.h"
-#define USER_NAME_LEN 50
-//include fanpage
-
+#include "Fanpage.h"
+#define NAME_LEN 50
+#define STATUS_LEN 120
 class Facebook
 {
 public:
@@ -16,11 +15,14 @@ public:
 	void ShowAllFanpage();
 	void ShowAllUsersAndFanpages();
 	void Exit();
-	User* FindUser(char* name);
+	void addTextStatus();
+	void Facebook::ShowStatusOfEntity();
+	User* FindUser(const char* name);
+	Fanpage* FindPage(const char* name);
 	~Facebook();
 private:
 	User** UsersPtrArr;
-	//fanpage;
+	Fanpage** FanpagePtrArr;
 	int numberOfUsers, numberOfFanpage;
 	int physicalNumberOfUsers, physicalNumberOfFanpage;
 };
