@@ -7,22 +7,6 @@ Status::Status(char* inputText)//ctor
 	text = new char[textLen];
 	strcpy(text, inputText);
 }
-Status::Status(const Status& other)
-	: dateOfStatus(other.dateOfStatus.getDay(), other.dateOfStatus.getMonth(), other.dateOfStatus.getYear())    //copy ctor
-{
-	statusTime = other.statusTime;
-	textLen = other.textLen;
-	text = new char[textLen];
-	strcpy(text, other.text);
-}
-Status::Status(Status&& other)
-	: dateOfStatus(other.dateOfStatus.getDay(), other.dateOfStatus.getMonth(), other.dateOfStatus.getYear())//move ctor
-{
-	statusTime = other.statusTime;
-	textLen = other.textLen;
-	text = other.text;
-	other.text = nullptr;
-}
 char* Status::GetText() const
 {
 	return text;

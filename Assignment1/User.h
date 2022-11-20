@@ -30,6 +30,7 @@ private:
 	bool SetName(const char* tryName);
 	void MakeDoubleFriendsSpace();
 	void MakeDoubleStatusSpace();
+	User(const User&);           //disable the possibility of user copy.
 };
 
 

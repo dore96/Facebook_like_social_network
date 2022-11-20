@@ -23,7 +23,6 @@ private:
 	bool setName(char* newName);
 	Status** statusPtrArr;
 	Fanpage(const Fanpage&);
-
 };
 
 

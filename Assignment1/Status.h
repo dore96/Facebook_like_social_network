@@ -8,8 +8,6 @@ class Status
 {
 public:
 	Status(char* inputText);
-	Status(const Status& other);
-	Status(Status&& other);
 	char* GetText() const;
 	void ShowText() const;
 	~Status();
@@ -19,6 +17,7 @@ private:
 	char* text;
 	int textLen;
 	Date dateOfStatus;
+	Status(const Status& other);  //disable the possibility of Status copy.	
 };
 
 #endif

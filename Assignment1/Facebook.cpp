@@ -71,10 +71,10 @@ void Facebook::addTextStatus()
 		CleanBuffer();
 		cout << "Enter Status: ";
 		cin.getline(statusStr, STATUS_LEN - 1);
-		Status status(statusStr);
-		currentUser->AddStatus(&status);
+		Status* status = new Status(statusStr);
+		currentUser->AddStatus(status);
 	}
-	else
+	else                                       //double code - havent learnd inheritance
 	{
 		cout << "Enter page's name: ";
 		char pageName[NAME_LEN];
@@ -83,8 +83,8 @@ void Facebook::addTextStatus()
 		CleanBuffer();
 		cout << "Enter Status: ";
 		cin.getline(statusStr, STATUS_LEN - 1);
-		Status status(statusStr);
-		currentPage->addStatus(&status);
+		Status* status = new Status(statusStr);
+		currentPage->addStatus(status);
 	}
 
 }
@@ -116,11 +116,11 @@ void Facebook::AddUser()
 	cout << "Please Enter the user's name: ";
 	cin.getline(name, NAME_LEN - 1);
 	CleanBuffer();
-	cout << "Please enter birthdate of the user (dd/mm/yy): ";
+	cout << "Please enter birthdate of the user (dd mm yy): ";
 	cin >> day >> month >> year;
 	if (numberOfUsers >= physicalNumberOfUsers)
 	{
-		makeDoubleSpace(UsersPtrArr, sizeof(User*), numberOfUsers);
+		makeDoubleSpace(UsersPtrArr, sizeof(User*), physicalNumberOfUsers);
 	}
 	User* newUser = new User(name, year, month, day);
 	UsersPtrArr[numberOfUsers] = newUser;
@@ -197,5 +197,10 @@ Facebook::~Facebook()
 	{
 		delete UsersPtrArr[i];
 	}
+	for (int j = 0; j < numberOfFanpage; j++)
+	{
+		delete FanpagePtrArr[i];
+	}
 	delete[]UsersPtrArr;
+	delete[]FanpagePtrArr;
 }

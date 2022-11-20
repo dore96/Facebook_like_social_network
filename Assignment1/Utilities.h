@@ -5,6 +5,4 @@ void CleanBuffer();
 void makeDoubleSpace(void* arr, int sizeOfElement, int& size);
 
 
-
-
 #endif
