@@ -96,7 +96,6 @@ void Facebook::ShowStatusOfEntity()
 	CleanBuffer();
 	cout << "Enter your name: ";
 	char name[NAME_LEN];
-	CleanBuffer();
 	cin.getline(name, NAME_LEN - 1);
 	if (isPage)
 	{
@@ -114,8 +113,8 @@ void Facebook::AddUser()
 	int day, month, year;
 	char name[NAME_LEN];
 	cout << "Please Enter the user's name: ";
-	cin.getline(name, NAME_LEN - 1);
 	CleanBuffer();
+	cin.getline(name, NAME_LEN - 1);
 	cout << "Please enter birthdate of the user (dd mm yy): ";
 	cin >> day >> month >> year;
 	if (numberOfUsers >= physicalNumberOfUsers)
