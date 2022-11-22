@@ -1,7 +1,7 @@
 #include "Status.h"
 
 Status::Status(const char* inputText)
-	: statusTime(localtime(nullptr)), dateOfStatus(statusTime->tm_mday, (statusTime->tm_mon) + 1, (statusTime->tm_year + 1900))//ctor
+	: curr_time(time(NULL)), statusTime(localtime(&curr_time)), dateOfStatus(statusTime->tm_mday, (statusTime->tm_mon) + 1, (statusTime->tm_year + 1900))//ctor
 {
 	textLen = strlen(inputText) + 1;
 	text = new char[textLen];

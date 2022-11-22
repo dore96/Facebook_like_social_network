@@ -44,7 +44,6 @@ void Fanpage::removeFan(User* fan)
 		}
 	}
 }
-
 void Fanpage::addStatus(Status* status)
 {
 	if(numberOfStatus >= PhysicalNumberOfStatus)

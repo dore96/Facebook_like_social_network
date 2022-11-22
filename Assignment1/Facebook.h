@@ -33,6 +33,7 @@ public:
 	void removeFanFromPage();
 	~Facebook();
 private:
+	Facebook(const Facebook& other);
 	User** UsersPtrArr;
 	Fanpage** FanpagePtrArr;
 	int numberOfUsers, numberOfFanpage;

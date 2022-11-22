@@ -3,15 +3,15 @@
 Maor:
 - User* addFriend ?? or const User* addFriend?? or const User* const addFriend
 */
-User::User(const char* tryName, int inputYear, int inputMonth, int inputDay) :  dateOfBirth(inputDay, inputMonth, inputYear)//constructor
+User::User(const char* tryName, int inputYear, int inputMonth, int inputDay) : dateOfBirth(inputDay, inputMonth, inputYear)//constructor
 {
-	SetName(tryName);                         
+	SetName(tryName);
 	numberOfFriends = 0;
-	numberOfStatus = 0;		
+	numberOfStatus = 0;
 	physicalNumberOfFriends = InitNumber;
 	physicalNumberOfStatus = InitNumber;
-	statusPtrArr = new Status*[physicalNumberOfStatus];
-	friendsPtrArr = new User*[physicalNumberOfFriends];
+	statusPtrArr = new Status * [physicalNumberOfStatus];
+	friendsPtrArr = new User * [physicalNumberOfFriends];
 }
 void User::AddFriend(User* addFriend)
 {
@@ -29,16 +29,16 @@ void User::AddStatus(Status* status)
 	statusPtrArr[numberOfStatus] = status;
 	numberOfStatus++;
 }
-void User::ShowAllStatus()			  const
+void User::ShowAllStatus(int numberOfPrintStatus)			const //user can limit how many statuses he wants to print
 {
-	for (int i = 0; i < numberOfStatus; i++)
-		statusPtrArr[i]->ShowText();
-}
-void User::ShowAllStatus(int numberOfPrintStatus)			const
-{
-	for (int i = 0; i < numberOfStatus && i < numberOfPrintStatus; i++)
+	int i;
+	for (i = 0; i < numberOfStatus && i < numberOfPrintStatus; i++)
 	{
 		statusPtrArr[i]->ShowText();
+	}
+	if (i < numberOfPrintStatus)
+	{
+		cout << name << "had only " << i << " statuses posted." << endl;
 	}
 }
 void User::ShowFriendsStatus(int numberOfPrintStatus)	    const
@@ -65,10 +65,20 @@ int User::GetNumberOfStatus()		  const
 {
 	return numberOfStatus;
 }
-
 int User::GetNumberOfFriends()		  const
 {
 	return numberOfFriends;
+}
+bool User::IsFriendsWith(const char* friendName)
+{
+	for (int i = 0; i < numberOfFriends; i++)
+	{
+		if (!strcmp(friendsPtrArr[i]->GetName(), friendName))
+		{
+			return true;
+		}
+	}
+	return false;
 }
 void User::UnFriend(const char* friendToRemove)
 {
@@ -110,7 +120,7 @@ void User::MakeDoubleStatusSpace()
 	delete[]statusPtrArr;
 	statusPtrArr = newStatusPtrArr;
 }
-Date& User::GetBirthDate()
+const Date& User::GetBirthDate()      const
 {
 	return dateOfBirth;
 }
@@ -121,6 +131,6 @@ User::~User()		//Destructor
 	{
 		delete statusPtrArr[i];
 	}
-	delete []friendsPtrArr;                
-	delete []statusPtrArr;
+	delete[]friendsPtrArr;
+	delete[]statusPtrArr;
 }

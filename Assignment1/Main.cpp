@@ -1,12 +1,12 @@
 #include "Facebook.h"
 #define EXIT 12 
 
-void InitFacebook(Facebook& myFacebook); //initiating the facebook with the needed arguments.
+void InitFacebook(Facebook& myFacebook); //initiating the facebook with initals entities as asked.
 int main()
 {
 	Facebook myFacebook;
 	int choice;
-	InitFacebook(myFacebook);
+	InitFacebook(myFacebook);//initiating the facebook with initals entities as asked.
 	do
 	{
 		myFacebook.PrintMenu();

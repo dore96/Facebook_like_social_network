@@ -51,7 +51,7 @@ void  Facebook::ChooseFromMenu(int choice)
 		break;
 	case 12: Exit();
 		break;
-	default: cout << "Invalid choice" << endl;
+	default: cout << "Invalid choice, choose again" << endl;
 		break;
 	}
 }
@@ -68,13 +68,15 @@ void Facebook::addTextStatus()
 		CleanBuffer();
 		cin.getline(userName, NAME_LEN - 1);
 		User* currentUser = FindUser(userName);
-		if (currentUser != nullptr)
+		if (currentUser == nullptr)
 		{
-			cout << "Enter Status: ";
-			cin.getline(statusStr, STATUS_LEN - 1);
-			Status* status = new Status(statusStr);
-			currentUser->AddStatus(status);
+			cout << "No user called " << userName << " was found, returning to menu." << endl;
+			return;
 		}
+		cout << "Enter Status: ";
+		cin.getline(statusStr, STATUS_LEN - 1);
+		Status* status = new Status(statusStr);
+		currentUser->AddStatus(status);
 	}
 	else                                       //double code - havent learnd inheritance
 	{
@@ -82,6 +84,10 @@ void Facebook::addTextStatus()
 		char pageName[NAME_LEN];
 		cin.getline(pageName, NAME_LEN - 1);
 		Fanpage* currentPage = FindPage(pageName);
+		if (currentPage == nullptr)
+		{
+			cout << "No page called " << pageName << " was found, returning to menu" << endl;
+		}
 		CleanBuffer();
 		cout << "Enter Status: ";
 		cin.getline(statusStr, STATUS_LEN - 1);
@@ -89,20 +95,26 @@ void Facebook::addTextStatus()
 		currentPage->addStatus(status);
 	}
 }
-void Facebook::addTextStatus(bool isPage, const char* statusStr, const char* userOrPageName)     
+void Facebook::addTextStatus(bool isPage, const char* statusStr, const char* userOrPageName)
 {//overload only for init perpuses adding statuses.
 	if (!isPage)
 	{
 		User* currentUser = FindUser(userOrPageName);
-		if (currentUser != nullptr)
+		if (currentUser == nullptr)
 		{
-			Status* status = new Status(statusStr);
-			currentUser->AddStatus(status);
+			cout << "No user called " << userOrPageName << " was found, returning to menu." << endl;
+			return;
 		}
+		Status* status = new Status(statusStr);
+		currentUser->AddStatus(status);
 	}
 	else
 	{
 		Fanpage* currentPage = FindPage(userOrPageName);
+		if (currentPage == nullptr)
+		{
+			cout << "No page called " << userOrPageName << " was found, returning to menu" << endl;
+		}
 		Status* status = new Status(statusStr);
 		currentPage->addStatus(status);
 	}
@@ -114,6 +126,11 @@ void Facebook::AddUser()      //check user exist ?
 	cout << "Please Enter the user's name: ";
 	CleanBuffer();
 	cin.getline(name, NAME_LEN - 1);
+	if (FindUser(name) != nullptr)
+	{
+		cout << "This user already exists, returning to menu" << endl;
+		return;
+	}
 	cout << "Please enter birthdate of the user (dd mm yy): ";
 	cin >> day >> month >> year;
 	if (numberOfUsers >= physicalNumberOfUsers)
@@ -129,6 +146,11 @@ void Facebook::AddUser(const char* name, int day, int month, int year) //overloa
 	if (numberOfUsers >= physicalNumberOfUsers)
 	{
 		makeDoubleSpace((void**)UsersPtrArr, sizeof(User*), physicalNumberOfUsers);
+	}
+	if (FindUser(name) != nullptr)
+	{
+		cout << "This user already exists, returning to menu"; << endl();
+		return;
 	}
 	User* newUser = new User(name, year, month, day);
 	UsersPtrArr[numberOfUsers] = newUser;
@@ -146,11 +168,19 @@ void Facebook::ShowStatusOfEntity()
 	if (isPage)
 	{
 		Fanpage* currentPage = FindPage(name);
+		if (currentPage == nullptr)
+		{
+			cout << "This page does not exist, returning to menu" << endl;
+		}
 		currentPage->showAllStatus();
 	}
 	else
 	{
 		User* currentUser = FindUser(name);
+		if (currentUser == nullptr)
+		{
+			cout << "This user does not exist, returning to menu" << endl;
+		}
 		currentUser->ShowAllStatus();
 	}
 }
@@ -164,6 +194,10 @@ void Facebook::AddFanpage()
 	{
 		makeDoubleSpace((void**)FanpagePtrArr, sizeof(Fanpage*), physicalNumberOfFanpage);
 	}
+	if (FindPage(name) != nullptr)
+	{
+		cout << "This page already exists, returning to menu" << endl;
+	}
 	Fanpage* newPage = new Fanpage(name);
 	FanpagePtrArr[numberOfFanpage] = newPage;
 	numberOfFanpage++;
@@ -173,6 +207,10 @@ void  Facebook::AddFanpage(const char* name)                            //overlo
 	if (numberOfFanpage >= physicalNumberOfFanpage)
 	{
 		makeDoubleSpace((void**)FanpagePtrArr, sizeof(Fanpage*), physicalNumberOfFanpage);
+	}
+	if (FindPage(name) != nullptr)
+	{
+		cout << "This page already exists, returning to menu" << endl;
 	}
 	Fanpage* newPage = new Fanpage(name);
 	FanpagePtrArr[numberOfFanpage] = newPage;
@@ -202,14 +240,17 @@ void Facebook::ShowFriendStatus()
 	char userName[NAME_LEN];
 	cout << "Please enter the user name you would like to see his/her *all* friends 10 latest statuses:\n ";
 	CleanBuffer();
-	cin.getline(userName, NAME_LEN -1);
+	cin.getline(userName, NAME_LEN - 1);
 	user = FindUser(userName);
-	if(user != nullptr)
-		user->ShowFriendsStatus(10);
+	if (user == nullptr)
+	{
+		cout << "User doesnt exist, returning to menu" << endl;
+	}
+	user->ShowFriendsStatus(10);
 }
 void Facebook::AddFriendship()   //to cancel the way of adding the same friend several times
 {
-	User* user1, *user2;
+	User* user1, * user2;
 	char userName1[NAME_LEN], userName2[NAME_LEN];
 	cout << "Please enter the two user names you would like to be friends:\n ";
 	CleanBuffer();
@@ -217,24 +258,34 @@ void Facebook::AddFriendship()   //to cancel the way of adding the same friend s
 	cin.getline(userName2, NAME_LEN - 1);
 	user1 = FindUser(userName1);
 	user2 = FindUser(userName2);
-	if (user1 != nullptr && user2 != nullptr)
+	if (user1 == nullptr || user2 == nullptr)
 	{
-		user1->AddFriend(user2);   //pointer dead at the end of func ? 
-		user2->AddFriend(user1);
+		cout << "at least one of the users does not exits, returning to menu." << endl;
 	}
+	if (!user1->IsFriendsWith(userName2))
+	{
+		cout << "Users are not friend." << endl;
+	}
+	user1->AddFriend(user2);
+	user2->AddFriend(user1);
 }
-void Facebook::AddFriendship(const char* name1, const char* name2)   
+void Facebook::AddFriendship(const char* name1, const char* name2)
 {//overload only for init perpuses adding friendship.
 	User* user1, * user2;
 	user1 = FindUser(name1);
 	user2 = FindUser(name2);
-	if (user1 != nullptr && user2 != nullptr)
+	if (user1 == nullptr || user2 == nullptr)
 	{
-		user1->AddFriend(user2);   //pointer dead at the end of func ? 
-		user2->AddFriend(user1);
+		cout << "at least one of the users does not exits, returning to menu." << endl;
 	}
+	if (!user1->IsFriendsWith(name2))
+	{
+		cout << "Users are not friend." << endl;
+	}
+	user1->AddFriend(user2);   //pointer dead at the end of func ? 
+	user2->AddFriend(user1);
 }
-void Facebook::CancelFriendship() 
+void Facebook::CancelFriendship()
 {
 	User* user1, * user2;
 	char userName1[NAME_LEN], userName2[NAME_LEN];
@@ -243,11 +294,18 @@ void Facebook::CancelFriendship()
 	cin.getline(userName2, NAME_LEN - 1);
 	user1 = FindUser(userName1);
 	user2 = FindUser(userName2);
-	if (user1 != nullptr && user2 != nullptr)
+	if (user1 == nullptr || user2 == nullptr)
 	{
-		user1->UnFriend(user2->GetName());   //is it the best way ? double searching.
-		user2->UnFriend(user1->GetName());
+		cout << "At least one of the users does not exist, returning to menu" << endl;
+		return;
 	}
+	if (!user1->IsFriendsWith(userName2))
+	{
+		cout << "Users are not friend, returning to menu" << endl;
+		return;
+	}
+	user1->UnFriend(user2->GetName());
+	user2->UnFriend(user1->GetName());
 }
 void Facebook::ShowAllUsersAndFanpages() const
 {
@@ -294,11 +352,21 @@ void Facebook::showAllFriendsOrFans()
 	if (isPage)
 	{
 		Fanpage* currentPage = FindPage(name);
+		if (currentPage == nullptr)
+		{
+			cout << "No page called " << name << " was found, returning to menu." << endl;
+			return;
+		}
 		currentPage->showAllFans();
 	}
 	else
 	{
 		User* currentUser = FindUser(name);
+		if (currentUser == nullptr)
+		{
+			cout << "No user called " << name << " was found, returning to menu." << endl;
+			return;
+		}
 		currentUser->ShowAllFriends();
 	}
 }
@@ -310,13 +378,24 @@ void Facebook::addFanToPage()
 	CleanBuffer();
 	cin.getline(pageName, NAME_LEN - 1);
 	Fanpage* page = FindPage(pageName);
+	if (page == nullptr)
+	{
+		cout << "No page called " << pageName << " was found, returning to menu." << endl;
+		return;
+	}
 	cout << "Which user would you like to add as a fan? ";
 	CleanBuffer();
 	cin.getline(fanName, NAME_LEN - 1);
-	page->addFan(FindUser(fanName));
+	User* user = FindUser(fanName);
+	if (user == nullptr)
+	{
+		cout << "No user called " << fanName << " was found, returning to menu." << endl;
+		return;
+	}
+	page->addFan(user);
 }
 void Facebook::addFanToPage(const char* userName, const char* pageName)
-{//overload only for init perpuses adding relasions.
+{//overload only for adding inital entities.
 	Fanpage* page = FindPage(pageName);
 	page->addFan(FindUser(userName));
 }
@@ -328,10 +407,21 @@ void Facebook::removeFanFromPage()
 	CleanBuffer();
 	cin.getline(pageName, NAME_LEN - 1);
 	Fanpage* page = FindPage(pageName);
+	if (page == nullptr)
+	{
+		cout << "No page called " << pageName << " was found, returning to menu." << endl;
+		return;
+	}
 	cout << "Which user would you like to remove as a fan? ";
 	CleanBuffer();
 	cin.getline(fanName, NAME_LEN - 1);
-	page->removeFan(FindUser(fanName));
+	User* user = FindUser(fanName);
+	if (user == nullptr)
+	{
+		cout << "No fan called " << fanName << " was found, returning to menu." << endl;
+		return;
+	}
+	page->removeFan(user);
 }
 Facebook::~Facebook()
 {

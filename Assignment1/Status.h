@@ -14,6 +14,7 @@ public:
 
 private:
 	tm* statusTime;
+	time_t curr_time;
 	char* text;
 	int textLen;
 	Date dateOfStatus;
