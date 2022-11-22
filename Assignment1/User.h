@@ -8,7 +8,7 @@ const int InitNumber = 10;
 class User
 {
 public:
-	User(char* tryName, int tryYear, int tryMonth, int tryDay);//constructor
+	User(const char* tryName, int tryYear, int tryMonth, int tryDay);//constructor
 	void AddFriend(User* addFriend);
 	void AddStatus(Status* status);
 	void ShowAllStatus()				const;

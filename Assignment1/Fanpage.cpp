@@ -1,6 +1,6 @@
 #include "Fanpage.h"
 
-Fanpage::Fanpage(char* newName)
+Fanpage::Fanpage(const char* newName)
 {
 	setName(newName);
 	physicalNumberOfFans = InitNumber;
@@ -10,7 +10,7 @@ Fanpage::Fanpage(char* newName)
 	arrOfFans = new User * [physicalNumberOfFans];
 	statusPtrArr = new Status * [PhysicalNumberOfStatus];
 }
-bool Fanpage::setName(char* newName)
+bool Fanpage::setName(const char* newName)
 {
 	char* name = new char[strlen(newName) + 1];
 	strcpy(name, newName);

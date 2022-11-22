@@ -7,7 +7,7 @@
 class Status
 {
 public:
-	Status(char* inputText);
+	Status(const char* inputText);
 	char* GetText() const;
 	void ShowText() const;
 	~Status();

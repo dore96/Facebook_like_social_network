@@ -5,7 +5,7 @@
 class Fanpage
 {
 public:
-	Fanpage(char* newName);
+	Fanpage(const char* newName);
 	char* getName()     const;
 	void printName()    const;
 	void addFan(User* fan);
@@ -20,7 +20,7 @@ private:
 	char* name;
 	int numberOfFans,numberOfStatus,physicalNumberOfFans,PhysicalNumberOfStatus;
 	User** arrOfFans;
-	bool setName(char* newName);
+	bool setName(const char* newName);
 	Status** statusPtrArr;
 	Fanpage(const Fanpage&);
 };

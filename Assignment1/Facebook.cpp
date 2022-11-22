@@ -88,9 +88,25 @@ void Facebook::addTextStatus()
 		Status* status = new Status(statusStr);
 		currentPage->addStatus(status);
 	}
-
 }
-
+void Facebook::addTextStatus(bool isPage, const char* statusStr, const char* userOrPageName)     
+{//overload only for init perpuses adding statuses.
+	if (!isPage)
+	{
+		User* currentUser = FindUser(userOrPageName);
+		if (currentUser != nullptr)
+		{
+			Status* status = new Status(statusStr);
+			currentUser->AddStatus(status);
+		}
+	}
+	else
+	{
+		Fanpage* currentPage = FindPage(userOrPageName);
+		Status* status = new Status(statusStr);
+		currentPage->addStatus(status);
+	}
+}
 void Facebook::AddUser()      //check user exist ? 
 {
 	int day, month, year;
@@ -100,6 +116,16 @@ void Facebook::AddUser()      //check user exist ?
 	cin.getline(name, NAME_LEN - 1);
 	cout << "Please enter birthdate of the user (dd mm yy): ";
 	cin >> day >> month >> year;
+	if (numberOfUsers >= physicalNumberOfUsers)
+	{
+		makeDoubleSpace((void**)UsersPtrArr, sizeof(User*), physicalNumberOfUsers);
+	}
+	User* newUser = new User(name, year, month, day);
+	UsersPtrArr[numberOfUsers] = newUser;
+	numberOfUsers++;
+}
+void Facebook::AddUser(const char* name, int day, int month, int year) //overload only for init perpuses adding 3 users.
+{
 	if (numberOfUsers >= physicalNumberOfUsers)
 	{
 		makeDoubleSpace((void**)UsersPtrArr, sizeof(User*), physicalNumberOfUsers);
@@ -134,6 +160,16 @@ void Facebook::AddFanpage()
 	cout << "Please enter the page's name: ";
 	CleanBuffer();
 	cin.getline(name, NAME_LEN - 1);
+	if (numberOfFanpage >= physicalNumberOfFanpage)
+	{
+		makeDoubleSpace((void**)FanpagePtrArr, sizeof(Fanpage*), physicalNumberOfFanpage);
+	}
+	Fanpage* newPage = new Fanpage(name);
+	FanpagePtrArr[numberOfFanpage] = newPage;
+	numberOfFanpage++;
+}
+void  Facebook::AddFanpage(const char* name)                            //overload only for init perpuses adding 3 fanpage.
+{
 	if (numberOfFanpage >= physicalNumberOfFanpage)
 	{
 		makeDoubleSpace((void**)FanpagePtrArr, sizeof(Fanpage*), physicalNumberOfFanpage);
@@ -181,6 +217,17 @@ void Facebook::AddFriendship()   //to cancel the way of adding the same friend s
 	cin.getline(userName2, NAME_LEN - 1);
 	user1 = FindUser(userName1);
 	user2 = FindUser(userName2);
+	if (user1 != nullptr && user2 != nullptr)
+	{
+		user1->AddFriend(user2);   //pointer dead at the end of func ? 
+		user2->AddFriend(user1);
+	}
+}
+void Facebook::AddFriendship(const char* name1, const char* name2)   
+{//overload only for init perpuses adding friendship.
+	User* user1, * user2;
+	user1 = FindUser(name1);
+	user2 = FindUser(name2);
 	if (user1 != nullptr && user2 != nullptr)
 	{
 		user1->AddFriend(user2);   //pointer dead at the end of func ? 
@@ -267,6 +314,11 @@ void Facebook::addFanToPage()
 	CleanBuffer();
 	cin.getline(fanName, NAME_LEN - 1);
 	page->addFan(FindUser(fanName));
+}
+void Facebook::addFanToPage(const char* userName, const char* pageName)
+{//overload only for init perpuses adding relasions.
+	Fanpage* page = FindPage(pageName);
+	page->addFan(FindUser(userName));
 }
 void Facebook::removeFanFromPage()
 {

@@ -3,7 +3,7 @@
 Maor:
 - User* addFriend ?? or const User* addFriend?? or const User* const addFriend
 */
-User::User(char* tryName, int inputYear, int inputMonth, int inputDay) :  dateOfBirth(inputDay, inputMonth, inputYear)//constructor
+User::User(const char* tryName, int inputYear, int inputMonth, int inputDay) :  dateOfBirth(inputDay, inputMonth, inputYear)//constructor
 {
 	SetName(tryName);                         
 	numberOfFriends = 0;

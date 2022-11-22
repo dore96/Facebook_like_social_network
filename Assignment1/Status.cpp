@@ -1,6 +1,6 @@
 #include "Status.h"
 
-Status::Status(char* inputText)//ctor
+Status::Status(const char* inputText)//ctor
 	: statusTime(localtime(nullptr)), dateOfStatus(statusTime->tm_mday, (statusTime->tm_mon) + 1, (statusTime->tm_year + 1900))
 {
 	textLen = strlen(inputText) + 1;
