@@ -16,6 +16,9 @@ public:
 	void ShowAllFanpage() const;
 	void ShowAllUsersAndFanpages()  const;
 	void Exit()  const;
+	void ShowFriendStatus();
+	void AddFriendship();
+	void CancelFriendship();
 	void addTextStatus();
 	void ShowStatusOfEntity();
 	User* FindUser(const char* name);

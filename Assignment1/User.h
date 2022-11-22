@@ -2,7 +2,7 @@
 #define __User_H
 
 #include "Status.h" 
-
+class Fanpage;					//avoiding the two way include problam. (user - fanpage , fanpage - user)
 const int InitNumber = 10;
 
 class User
@@ -18,6 +18,9 @@ public:
 	char* GetName()						const;
 	void PrintName()                    const;
 	int GetNumberOfStatus()		     	const;
+	void ShowAllStatus(int numberOfPrintStatus)			const;   //overload - showing wanted number of status or all status.
+	void ShowFriendsStatus(int numberOfPrintStatus)	    const;
+	int GetNumberOfFriends()							const;
 	~User();								//Destructor
 private:
 	int numberOfFriends, numberOfStatus;
@@ -26,6 +29,7 @@ private:
 	char* name;
 	Status** statusPtrArr;
 	User** friendsPtrArr;
+	Fanpage** fanpagePtrArr;
 	bool SetName(const char* tryName);
 	void MakeDoubleFriendsSpace();
 	void MakeDoubleStatusSpace();
