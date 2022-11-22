@@ -30,6 +30,43 @@ void Facebook::AddUser()
 {
 
 }
+void Facebook::ShowStatusOfEntity()
+{
+	bool isPage;
+	cout << "Press 1 to show status for a fanpage or 0 for a user: ";
+	cin >> isPage;
+	CleanBuffer();
+	cout << "Enter your name: ";
+	char name[NAME_LEN];
+	cin.getline(name, NAME_LEN - 1);
+	if (isPage)
+	{
+		Fanpage* currentPage = FindPage(name);
+		currentPage->showAllStatus();
+	}
+	else
+	{
+		User* currentUser = FindUser(name);
+		currentUser->ShowAllStatus();
+	}
+}
+void Facebook::AddUser()
+{//לבדוק אם המשתמש כבר קיים ואז לא להוסיף?
+	int day, month, year;
+	char name[NAME_LEN];
+	cout << "Please Enter the user's name: ";
+	cin.getline(name, NAME_LEN - 1);
+	CleanBuffer();
+	cout << "Please enter birthdate of the user (dd mm yy): ";
+	cin >> day >> month >> year;
+	if (numberOfUsers >= physicalNumberOfUsers)
+	{
+		makeDoubleSpace((void**)UsersPtrArr, sizeof(User*), physicalNumberOfUsers);
+	}
+	User* newUser = new User(name, year, month, day);
+	UsersPtrArr[numberOfUsers] = newUser;
+	numberOfUsers++;
+}
 void Facebook::AddFanpage()
 {
 

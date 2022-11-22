@@ -4,6 +4,8 @@
 #include "Status.h"
 #include "Date.h" 
 
+#include "Status.h" 
+class Fanpage;				//avoiding the two way include problam. (user - fanpage , fanpage - user)
 const int InitNumber = 10;
 
 class User
@@ -33,7 +35,7 @@ private:
 	char *name;
 	Status** statusPtrArr;
 	User** friendsPtrArr;
-
+	Fanpage** fanpagePtrArr;
 	bool SetName(const char* tryName);
 
 	void MakeDoubleFriendsSpace();
