@@ -45,8 +45,7 @@ void  Facebook::ChooseFromMenu(int choice)
 		break;
 	case 9:removeFanFromPage();
 		break;
-	case 10:
-		ShowAllUsersAndFanpages();
+	case 10:ShowAllUsersAndFanpages();
 		break;
 	case 11: showAllFriendsOrFans();
 		break;
@@ -91,20 +90,7 @@ void Facebook::addTextStatus()
 	}
 
 }
-void Facebook::ShowStatusOfEntity()
-{
-	bool isPage;
-	cout << "Press 1 to add status for a fanpage or 0 for a user: ";
-		if (currentPage != nullptr)
-		{
-			cout << "Enter Status: ";
-			cin.getline(statusStr, STATUS_LEN - 1);
-			Status* status = new Status(statusStr);
-			currentPage->addStatus(status);
-		}
-	}
 
-}
 void Facebook::AddUser()      //check user exist ? 
 {
 	int day, month, year;
@@ -141,23 +127,6 @@ void Facebook::ShowStatusOfEntity()
 		User* currentUser = FindUser(name);
 		currentUser->ShowAllStatus();
 	}
-}
-void Facebook::AddUser()
-{//����� �� ������ ��� ���� ��� �� ������?
-	int day, month, year;
-	char name[NAME_LEN];
-	cout << "Please Enter the user's name: ";
-	CleanBuffer();
-	cin.getline(name, NAME_LEN - 1);
-	cout << "Please enter birthdate of the user (dd mm yy): ";
-	cin >> day >> month >> year;
-	if (numberOfUsers >= physicalNumberOfUsers)
-	{
-		makeDoubleSpace((void**)UsersPtrArr, sizeof(User*), physicalNumberOfUsers);
-	}
-	User* newUser = new User(name, year, month, day);
-	UsersPtrArr[numberOfUsers] = newUser;
-	numberOfUsers++;
 }
 void Facebook::AddFanpage()
 {
