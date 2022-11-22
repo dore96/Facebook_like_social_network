@@ -11,15 +11,15 @@ public:
 	User(char* tryName, int tryYear, int tryMonth, int tryDay);//constructor
 	void AddFriend(User* addFriend);
 	void AddStatus(Status* status);
-	void ShowAllStatus()								const;
-	void ShowAllStatus(int numberOfPrintStatus)			const;   //overload - showing wanted number of status or all status.
-	void ShowFriendsStatus(int numberOfPrintStatus)	    const;
-	void ShowAllFriends()								const;
+	void ShowAllStatus()				const;
+	void ShowAllFriends()				const;
 	Date& GetBirthDate();
 	void UnFriend(const char* friendToRemove);
-	char* GetName()										const;
-	void PrintName()								    const;
-	int GetNumberOfStatus()								const;
+	char* GetName()						const;
+	void PrintName()                    const;
+	int GetNumberOfStatus()		     	const;
+	void ShowAllStatus(int numberOfPrintStatus)			const;   //overload - showing wanted number of status or all status.
+	void ShowFriendsStatus(int numberOfPrintStatus)	    const;
 	int GetNumberOfFriends()							const;
 	~User();								//Destructor
 private:

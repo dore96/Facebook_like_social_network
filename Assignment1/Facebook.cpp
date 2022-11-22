@@ -7,7 +7,7 @@ Facebook::Facebook()
 	UsersPtrArr = new User * [physicalNumberOfUsers];
 	FanpagePtrArr = new Fanpage * [physicalNumberOfFanpage];
 }
-void Facebook::PrintMenu()
+void Facebook::PrintMenu() const
 {
 	cout << "Choose an action number from the above menu:" << endl;
 	cout << "1.Add user" << endl;
@@ -41,14 +41,14 @@ void  Facebook::ChooseFromMenu(int choice)
 		break;
 	case 7:CancelFriendship();
 		break;
-	case 8:
+	case 8:addFanToPage();
 		break;
-	case 9:
+	case 9:removeFanFromPage();
 		break;
 	case 10:
 		ShowAllUsersAndFanpages();
 		break;
-	case 11:
+	case 11: showAllFriendsOrFans();
 		break;
 	case 12: Exit();
 		break;
@@ -84,6 +84,17 @@ void Facebook::addTextStatus()
 		cin.getline(pageName, NAME_LEN - 1);
 		Fanpage* currentPage = FindPage(pageName);
 		CleanBuffer();
+		cout << "Enter Status: ";
+		cin.getline(statusStr, STATUS_LEN - 1);
+		Status* status = new Status(statusStr);
+		currentPage->addStatus(status);
+	}
+
+}
+void Facebook::ShowStatusOfEntity()
+{
+	bool isPage;
+	cout << "Press 1 to add status for a fanpage or 0 for a user: ";
 		if (currentPage != nullptr)
 		{
 			cout << "Enter Status: ";
@@ -131,6 +142,23 @@ void Facebook::ShowStatusOfEntity()
 		currentUser->ShowAllStatus();
 	}
 }
+void Facebook::AddUser()
+{//����� �� ������ ��� ���� ��� �� ������?
+	int day, month, year;
+	char name[NAME_LEN];
+	cout << "Please Enter the user's name: ";
+	CleanBuffer();
+	cin.getline(name, NAME_LEN - 1);
+	cout << "Please enter birthdate of the user (dd mm yy): ";
+	cin >> day >> month >> year;
+	if (numberOfUsers >= physicalNumberOfUsers)
+	{
+		makeDoubleSpace((void**)UsersPtrArr, sizeof(User*), physicalNumberOfUsers);
+	}
+	User* newUser = new User(name, year, month, day);
+	UsersPtrArr[numberOfUsers] = newUser;
+	numberOfUsers++;
+}
 void Facebook::AddFanpage()
 {
 	char name[NAME_LEN];
@@ -145,7 +173,7 @@ void Facebook::AddFanpage()
 	FanpagePtrArr[numberOfFanpage] = newPage;
 	numberOfFanpage++;
 }
-void Facebook::ShowAllUsers()
+void Facebook::ShowAllUsers() const
 {
 	cout << "Users: " << endl;
 	for (int i = 0; i < numberOfUsers; i++)
@@ -153,7 +181,7 @@ void Facebook::ShowAllUsers()
 		cout << i + 1 << "." << UsersPtrArr[i]->GetName() << endl;
 	}
 }
-void Facebook::ShowAllFanpage()
+void Facebook::ShowAllFanpage() const
 {
 	cout << "FanPages: " << endl;
 	for (int i = 0; i < numberOfFanpage; i++)
@@ -161,6 +189,7 @@ void Facebook::ShowAllFanpage()
 		cout << i + 1 << ".";
 		FanpagePtrArr[i]->printName();
 	}
+
 }
 void Facebook::ShowFriendStatus()
 {
@@ -204,7 +233,7 @@ void Facebook::CancelFriendship()
 		user2->UnFriend(user1->GetName());
 	}
 }
-void Facebook::ShowAllUsersAndFanpages()
+void Facebook::ShowAllUsersAndFanpages() const
 {
 	ShowAllUsers();
 	ShowAllFanpage();
@@ -233,9 +262,55 @@ Fanpage* Facebook::FindPage(const char* name)
 	cout << "Page not found, nullptr returned" << endl;
 	return nullptr;
 }
-void Facebook::Exit()
+void Facebook::Exit() const
 {
 	cout << "Thank you for using FaceBook, goodbye !" << endl;
+}
+void Facebook::showAllFriendsOrFans()
+{
+	bool isPage;
+	cout << "Press 1 to add status for a fanpage or 0 for a user: ";
+	cin >> isPage;
+	CleanBuffer();
+	cout << "Enter your name: ";
+	char name[NAME_LEN];
+	cin.getline(name, NAME_LEN - 1);
+	if (isPage)
+	{
+		Fanpage* currentPage = FindPage(name);
+		currentPage->showAllFans();
+	}
+	else
+	{
+		User* currentUser = FindUser(name);
+		currentUser->ShowAllFriends();
+	}
+}
+void Facebook::addFanToPage()
+{
+	char pageName[NAME_LEN];
+	char fanName[NAME_LEN];
+	cout << "To which page would you like to add a fan? ";
+	CleanBuffer();
+	cin.getline(pageName, NAME_LEN - 1);
+	Fanpage* page = FindPage(pageName);
+	cout << "Which user would you like to add as a fan? ";
+	CleanBuffer();
+	cin.getline(fanName, NAME_LEN - 1);
+	page->addFan(FindUser(fanName));
+}
+void Facebook::removeFanFromPage()
+{
+	char pageName[NAME_LEN];
+	char fanName[NAME_LEN];
+	cout << "From which page would you like to remove a fan? ";
+	CleanBuffer();
+	cin.getline(pageName, NAME_LEN - 1);
+	Fanpage* page = FindPage(pageName);
+	cout << "Which user would you like to remove as a fan? ";
+	CleanBuffer();
+	cin.getline(fanName, NAME_LEN - 1);
+	page->removeFan(FindUser(fanName));
 }
 Facebook::~Facebook()
 {

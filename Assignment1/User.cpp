@@ -65,6 +65,7 @@ int User::GetNumberOfStatus()		  const
 {
 	return numberOfStatus;
 }
+
 int User::GetNumberOfFriends()		  const
 {
 	return numberOfFriends;

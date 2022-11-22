@@ -8,21 +8,24 @@ class Facebook
 {
 public:
 	Facebook();
-	void PrintMenu();
+	void PrintMenu()      const;
 	void ChooseFromMenu(int choice);
 	void AddUser();
 	void AddFanpage();
-	void ShowAllUsers();
-	void ShowAllFanpage();
+	void ShowAllUsers()   const;
+	void ShowAllFanpage() const;
+	void ShowAllUsersAndFanpages()  const;
+	void Exit()  const;
 	void ShowFriendStatus();
 	void AddFriendship();
 	void CancelFriendship();
-	void ShowAllUsersAndFanpages();
-	void Exit();
 	void addTextStatus();
 	void ShowStatusOfEntity();
 	User* FindUser(const char* name);
 	Fanpage* FindPage(const char* name);
+	void showAllFriendsOrFans();
+	void addFanToPage();
+	void removeFanFromPage();
 	~Facebook();
 private:
 	User** UsersPtrArr;

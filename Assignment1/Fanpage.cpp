@@ -33,6 +33,18 @@ void Fanpage::addFan(User* fan)
 	arrOfFans[numberOfFans] = fan;
 	numberOfFans++;
 }
+void Fanpage::removeFan(User* fan)
+{
+	for(int i = 0;i < numberOfFans;i++)
+	{
+		if (arrOfFans[i] == fan)
+		{
+			arrOfFans[i] = arrOfFans[numberOfFans - 1];
+			numberOfFans--;
+		}
+	}
+}
+
 void Fanpage::addStatus(Status* status)
 {
 	if(numberOfStatus >= PhysicalNumberOfStatus)
