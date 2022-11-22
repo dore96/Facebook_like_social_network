@@ -1,24 +1,9 @@
 #include "Date.h"
-
-/*
-maor:
--clean buffer func to c'tor
--define curr year to set date func
-*/
+#include "Utilities.h"
 
 Date::Date(int inputDay, int inputMonth, int inputYear)
 {
-	while (!setDate(inputDay, inputMonth, inputYear))                  
-	{
-		cout << "Date is not legit, please enter new date" << endl;
-		cout << "Please enter the user's bDay (dd/mm/yy): ";
-		cin >> inputDay;
-		getchar();
-		cin >> inputMonth;
-		getchar();
-		cin >> inputYear;
-		cout << endl;
-	}
+	setDate(inputDay, inputMonth, inputYear);
 }
 bool Date::setDate(int inputDay, int inputMonth, int inputYear)
 {
@@ -30,7 +15,7 @@ bool Date::setDate(int inputDay, int inputMonth, int inputYear)
 	{
 		return false;
 	}
-	else if (inputYear > 2022)
+	else if (inputYear > CURRENT_YEAR)
 	{
 		return false;
 	}
