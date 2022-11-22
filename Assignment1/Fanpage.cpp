@@ -12,7 +12,7 @@ Fanpage::Fanpage(const char* newName)
 }
 bool Fanpage::setName(const char* newName)
 {
-	char* name = new char[strlen(newName) + 1];
+	name = new char[strlen(newName) + 1];
 	strcpy(name, newName);
 	return true;
 }
