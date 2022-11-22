@@ -14,6 +14,9 @@ public:
 	void AddFanpage();
 	void ShowAllUsers();
 	void ShowAllFanpage();
+	void ShowFriendStatus();
+	void AddFriendship();
+	void CancelFriendship();
 	void ShowAllUsersAndFanpages();
 	void Exit();
 	void addTextStatus();

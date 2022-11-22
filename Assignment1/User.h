@@ -2,9 +2,7 @@
 #define __User_H
 
 #include "Status.h" 
-
-#include "Status.h" 
-class Fanpage;				//avoiding the two way include problam. (user - fanpage , fanpage - user)
+class Fanpage;					//avoiding the two way include problam. (user - fanpage , fanpage - user)
 const int InitNumber = 10;
 
 class User
@@ -13,13 +11,16 @@ public:
 	User(char* tryName, int tryYear, int tryMonth, int tryDay);//constructor
 	void AddFriend(User* addFriend);
 	void AddStatus(Status* status);
-	void ShowAllStatus()				const;
-	void ShowAllFriends()				const;
+	void ShowAllStatus()								const;
+	void ShowAllStatus(int numberOfPrintStatus)			const;   //overload - showing wanted number of status or all status.
+	void ShowFriendsStatus(int numberOfPrintStatus)	    const;
+	void ShowAllFriends()								const;
 	Date& GetBirthDate();
 	void UnFriend(const char* friendToRemove);
-	char* GetName()						const;
-	void PrintName()                    const;
-	int GetNumberOfStatus()		     	const;
+	char* GetName()										const;
+	void PrintName()								    const;
+	int GetNumberOfStatus()								const;
+	int GetNumberOfFriends()							const;
 	~User();								//Destructor
 private:
 	int numberOfFriends, numberOfStatus;

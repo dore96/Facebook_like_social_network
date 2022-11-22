@@ -34,6 +34,20 @@ void User::ShowAllStatus()			  const
 	for (int i = 0; i < numberOfStatus; i++)
 		statusPtrArr[i]->ShowText();
 }
+void User::ShowAllStatus(int numberOfPrintStatus)			const
+{
+	for (int i = 0; i < numberOfStatus && i < numberOfPrintStatus; i++)
+	{
+		statusPtrArr[i]->ShowText();
+	}
+}
+void User::ShowFriendsStatus(int numberOfPrintStatus)	    const
+{
+	for (int i = 0; i < numberOfFriends; i++)
+	{
+		friendsPtrArr[i]->ShowAllStatus(numberOfPrintStatus);
+	}
+}
 void User::ShowAllFriends()			  const
 {
 	for (int i = 0; i < numberOfFriends; i++)
@@ -50,6 +64,10 @@ void User::PrintName()                const
 int User::GetNumberOfStatus()		  const
 {
 	return numberOfStatus;
+}
+int User::GetNumberOfFriends()		  const
+{
+	return numberOfFriends;
 }
 void User::UnFriend(const char* friendToRemove)
 {

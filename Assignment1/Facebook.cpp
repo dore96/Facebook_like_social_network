@@ -35,11 +35,11 @@ void  Facebook::ChooseFromMenu(int choice)
 		break;
 	case 4:ShowStatusOfEntity();
 		break;
-	case 5:
+	case 5:ShowFriendStatus();
 		break;
-	case 6:
+	case 6:AddFriendship();
 		break;
-	case 7:
+	case 7:CancelFriendship();
 		break;
 	case 8:
 		break;
@@ -66,13 +66,16 @@ void Facebook::addTextStatus()
 	{
 		cout << "Enter user's name: ";
 		char userName[NAME_LEN];
+		CleanBuffer();
 		cin.getline(userName, NAME_LEN - 1);
 		User* currentUser = FindUser(userName);
-		CleanBuffer();
-		cout << "Enter Status: ";
-		cin.getline(statusStr, STATUS_LEN - 1);
-		Status* status = new Status(statusStr);
-		currentUser->AddStatus(status);
+		if (currentUser != nullptr)
+		{
+			cout << "Enter Status: ";
+			cin.getline(statusStr, STATUS_LEN - 1);
+			Status* status = new Status(statusStr);
+			currentUser->AddStatus(status);
+		}
 	}
 	else                                       //double code - havent learnd inheritance
 	{
@@ -81,35 +84,18 @@ void Facebook::addTextStatus()
 		cin.getline(pageName, NAME_LEN - 1);
 		Fanpage* currentPage = FindPage(pageName);
 		CleanBuffer();
-		cout << "Enter Status: ";
-		cin.getline(statusStr, STATUS_LEN - 1);
-		Status* status = new Status(statusStr);
-		currentPage->addStatus(status);
+		if (currentPage != nullptr)
+		{
+			cout << "Enter Status: ";
+			cin.getline(statusStr, STATUS_LEN - 1);
+			Status* status = new Status(statusStr);
+			currentPage->addStatus(status);
+		}
 	}
 
 }
-void Facebook::ShowStatusOfEntity()
+void Facebook::AddUser()      //check user exist ? 
 {
-	bool isPage;
-	cout << "Press 1 to add status for a fanpage or 0 for a user: ";
-	cin >> isPage;
-	CleanBuffer();
-	cout << "Enter your name: ";
-	char name[NAME_LEN];
-	cin.getline(name, NAME_LEN - 1);
-	if (isPage)
-	{
-		Fanpage* currentPage = FindPage(name);
-		currentPage->showAllStatus();
-	}
-	else
-	{
-		User* currentUser = FindUser(name);
-		currentUser->ShowAllStatus();
-	}
-}
-void Facebook::AddUser()
-{//לבדוק אם המשתמש כבר קיים ואז לא להוסיף?
 	int day, month, year;
 	char name[NAME_LEN];
 	cout << "Please Enter the user's name: ";
@@ -145,29 +131,12 @@ void Facebook::ShowStatusOfEntity()
 		currentUser->ShowAllStatus();
 	}
 }
-void Facebook::AddUser()
-{//לבדוק אם המשתמש כבר קיים ואז לא להוסיף?
-	int day, month, year;
-	char name[NAME_LEN];
-	cout << "Please Enter the user's name: ";
-	cin.getline(name, NAME_LEN - 1);
-	CleanBuffer();
-	cout << "Please enter birthdate of the user (dd mm yy): ";
-	cin >> day >> month >> year;
-	if (numberOfUsers >= physicalNumberOfUsers)
-	{
-		makeDoubleSpace((void**)UsersPtrArr, sizeof(User*), physicalNumberOfUsers);
-	}
-	User* newUser = new User(name, year, month, day);
-	UsersPtrArr[numberOfUsers] = newUser;
-	numberOfUsers++;
-}
 void Facebook::AddFanpage()
 {
 	char name[NAME_LEN];
 	cout << "Please enter the page's name: ";
-	cin.getline(name, NAME_LEN - 1);
 	CleanBuffer();
+	cin.getline(name, NAME_LEN - 1);
 	if (numberOfFanpage >= physicalNumberOfFanpage)
 	{
 		makeDoubleSpace((void**)FanpagePtrArr, sizeof(Fanpage*), physicalNumberOfFanpage);
@@ -191,6 +160,48 @@ void Facebook::ShowAllFanpage()
 	{
 		cout << i + 1 << ".";
 		FanpagePtrArr[i]->printName();
+	}
+}
+void Facebook::ShowFriendStatus()
+{
+	User* user;
+	char userName[NAME_LEN];
+	cout << "Please enter the user name you would like to see his/her *all* friends 10 latest statuses:\n ";
+	CleanBuffer();
+	cin.getline(userName, NAME_LEN -1);
+	user = FindUser(userName);
+	if(user != nullptr)
+		user->ShowFriendsStatus(10);
+}
+void Facebook::AddFriendship()   //to cancel the way of adding the same friend several times
+{
+	User* user1, *user2;
+	char userName1[NAME_LEN], userName2[NAME_LEN];
+	cout << "Please enter the two user names you would like to be friends:\n ";
+	CleanBuffer();
+	cin.getline(userName1, NAME_LEN - 1);
+	cin.getline(userName2, NAME_LEN - 1);
+	user1 = FindUser(userName1);
+	user2 = FindUser(userName2);
+	if (user1 != nullptr && user2 != nullptr)
+	{
+		user1->AddFriend(user2);   //pointer dead at the end of func ? 
+		user2->AddFriend(user1);
+	}
+}
+void Facebook::CancelFriendship() 
+{
+	User* user1, * user2;
+	char userName1[NAME_LEN], userName2[NAME_LEN];
+	cout << "Please enter the two user names you would like to unfriend each other:\n ";
+	cin.getline(userName1, NAME_LEN - 1);
+	cin.getline(userName2, NAME_LEN - 1);
+	user1 = FindUser(userName1);
+	user2 = FindUser(userName2);
+	if (user1 != nullptr && user2 != nullptr)
+	{
+		user1->UnFriend(user2->GetName());   //is it the best way ? double searching.
+		user2->UnFriend(user1->GetName());
 	}
 }
 void Facebook::ShowAllUsersAndFanpages()
