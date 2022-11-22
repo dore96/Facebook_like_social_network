@@ -16,7 +16,7 @@ int main()
 	return 0;
 }
 
-void InitFacebook(Facebook& myFacebook) //initiating the facebook with the needed arguments.
+void InitFacebook(Facebook& myFacebook) //initiating the facebook with the needed arguments..
 {
 	myFacebook.AddUser("dor", 25, 07, 1996);
 	myFacebook.AddUser("maor", 29, 04, 1999);
