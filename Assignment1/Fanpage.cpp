@@ -53,7 +53,6 @@ void Fanpage::printName()										const
 	cout << name << endl;
 }
 
-
 bool Fanpage::isAFan(const User& user)							const
 {
 	for (int i = 0; i < numberOfFans; i++)

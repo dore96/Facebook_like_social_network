@@ -9,9 +9,9 @@ int main()
 	InitFacebook(myFacebook);//initiating the facebook with initals entities as asked.
 	do
 	{
-		myFacebook.PrintMenu();
+		myFacebook.printMenu();
 		cin >> choice;
-		myFacebook.ChooseFromMenu(choice);
+		myFacebook.chooseFromMenu(choice);
 	} while (choice != EXIT);
 	return 0;
 }
@@ -21,12 +21,12 @@ void InitFacebook(Facebook& myFacebook) //initiating the facebook with the neede
 	char dor[4] = { "dor"};
 	char maor[5] = { "maor" };
 	char tovia[6] = { "tovia" };
-	myFacebook.AddUser(dor, 25, 07, 1996);
-	myFacebook.AddUser(maor, 29, 04, 1999);
-	myFacebook.AddUser(tovia, 04, 8, 2022);
-	myFacebook.AddFanpage("MTA course recomendations");
-	myFacebook.AddFanpage("Pro yogurt");
-	myFacebook.AddFanpage("Merge Halicod & Meretz");
+	myFacebook.addUser(dor, 25, 07, 1996);
+	myFacebook.addUser(maor, 29, 04, 1999);
+	myFacebook.addUser(tovia, 04, 8, 2022);
+	myFacebook.addFanpage("MTA course recomendations");
+	myFacebook.addFanpage("Pro yogurt");
+	myFacebook.addFanpage("Merge Halicod & Meretz");
 	myFacebook.addTextStatus(true, "c++ course is great", "MTA course recomendations");
 	myFacebook.addTextStatus(true, "c++ course is ok", "MTA course recomendations");
 	myFacebook.addTextStatus(true, "OOP is cool", "MTA course recomendations");
@@ -45,9 +45,9 @@ void InitFacebook(Facebook& myFacebook) //initiating the facebook with the neede
 	myFacebook.addTextStatus(false, "bark", "tovia");
 	myFacebook.addTextStatus(false, "bark bark", "tovia");
 	myFacebook.addTextStatus(false, "whof", "tovia");
-	myFacebook.AddFriendship("dor", "maor");
-	myFacebook.AddFriendship("dor", "tovia");
-	myFacebook.AddFriendship("tovia", "maor");
+	myFacebook.addFriendship("dor", "maor");
+	myFacebook.addFriendship("dor", "tovia");
+	myFacebook.addFriendship("tovia", "maor");
 	myFacebook.addFanToPage("maor", "Merge Halicod & Meretz");
 	myFacebook.addFanToPage("tovia", "Pro yogurt");
 	myFacebook.addFanToPage("dor", "MTA course recomendations");

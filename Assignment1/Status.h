@@ -8,20 +8,23 @@ class Status
 {
 public:
 	Status(const char* inputText);
+
 	const tm& getTime()			const;    //func returns the time ref , with no option to change it.
-	void showTime()				const;
-	char* GetText()				const;
+	const char* GetText()		const;
 	int getTextLen()			const;
-	void ShowText()				const;
 	const Date& getDate()		const;
+
+	void showTime()				const;
+	void ShowText()				const;
 	~Status();
 
 private:
 	const tm* const statusTime;
-	time_t curr_time;
-	char* text;
-	int textLen;
 	const Date dateOfStatus;
+	char* text;
+	time_t curr_time;
+	int textLen;
+
 	Status(const Status& other);  //disable the possibility of Status copy.	
 };
 

@@ -10,12 +10,14 @@ public:
 	int getNumberOfStatus()		     						const;
 	int getNumberOfFans()									const;
 
+	//show funcs
 	void printName()										const;
 	void showAllFans()										const;
 	void showStatuses(int numberOfPrintStatus = INT_MAX)	const;
 
 	bool isAFan(const User& userName)						const;
 
+	//action funcs
 	void addFan(User& fan);
 	void removeFan(User& fan);
 	void addStatus(const Status& status);

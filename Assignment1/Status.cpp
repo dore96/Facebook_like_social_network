@@ -15,7 +15,7 @@ void Status::showTime()				const
 {
 	cout << statusTime->tm_hour << ":" << statusTime->tm_min << ":" << statusTime->tm_sec << endl;
 }
-char* Status::GetText() const
+const char* Status::GetText() const
 {
 	return text;
 }
