@@ -119,7 +119,7 @@ void User::unFriend(User& friendToRemove)
 	}
 	for (int i = 0; i < numberOfFriends; i++)
 	{
-		if (friendsPtrArr[i] != nullptr && !strcmp(friendsPtrArr[i]->name, friendToRemove.getName()))
+		if (friendsPtrArr[i] == &friendToRemove)
 		{
 			friendsPtrArr[i] = friendsPtrArr[numberOfFriends - 1];
 			numberOfFriends--;
@@ -146,11 +146,15 @@ void User::unlikeAPage(Fanpage& page)
 	{
 		return;
 	}
-	if (numberOfLikedPages >= physicalNumberOfLikedPages)
-		makeDoublePageSpace();
-
-	fanpagePtrArr[numberOfLikedPages] = &page;
-	numberOfLikedPages++;
+	for (int i = 0; i < numberOfLikedPages; i++)
+	{
+		if (fanpagePtrArr[i] == &page)
+		{
+			fanpagePtrArr[i] = fanpagePtrArr[numberOfLikedPages - 1];
+			numberOfLikedPages--;
+			break;
+		}
+	}
 	page.removeFan(*this);
 }
 

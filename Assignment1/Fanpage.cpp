@@ -67,15 +67,24 @@ bool Fanpage::isAFan(const User& user)							const
 
 void Fanpage::addFan(User& fan)
 {
+	if (isAFan(fan))
+	{
+		return;
+	}
 	if (numberOfFans >= physicalNumberOfFans)
 	{
 		makeDoubleFansSpace();
 	}
 	arrOfFans[numberOfFans] = &fan;
 	numberOfFans++;
+	fan.likeAPage(*this);
 }
 void Fanpage::removeFan(User& fan)
 {
+	if (!isAFan(fan))
+	{
+		return;
+	}
 	for(int i = 0;i < numberOfFans;i++)
 	{
 		if (arrOfFans[i] == &fan)
@@ -84,6 +93,7 @@ void Fanpage::removeFan(User& fan)
 			numberOfFans--;
 		}
 	}
+	fan.unlikeAPage(*this);
 }
 void Fanpage::addStatus(const Status& status)
 {
