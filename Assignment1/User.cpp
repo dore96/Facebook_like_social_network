@@ -10,28 +10,29 @@ User::User(char* inputName, const Date& inputDateOfBirth) : dateOfBirth(inputDat
 	statusPtrArr = new const Status * [physicalNumberOfStatus];
 	friendsPtrArr = new const User * [physicalNumberOfFriends];
 }
-void User::AddFriend(User& addFriend)
+bool User::SetName(char* inputName)
 {
-	if (IsFriendsWith(addFriend.GetName()))
-	{
-		return;
-	}
-
-	if (numberOfFriends >= physicalNumberOfFriends)
-		MakeDoubleFriendsSpace();
-
-	friendsPtrArr[numberOfFriends] = &addFriend;
-	numberOfFriends++;
-	addFriend.AddFriend(*this);
+	name = new char[strlen(inputName) + 1];
+	strcpy(name, inputName);
+	return true;
 }
-void User::AddStatus(const Status& status)
+const Date& User::GetBirthDate()							const
 {
-	if (numberOfStatus >= physicalNumberOfStatus)
-		MakeDoubleStatusSpace();
-
-	statusPtrArr[numberOfStatus] = &status;
-	numberOfStatus++;
+	return dateOfBirth;
 }
+int User::GetNumberOfStatus()								const
+{
+	return numberOfStatus;
+}
+int User::GetNumberOfFriends()								const
+{
+	return numberOfFriends;
+}
+const char* User::GetName()									const
+{
+	return name;
+}
+
 void User::ShowAllStatus(int numberOfPrintStatus)			const //user can limit how many statuses he wants to print
 {
 	int i;
@@ -56,22 +57,11 @@ void User::ShowAllFriends()									const
 	for (int i = 0; i < numberOfFriends; i++)
 		cout << "Friend number " << (i + 1) << " is: " << friendsPtrArr[i]->name << endl;
 }
-const char* User::GetName()									const
-{
-	return name;
-}
 void User::PrintName()										const
 {
 	cout << name << endl;
 }
-int User::GetNumberOfStatus()								const
-{
-	return numberOfStatus;
-}
-int User::GetNumberOfFriends()								const
-{
-	return numberOfFriends;
-}
+
 bool User::IsFriendsWith(const char* friendName)			const
 {
 	for (int i = 0; i < numberOfFriends; i++)
@@ -82,6 +72,28 @@ bool User::IsFriendsWith(const char* friendName)			const
 		}
 	}
 	return false;
+}
+void User::AddFriend(User& addFriend)
+{
+	if (IsFriendsWith(addFriend.GetName()))
+	{
+		return;
+	}
+
+	if (numberOfFriends >= physicalNumberOfFriends)
+		MakeDoubleFriendsSpace();
+
+	friendsPtrArr[numberOfFriends] = &addFriend;
+	numberOfFriends++;
+	addFriend.AddFriend(*this);
+}
+void User::AddStatus(const Status& status)
+{
+	if (numberOfStatus >= physicalNumberOfStatus)
+		MakeDoubleStatusSpace();
+
+	statusPtrArr[numberOfStatus] = &status;
+	numberOfStatus++;
 }
 void User::UnFriend(const char* friendToRemove)
 {
@@ -95,12 +107,7 @@ void User::UnFriend(const char* friendToRemove)
 		}
 	}
 }
-bool User::SetName(char* inputName)
-{
-	name = new char[strlen(inputName) + 1];
-	strcpy(name, inputName);
-	return true;
-}
+
 void User::MakeDoubleFriendsSpace()//make generic double space function in utilities.
 {
 	physicalNumberOfFriends *= 2;
@@ -122,10 +129,6 @@ void User::MakeDoubleStatusSpace()
 	}
 	delete[]statusPtrArr;
 	statusPtrArr = newStatusPtrArr;
-}
-const Date& User::GetBirthDate()							 const
-{
-	return dateOfBirth;
 }
 User::~User()		//Destructor
 {
