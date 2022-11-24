@@ -1,6 +1,6 @@
 #include "Facebook.h"
 #define EXIT 12 
-
+//create another class for user interaction
 void InitFacebook(Facebook& myFacebook); //initiating the facebook with initals entities as asked.
 int main()
 {

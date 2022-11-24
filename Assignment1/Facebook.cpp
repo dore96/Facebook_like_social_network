@@ -202,7 +202,7 @@ void Facebook::AddFanpage()
 	FanpagePtrArr[numberOfFanpage] = newPage;
 	numberOfFanpage++;
 }
-void  Facebook::AddFanpage(const char* name)                            //overload only for init perpuses adding 3 fanpage.
+void Facebook::AddFanpage(const char* name)                            //overload only for init perpuses adding 3 fanpage.
 {
 	if (numberOfFanpage >= physicalNumberOfFanpage)
 	{

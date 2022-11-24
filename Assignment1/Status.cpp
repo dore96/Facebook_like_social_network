@@ -11,9 +11,17 @@ char* Status::GetText() const
 {
 	return text;
 }
-void Status::ShowText() const
+void  Status::ShowText() const
 {
 	cout << text << endl;
+}
+int   Status::getTextLen()      const
+{
+	return  strlen(text);
+}
+const Date& Status::getDate() const
+{
+	return dateOfStatus;
 }
 Status::~Status()
 {

@@ -8,19 +8,19 @@ const int InitNumber = 10;
 class User
 {
 public:
-	User(const char* tryName, int tryYear, int tryMonth, int tryDay);//constructor
-	void AddFriend(User* addFriend);
+	User(const char* tryName, int tryYear, int tryMonth, int tryDay);//constructor // change to recive date!
+	void AddFriend(User* addFriend);//recive by refrence
 	void AddStatus(Status* status);
 	void ShowAllFriends()				const;
-	const Date& GetBirthDate()                const;
+	const Date& GetBirthDate()          const;
 	void UnFriend(const char* friendToRemove);
 	char* GetName()						const;
 	void PrintName()                    const;
 	int GetNumberOfStatus()		     	const;
-	void ShowAllStatus(int numberOfPrintStatus = INT_MAX)			const;
-	void ShowFriendsStatus(int numberOfPrintStatus)	    const;
+	void ShowAllStatus(int numberOfPrintStatus = INT_MAX)const;
+	void ShowFriendsStatus(int numberOfPrintStatus)	     const;
 	bool IsFriendsWith(const char* friendName);
-	int GetNumberOfFriends()							const;
+	int GetNumberOfFriends()			const;
 	~User();								//Destructor
 private:
 	int numberOfFriends, numberOfStatus;

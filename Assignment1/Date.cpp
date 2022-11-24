@@ -7,22 +7,8 @@ Date::Date(int inputDay, int inputMonth, int inputYear)
 }
 bool Date::setDate(int inputDay, int inputMonth, int inputYear)
 {
-	if (!(inputMonth < 13 && inputMonth > 0))
-	{
-		return false;
-	}
-	else if (inputDay <= 0 || inputDay > monthLen[inputMonth])
-	{
-		return false;
-	}
-	else if (inputYear > CURRENT_YEAR)
-	{
-		return false;
-	}
-	year = inputYear;
-	month = inputMonth;
-	day = inputDay;
-	return true;
+	
+	return (setYear(inputYear) && setMonth(inputMonth) && setDay(inputDay));
 }
 int Date::getYear() const
 {
@@ -35,4 +21,31 @@ int Date::getMonth() const
 int Date::getDay() const
 {
 	return day;
+}
+bool Date::setYear(int year)
+{
+	if(year > CURRENT_YEAR)
+	{
+		return false;
+	}
+	this->year = year;
+	return true;
+}
+bool Date::setMonth(int month)
+{
+	if (!(month < 13 && month > 0))
+	{
+		return false;
+	}
+	this->month = month;
+	return true;
+}
+bool Date::setDay(int day)
+{
+	if (day <= 0 || day > monthLen[getMonth()])
+	{
+		return false;
+	}
+	this->day = day;
+	return true;
 }

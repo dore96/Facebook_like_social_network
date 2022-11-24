@@ -12,8 +12,12 @@ public:
 	int getYear() const;
 	int getMonth() const;
 	int getDay() const;
-private:
 	bool setDate(int inputDay, int inputMonth, int inputYear);
+	bool setYear(int year);
+	bool setMonth(int month);
+	bool setDay(int day);
+private:
+	
 	int year, month, day;
 };
 
