@@ -1,6 +1,7 @@
 #ifndef __Facebook_H
 #define __Facebook_H
 #include "Fanpage.h"
+
 #define NAME_LEN 50
 #define STATUS_LEN 120
 

@@ -15,7 +15,7 @@ public:
 	void showAllFans()										const;
 	void showStatuses(int numberOfPrintStatus = INT_MAX)	const;
 
-	bool isAFan(const User& userName)						const;
+	bool isAFan(const char* name)							const;
 
 	//action funcs
 	void addFan(User& fan);

@@ -1,7 +1,7 @@
 
 user : 
 1. get funcs of all user arrays ? 
-2. name saved as not const + ctor.
+2. name saved as not const + ctor. (ask gil)
 3. why does find page\ user not returning const - effect the facebook funcs constant.
 
 fanpage:

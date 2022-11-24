@@ -53,11 +53,11 @@ void Fanpage::printName()										const
 	cout << name << endl;
 }
 
-bool Fanpage::isAFan(const User& user)							const
+bool Fanpage::isAFan(const char* name)							const
 {
 	for (int i = 0; i < numberOfFans; i++)
 	{
-		if ((arrOfFans[i]) == &user)
+		if (!strcmp(arrOfFans[i]->getName(), name))
 		{
 			return true;
 		}
@@ -67,7 +67,7 @@ bool Fanpage::isAFan(const User& user)							const
 
 void Fanpage::addFan(User& fan)
 {
-	if (isAFan(fan))
+	if (isAFan(fan.getName()))
 	{
 		return;
 	}
@@ -81,7 +81,7 @@ void Fanpage::addFan(User& fan)
 }
 void Fanpage::removeFan(User& fan)
 {
-	if (!isAFan(fan))
+	if (!isAFan(fan.getName()))
 	{
 		return;
 	}
