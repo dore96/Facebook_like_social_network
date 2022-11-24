@@ -18,9 +18,12 @@ int main()
 
 void InitFacebook(Facebook& myFacebook) //initiating the facebook with the needed arguments..
 {
-	myFacebook.AddUser("dor", 25, 07, 1996);
-	myFacebook.AddUser("maor", 29, 04, 1999);
-	myFacebook.AddUser("tovia", 04, 8, 2022);
+	char dor[4] = { "dor"};
+	char maor[5] = { "maor" };
+	char tovia[6] = { "tovia" };
+	myFacebook.AddUser(dor, 25, 07, 1996);
+	myFacebook.AddUser(maor, 29, 04, 1999);
+	myFacebook.AddUser(tovia, 04, 8, 2022);
 	myFacebook.AddFanpage("MTA course recomendations");
 	myFacebook.AddFanpage("Pro yogurt");
 	myFacebook.AddFanpage("Merge Halicod & Meretz");

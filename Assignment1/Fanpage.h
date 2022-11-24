@@ -6,19 +6,19 @@ class Fanpage
 {
 public:
 	Fanpage(const char* newName);
-	const char* getName()     const;
-	int   getNumberOfStatus() const;
-	int   getNumberOfFans()   const;
+	const char* getName()									const;
+	int getNumberOfStatus()		     						const;
+	int getNumberOfFans()									const;
 
-	void printName()          const;
-	void showAllFans()        const;
-	void showAllStatus()      const;
+	void printName()										const;
+	void showAllFans()										const;
+	void showStatuses(int numberOfPrintStatus = INT_MAX)	const;
+
+	bool isAFan(const User& userName)						const;
 
 	void addFan(User& fan);
 	void removeFan(User& fan);
 	void addStatus(const Status& status);
-
-	bool hasAFan(const User& userName);
 
 	void makeDoubleStatusSpace();
 	void makeDoubleFansSpace();
@@ -27,10 +27,11 @@ public:
 private:
 	char* name;
 	int numberOfFans,numberOfStatus,physicalNumberOfFans,physicalNumberOfStatus;
-	bool setName(const char* newName);
 	const User** arrOfFans;
 	const Status** statusPtrArr;
-	Fanpage(const Fanpage&);
+
+	bool setName(const char* newName);
+	Fanpage(const Fanpage&);													//disable the possibility of Fanpage copy.
 };
 
 

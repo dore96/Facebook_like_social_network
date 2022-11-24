@@ -15,38 +15,55 @@ bool Fanpage::setName(const char* newName)
 	name = new char[strlen(newName) + 1];
 	strcpy(name, newName);
 	return true;
-}
-const char* Fanpage::getName() const
+}	  
+const char* Fanpage::getName()									const
 {
 	return name;
 }
-int Fanpage::getNumberOfStatus() const
+int Fanpage::getNumberOfStatus()								const
 {
 	return numberOfStatus;
 }
-int Fanpage::getNumberOfFans() const
+int Fanpage::getNumberOfFans()									const
 {
 	return numberOfFans;
 }
 
-void Fanpage::showAllFans() const
+void Fanpage::showAllFans()										const
 {
 	for (int i = 0; i < numberOfFans; i++)
 	{
-		cout << "Fan number " << (i + 1) << " is: " << arrOfFans[i]->GetName() << endl;
+		cout << "Fan number " << (i + 1) << " is: " << arrOfFans[i]->getName() << endl;
 	}
 }
-void Fanpage::showAllStatus() const
+void Fanpage::showStatuses(int numberOfPrintStatus)				const
 {
-	for (int i = 0; i < numberOfStatus; i++)
+	for (int i = 0; i < numberOfFans; i++)
 	{
-		cout << "Status number " << (i + 1) << ": ";
-		statusPtrArr[i]->ShowText();
+		cout << "\n" << arrOfFans[i]->getName() << " statuses:" << endl;
+		for (int j = 0; j < numberOfPrintStatus; j++)
+		{
+			cout << "Status number " << (j + 1) << ": ";
+			statusPtrArr[j]->ShowText();
+		}
 	}
 }
-void Fanpage::printName() const
+void Fanpage::printName()										const
 {
 	cout << name << endl;
+}
+
+
+bool Fanpage::isAFan(const User& user)							const
+{
+	for (int i = 0; i < numberOfFans; i++)
+	{
+		if ((arrOfFans[i]) == &user)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 void Fanpage::addFan(User& fan)
@@ -55,41 +72,30 @@ void Fanpage::addFan(User& fan)
 	{
 		makeDoubleFansSpace();
 	}
-	arrOfFans[numberOfFans] = fan;
+	arrOfFans[numberOfFans] = &fan;
 	numberOfFans++;
 }
 void Fanpage::removeFan(User& fan)
 {
 	for(int i = 0;i < numberOfFans;i++)
 	{
-		if (arrOfFans[i] == fan)
+		if (arrOfFans[i] == &fan)
 		{
 			arrOfFans[i] = arrOfFans[numberOfFans - 1];
 			numberOfFans--;
 		}
 	}
 }
-void Fanpage::addStatus(Status& status)
+void Fanpage::addStatus(const Status& status)
 {
 	if(numberOfStatus >= physicalNumberOfStatus)
 	{
 		makeDoubleStatusSpace();
 	}
-	statusPtrArr[numberOfStatus] = status;
+	statusPtrArr[numberOfStatus] = &status;
 	numberOfStatus++;
 }
 
-bool Fanpage::hasAFan(const User& userName)
-{
-	for (int i = 0; i < numberOfFans; i++)
-	{
-		if((arrOfFans[i]) == &userName)
-		{
-			return true;
-		}
-	}
-	return false;
-}
 void Fanpage::makeDoubleStatusSpace()
 {
 	physicalNumberOfStatus *= 2;
@@ -112,7 +118,6 @@ void Fanpage::makeDoubleFansSpace()
 	delete[]arrOfFans;
 	arrOfFans = newFansPtrArr;
 }
-
 
 Fanpage::~Fanpage()
 {

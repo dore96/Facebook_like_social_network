@@ -9,22 +9,22 @@ class User
 {
 public:
 	User(char* tryName, const Date &dateOfBirth);							//constructor 
-	const Date& GetBirthDate()								const;
-	int GetNumberOfStatus()		     						const;
-	int GetNumberOfFriends()								const;
-	const char* GetName()									const;
+	const Date& getBirthDate()								const;
+	int getNumberOfStatus()		     						const;
+	int getNumberOfFriends()								const;
+	const char* getName()									const;
 
-	void PrintName()										const;
-	void ShowAllStatus(int numberOfPrintStatus = INT_MAX)	const;
-	void ShowFriendsStatus(int numberOfPrintStatus)			const;
-	void ShowAllFriends()									const;
+	void printName()										const;
+	void showStatuses(int numberOfPrintStatus = INT_MAX)	const;
+	void showFriendsStatus(int numberOfPrintStatus)			const;
+	void showAllFriends()									const;
 
-	bool IsFriendsWith(const char* friendName)				const;
+	bool isFriendsWith(const char* friendName)				const;
 	bool isFanOf(const char* pageName)                      const;
 
-	void AddFriend(User& addFriend);								 //recive by refrence
-	void AddStatus(const Status& status);
-	void UnFriend(const char* friendToRemove);
+	void addFriend(User& addFriend);								 //recive by refrence
+	void addStatus(const Status& status);
+	void unFriend(User& friendToRemove);
 	void likeAPage(Fanpage& page);
 	void unlikeAPage(Fanpage& page);
 	
@@ -38,9 +38,9 @@ private:
 	const User** friendsPtrArr;
 	const Fanpage** fanpagePtrArr;
 
-	bool SetName(char* tryName);                               
-	void MakeDoubleFriendsSpace();
-	void MakeDoubleStatusSpace();
+	bool setName(char* tryName);                               
+	void makeDoubleFriendsSpace();
+	void makeDoubleStatusSpace();
 	void makeDoublePageSpace();
 	User(const User&);												 //disable the possibility of user copy.
 };

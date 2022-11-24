@@ -1,0 +1,8 @@
+
+user : 
+1. get funcs of all user arrays ? 
+2. name saved as not const + ctor.
+
+fanpage:
+1. get funcs of all fanpage arrays ? 
+2. name saved as not const + ctor.

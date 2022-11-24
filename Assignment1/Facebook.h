@@ -11,7 +11,7 @@ public:
 	void PrintMenu()      const;
 	void ChooseFromMenu(int choice);
 	void AddUser();
-	void AddUser(const char* name, int day, int month, int year); //overload only for init perpuses adding 3 users.
+	void AddUser(char* name, int day, int month, int year); //overload only for init perpuses adding 3 users.
 	void AddFanpage();
 	void AddFanpage(const char* name);                            //overload only for init perpuses adding 3 fanpage.
 	void ShowAllUsers()   const;
@@ -25,7 +25,7 @@ public:
 	void addTextStatus();
 	void addTextStatus(bool isPage, const char* statusStr, const char* userName);     //overload only for init perpuses adding statuses.
 	void ShowStatusOfEntity();
-	User* FindUser(const char* name);
+	User* findUser(const char* name);
 	Fanpage* FindPage(const char* name);
 	void showAllFriendsOrFans();
 	void addFanToPage();
@@ -33,11 +33,14 @@ public:
 	void removeFanFromPage();
 	~Facebook();
 private:
-	Facebook(const Facebook& other);
 	User** UsersPtrArr;
 	Fanpage** FanpagePtrArr;
 	int numberOfUsers, numberOfFanpage;
 	int physicalNumberOfUsers, physicalNumberOfFanpage;
+
+	void makeDoubleUserssSpace();
+	void makeDoublePageSpace();
+	Facebook(const Facebook& other);
 };
 
 #endif
