@@ -20,15 +20,18 @@ public:
 	void ShowAllFriends()									const;
 
 	bool IsFriendsWith(const char* friendName)				const;
+	bool isFanOf(const char* pageName)                      const;
 
 	void AddFriend(User& addFriend);								 //recive by refrence
 	void AddStatus(const Status& status);
 	void UnFriend(const char* friendToRemove);
+	void likeAPage(Fanpage& page);
+	void unlikeAPage(Fanpage& page);
 	
 	~User();														//Destructor
 private:
-	int numberOfFriends, numberOfStatus;
-	int physicalNumberOfFriends, physicalNumberOfStatus;
+	int numberOfFriends, numberOfStatus,numberOfLikedPages;
+	int physicalNumberOfFriends, physicalNumberOfStatus,physicalNumberOfLikedPages;
 	const Date dateOfBirth;
 	char* name;
 	const Status** statusPtrArr;
@@ -38,6 +41,7 @@ private:
 	bool SetName(char* tryName);                               
 	void MakeDoubleFriendsSpace();
 	void MakeDoubleStatusSpace();
+	void makeDoublePageSpace();
 	User(const User&);												 //disable the possibility of user copy.
 };
 

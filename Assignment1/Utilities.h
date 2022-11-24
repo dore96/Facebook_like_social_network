@@ -4,7 +4,4 @@
 using namespace std;
 #pragma warning (disable: 4996)
 void CleanBuffer();
-void makeDoubleSpace(void** arr, int sizeOfElement, int& size);
-
-
 #endif

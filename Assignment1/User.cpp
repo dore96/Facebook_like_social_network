@@ -1,14 +1,19 @@
 #include "User.h"
 
+#include "Fanpage.h"
+//add like a fanpage for user
 User::User(char* inputName, const Date& inputDateOfBirth) : dateOfBirth(inputDateOfBirth)      //constructor
 {
 	SetName(inputName);
 	numberOfFriends = 0;
 	numberOfStatus = 0;
+	numberOfLikedPages = 0;
+	physicalNumberOfLikedPages = InitNumber;
 	physicalNumberOfFriends = InitNumber;
 	physicalNumberOfStatus = InitNumber;
 	statusPtrArr = new const Status * [physicalNumberOfStatus];
 	friendsPtrArr = new const User * [physicalNumberOfFriends];
+	fanpagePtrArr = new const Fanpage * [physicalNumberOfLikedPages];
 }
 bool User::SetName(char* inputName)
 {
@@ -73,6 +78,19 @@ bool User::IsFriendsWith(const char* friendName)			const
 	}
 	return false;
 }
+bool User::isFanOf(const char* pageName)                   const
+{
+	for (int i = 0; i < numberOfLikedPages; i++)
+	{
+		if (!strcmp(fanpagePtrArr[i]->getName(), pageName))
+		{
+			return true;
+		}
+	}
+	return  false;
+}
+
+
 void User::AddFriend(User& addFriend)
 {
 	if (IsFriendsWith(addFriend.GetName()))
@@ -97,6 +115,10 @@ void User::AddStatus(const Status& status)
 }
 void User::UnFriend(const char* friendToRemove)
 {
+	if (!IsFriendsWith(friendToRemove))
+	{
+		return;
+	}
 	for (int i = 0; i < numberOfFriends; i++)
 	{
 		if (friendsPtrArr[i] != nullptr && !strcmp(friendsPtrArr[i]->name, friendToRemove))
@@ -106,7 +128,29 @@ void User::UnFriend(const char* friendToRemove)
 			break;
 		}
 	}
+	//remove from othre friend
 }
+void User::likeAPage(Fanpage& page)
+{
+	if (isFanOf(page.getName()))
+	{
+		return;
+	}
+	if (numberOfLikedPages >= physicalNumberOfLikedPages)
+		makeDoublePageSpace();
+	fanpagePtrArr[numberOfLikedPages] = &page;
+	numberOfLikedPages++;
+	page.addFan(*this);
+}
+void User::unlikeAPage(Fanpage& page)//dor please complete
+{
+	if (!isFanOf(page.getName()))
+	{
+		return;
+	}
+
+}
+
 
 void User::MakeDoubleFriendsSpace()//make generic double space function in utilities.
 {
@@ -129,6 +173,17 @@ void User::MakeDoubleStatusSpace()
 	}
 	delete[]statusPtrArr;
 	statusPtrArr = newStatusPtrArr;
+}
+void User::makeDoublePageSpace()
+{
+	physicalNumberOfLikedPages *= 2;
+	const Fanpage** newFanpagePtrArr = new const Fanpage * [physicalNumberOfLikedPages];
+	for (int i = 0; i < numberOfLikedPages; i++)
+	{
+		newFanpagePtrArr[i] = fanpagePtrArr[i];
+	}
+	delete[] fanpagePtrArr;
+	fanpagePtrArr = newFanpagePtrArr;
 }
 User::~User()		//Destructor
 {
