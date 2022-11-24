@@ -8,14 +8,16 @@ class Status
 {
 public:
 	Status(const char* inputText);
-	char* GetText()       const;
-	int getTextLen()      const;
-	void ShowText()       const;
-	const Date& getDate() const;
+	const tm& getTime()			const;    //func returns the time ref , with no option to change it.
+	void showTime()				const;
+	char* GetText()				const;
+	int getTextLen()			const;
+	void ShowText()				const;
+	const Date& getDate()		const;
 	~Status();
 
 private:
-	tm* statusTime;
+	const tm* const statusTime;
 	time_t curr_time;
 	char* text;
 	int textLen;

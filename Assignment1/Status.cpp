@@ -7,6 +7,14 @@ Status::Status(const char* inputText)
 	text = new char[textLen];
 	strcpy(text, inputText);
 }
+const tm& Status::getTime()   const
+{
+	return *statusTime;
+}
+void Status::showTime()				const
+{
+	cout << statusTime->tm_hour << ":" << statusTime->tm_min << ":" << statusTime->tm_sec << endl;
+}
 char* Status::GetText() const
 {
 	return text;

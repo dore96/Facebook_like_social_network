@@ -149,7 +149,7 @@ void Facebook::AddUser(const char* name, int day, int month, int year) //overloa
 	}
 	if (FindUser(name) != nullptr)
 	{
-		cout << "This user already exists, returning to menu"; << endl();
+		cout << "This user already exists, returning to menu" << endl;
 		return;
 	}
 	User* newUser = new User(name, year, month, day);
