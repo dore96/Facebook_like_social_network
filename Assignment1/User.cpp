@@ -46,7 +46,7 @@ void User::showStatuses(int numberOfPrintStatus)			const //user can limit how ma
 	}
 	if (i < numberOfPrintStatus)
 	{
-		cout << name << "had only " << i << " statuses posted." << endl;
+		cout << name << " had posted " << i << " statuses." << endl;
 	}
 }
 void User::showFriendsStatus(int numberOfPrintStatus)	    const
@@ -123,7 +123,6 @@ void User::unFriend(User& friendToRemove)
 		{
 			friendsPtrArr[i] = friendsPtrArr[numberOfFriends - 1];
 			numberOfFriends--;
-			break;
 		}
 	}
 	friendToRemove.unFriend(*this);
@@ -152,7 +151,6 @@ void User::unlikeAPage(Fanpage& page)
 		{
 			fanpagePtrArr[i] = fanpagePtrArr[numberOfLikedPages - 1];
 			numberOfLikedPages--;
-			break;
 		}
 	}
 	page.removeFan(*this);

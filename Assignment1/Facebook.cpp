@@ -170,7 +170,6 @@ User* Facebook::findUser(const char* name)
 			return UsersPtrArr[i];
 		}
 	}
-	cout << "User not found, nullptr returned" << endl;
 	return nullptr;
 }
 Fanpage* Facebook::findPage(const char* name)
@@ -182,7 +181,6 @@ Fanpage* Facebook::findPage(const char* name)
 			return FanpagePtrArr[i];
 		}
 	}
-	cout << "Page not found, nullptr returned" << endl;
 	return nullptr;
 }
 void Facebook::Exit() const
@@ -332,7 +330,6 @@ void Facebook::removeFanFromPage()
 		return;
 	}
 	cout << "Which user would you like to remove as a fan? ";
-	CleanBuffer();
 	cin.getline(fanName, NAME_LEN - 1);
 	User* user = findUser(fanName);
 	if (user == nullptr)
@@ -347,6 +344,7 @@ void Facebook::cancelFriendship()
 	User* user1, * user2;
 	char userName1[NAME_LEN], userName2[NAME_LEN];
 	cout << "Please enter the two user names you would like to unfriend each other:\n ";
+	CleanBuffer();
 	cin.getline(userName1, NAME_LEN - 1);
 	cin.getline(userName2, NAME_LEN - 1);
 	user1 = findUser(userName1);
@@ -354,10 +352,6 @@ void Facebook::cancelFriendship()
 	if (user1 == nullptr || user2 == nullptr)
 	{
 		cout << "At least one of the users does not exist, returning to menu" << endl;
-	}
-	else if (!user1->isFriendsWith(userName2))
-	{
-		cout << "Users are not friend, returning to menu" << endl;
 	}
 	else
 	{
@@ -396,7 +390,7 @@ void Facebook::addUser(char* name, int day, int month, int year) //overload only
 		cout << "This user already exists, returning to menu" << endl;
 		return;
 	}
-	Date* userDate = new Date(year, month, day);
+	Date* userDate = new Date(day, month,year);
 	User* newUser = new User(name, *userDate);
 	UsersPtrArr[numberOfUsers] = newUser;
 	numberOfUsers++;
@@ -433,10 +427,6 @@ void Facebook::addFriendship(const char* name1, const char* name2)
 	if (user1 == nullptr || user2 == nullptr)
 	{
 		cout << "at least one of the users does not exits, returning to menu." << endl;
-	}
-	else if (!user1->isFriendsWith(name2))
-	{
-		cout << "Users are not friend." << endl;
 	}
 	else
 	{

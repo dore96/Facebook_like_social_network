@@ -36,6 +36,9 @@
     <ClCompile Include="Fanpage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="UserInteraction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Status.h">
@@ -54,6 +57,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Fanpage.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInteraction.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
