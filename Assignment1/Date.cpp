@@ -7,27 +7,22 @@ Date::Date(int inputDay, int inputMonth, int inputYear)
 }
 bool Date::setDate(int inputDay, int inputMonth, int inputYear)
 {
-	
 	return (setYear(inputYear) && setMonth(inputMonth) && setDay(inputDay));
 }
-int Date::getYear() const
+int Date::getYear()					const
 {
 	return year;
 }
-int Date::getMonth() const
+int Date::getMonth()				const
 {
 	return month;
 }
-int Date::getDay() const
+int Date::getDay()					const
 {
 	return day;
 }
 bool Date::setYear(int year)
-{
-	if(year > CURRENT_YEAR)
-	{
-		return false;
-	}
+{//every year is exeptable.
 	this->year = year;
 	return true;
 }

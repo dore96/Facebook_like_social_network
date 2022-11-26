@@ -44,7 +44,7 @@ void Fanpage::showStatuses(int numberOfPrintStatus)				const
 		for (int j = 0; j < numberOfPrintStatus; j++)
 		{
 			cout << "Status number " << (j + 1) << ": ";
-			statusPtrArr[j]->ShowText();
+			statusPtrArr[j]->showText();
 		}
 	}
 }
@@ -58,7 +58,7 @@ bool Fanpage::isAFan(const char* name)							const
 	for (int i = 0; i < numberOfFans; i++)
 	{
 		if (!strcmp(arrOfFans[i]->getName(), name))
-		{
+		{//compere fans by name (uniq)
 			return true;
 		}
 	}
@@ -68,7 +68,7 @@ bool Fanpage::isAFan(const char* name)							const
 void Fanpage::addFan(User& fan)
 {
 	if (isAFan(fan.getName()))
-	{
+	{//if user is a fan already return
 		return;
 	}
 	if (numberOfFans >= physicalNumberOfFans)
@@ -77,12 +77,12 @@ void Fanpage::addFan(User& fan)
 	}
 	arrOfFans[numberOfFans] = &fan;
 	numberOfFans++;
-	fan.likeAPage(*this);
+	fan.likeAPage(*this); //add page to user fanpages
 }
 void Fanpage::removeFan(User& fan)
 {
 	if (!isAFan(fan.getName()))
-	{
+	{//if user do not fan page return
 		return;
 	}
 	for(int i = 0;i < numberOfFans;i++)
@@ -93,7 +93,7 @@ void Fanpage::removeFan(User& fan)
 			numberOfFans--;
 		}
 	}
-	fan.unlikeAPage(*this);
+	fan.unlikeAPage(*this); // remove page from users fanpages
 }
 void Fanpage::addStatus(const Status& status)
 {

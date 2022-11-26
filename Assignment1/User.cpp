@@ -37,20 +37,20 @@ const char* User::getName()									const
 	return name;
 }
 
-void User::showStatuses(int numberOfPrintStatus)			const //user can limit how many statuses he wants to print
-{
+void User::showStatuses(int numberOfPrintStatus)			const 
+{//user can limit how many statuses he wants to print - otherwise it will print all statuses.
 	int i;
 	for (i = 0; i < numberOfStatus && i < numberOfPrintStatus; i++)
 	{
-		statusPtrArr[i]->ShowText();
+		statusPtrArr[i]->showText();
 	}
 	if (i < numberOfPrintStatus)
-	{
+	{// if didnt printed all statuses
 		cout << name << " had posted " << i << " statuses." << endl;
 	}
 }
 void User::showFriendsStatus(int numberOfPrintStatus)	    const
-{
+{//user can limit how many statuses he wants to print per user - otherwise it will prints all statuses.
 	for (int i = 0; i < numberOfFriends; i++)
 	{
 		friendsPtrArr[i]->showStatuses(numberOfPrintStatus);
@@ -70,8 +70,8 @@ bool User::isFriendsWith(const char* friendName)			const
 {
 	for (int i = 0; i < numberOfFriends; i++)
 	{
-		if (!strcmp(friendsPtrArr[i]->getName(), friendName))
-		{
+		if (!strcmp(friendsPtrArr[i]->getName(), friendName)) 
+		{//compare by name of users (uniq)
 			return true;
 		}
 	}
@@ -82,7 +82,7 @@ bool User::isFanOf(const char* pageName)                    const
 	for (int i = 0; i < numberOfLikedPages; i++)
 	{
 		if (!strcmp(fanpagePtrArr[i]->getName(), pageName))
-		{
+		{//compare by name of fanpages (uniq)
 			return true;
 		}
 	}
@@ -92,7 +92,7 @@ bool User::isFanOf(const char* pageName)                    const
 void User::addFriend(User& addFriend)
 {
 	if (isFriendsWith(addFriend.getName()))
-	{
+	{//if they are friends already - return
 		return;
 	}
 
@@ -101,7 +101,7 @@ void User::addFriend(User& addFriend)
 
 	friendsPtrArr[numberOfFriends] = &addFriend;
 	numberOfFriends++;
-	addFriend.addFriend(*this);
+	addFriend.addFriend(*this);  //add myself to friend list.
 }
 void User::addStatus(const Status& status)
 {
@@ -118,7 +118,7 @@ void User::unFriend(User& friendToRemove)
 		return;
 	}
 	for (int i = 0; i < numberOfFriends; i++)
-	{
+	{//if they are friends - remove the friend and put in their place the last friend.
 		if (friendsPtrArr[i] == &friendToRemove)
 		{
 			friendsPtrArr[i] = friendsPtrArr[numberOfFriends - 1];
@@ -130,19 +130,19 @@ void User::unFriend(User& friendToRemove)
 void User::likeAPage(Fanpage& page)
 {
 	if (isFanOf(page.getName()))
-	{
+	{//if user is a fan of the page , return.
 		return;
 	}
 	if (numberOfLikedPages >= physicalNumberOfLikedPages)
 		makeDoublePageSpace();
 	fanpagePtrArr[numberOfLikedPages] = &page;
 	numberOfLikedPages++;
-	page.addFan(*this);
+	page.addFan(*this);  //add user to fans of fanpage.
 }
 void User::unlikeAPage(Fanpage& page)
 {
 	if (!isFanOf(page.getName()))
-	{
+	{//if user do not fan of page - return
 		return;
 	}
 	for (int i = 0; i < numberOfLikedPages; i++)
@@ -153,7 +153,7 @@ void User::unlikeAPage(Fanpage& page)
 			numberOfLikedPages--;
 		}
 	}
-	page.removeFan(*this);
+	page.removeFan(*this); //remove user from list of fans in fanpage
 }
 
 void User::makeDoubleFriendsSpace()
@@ -193,8 +193,8 @@ User::~User()		//Destructor
 {
 	delete[]name;
 	for (int i = 0; i < numberOfStatus; i++)
-	{
-		delete statusPtrArr[i];
+	{//deletes all statuses
+		delete statusPtrArr[i];  
 	}
 	delete[]friendsPtrArr;
 	delete[]statusPtrArr;

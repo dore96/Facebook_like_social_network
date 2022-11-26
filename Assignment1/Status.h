@@ -10,12 +10,12 @@ public:
 	Status(const char* inputText);
 
 	const tm& getTime()			const;    //func returns the time ref , with no option to change it.
-	const char* GetText()		const;
+	const char* getText()		const;
 	int getTextLen()			const;
 	const Date& getDate()		const;
 
 	void showTime()				const;
-	void ShowText()				const;
+	void showText()				const;
 	~Status();
 
 private:
