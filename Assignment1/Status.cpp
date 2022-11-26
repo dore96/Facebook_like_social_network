@@ -13,8 +13,8 @@ const tm& Status::getTime()			const
 }
 void Status::showTime()				const
 {
-	char time_string[100];
-	strftime(time_string, 50, "Current time is %T", statusTime);
+	char time_string[TIME_FORMAT_LEN];
+	strftime(time_string, TIME_FORMAT_LEN-1, "Current time is %T", statusTime);
 	cout << time_string << endl;
 }
 const char* Status::getText()		const
