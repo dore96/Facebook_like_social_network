@@ -207,7 +207,6 @@ void Facebook::addFanToPage(const char* pageName, const char* userName)
 	if (user->isFanOf(pageName))
 	{
 		cout << "User is already a fan of this page." << endl;
-		return;
 	}
 	page->addFan(*user);
 }

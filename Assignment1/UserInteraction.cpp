@@ -17,8 +17,8 @@ void UserInteraction::printMenu()								const
 	cout << "7.Cancel a friendship" << endl;
 	cout << "8.Add a fan to a fanpage" << endl;
 	cout << "9.Delete a fan from fanpage" << endl;
-	cout << "10.Show all users and fanpage" << endl;
-	cout << "11.Show all frieds/fans of a User/Fanpage" << endl;
+	cout << "10.Show all users and fanpages" << endl;
+	cout << "11.Show all friends/fans of a User/Fanpage" << endl;
 	cout << "12.Exit" << endl;
 }
 void UserInteraction::chooseFromMenu(int choice)
@@ -76,7 +76,7 @@ void UserInteraction::showStatusOfEntity()
 void UserInteraction::showAllFriendsOrFans()
 {
 	bool isPage;
-	cout << "Press 0 to add status for a user or 1 to add status for a fanpage: ";
+	cout << "Press 1 to see all fans of a page or 0 to see users friends ";
 	cin >> isPage;
 	CleanBuffer();
 	cout << "Enter your name: ";
