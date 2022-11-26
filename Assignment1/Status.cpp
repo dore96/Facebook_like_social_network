@@ -13,7 +13,9 @@ const tm& Status::getTime()   const
 }
 void Status::showTime()				const
 {
-	cout << statusTime->tm_hour << ":" << statusTime->tm_min << ":" << statusTime->tm_sec << endl;
+	char time_string[100];
+	strftime(time_string, 50, "Current time is %T", statusTime);
+	cout << time_string << endl;
 }
 const char* Status::GetText() const
 {
