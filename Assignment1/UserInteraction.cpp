@@ -97,7 +97,7 @@ void UserInteraction::addTextStatus()
 	cin.getline(name, NAME_LEN - 1);
 	cout << "Enter Status: ";
 	cin.getline(statusStr, STATUS_LEN - 1);
-	facebook->addTextStatus(isPage, name, statusStr);
+	facebook->addTextStatus(isPage, name, statusStr);  //adds a status to user/fanpage
 }
 void UserInteraction::addUser()      
 {
@@ -108,7 +108,7 @@ void UserInteraction::addUser()
 	cin.getline(name, NAME_LEN - 1);
 	cout << "Please enter birthdate of the user (dd mm yy): ";
 	cin >> day >> month >> year;
-	facebook->addUser(name,day,month,year);
+	facebook->addUser(name,day,month,year);  //addes new user to system
 }
 void UserInteraction::addFanToPage()
 {
@@ -120,7 +120,7 @@ void UserInteraction::addFanToPage()
 	cout << "Which user would you like to add as a fan? ";
 	CleanBuffer();
 	cin.getline(fanName, NAME_LEN - 1);
-	facebook->addFanToPage(pageName, fanName);
+	facebook->addFanToPage(pageName, fanName);  //addes user to panpage and vice versa.
 }
 void UserInteraction::addFanpage()
 {
@@ -148,7 +148,7 @@ void UserInteraction::removeFanFromPage()
 	cin.getline(pageName, NAME_LEN - 1);
 	cout << "Which user would you like to remove as a fan? ";
 	cin.getline(fanName, NAME_LEN - 1);
-	facebook->removeFanFromPage(pageName, fanName);
+	facebook->removeFanFromPage(pageName, fanName);  //removes fan from fanpage and vice versa.
 }
 void UserInteraction::cancelFriendship()
 {
@@ -157,5 +157,5 @@ void UserInteraction::cancelFriendship()
 	CleanBuffer();
 	cin.getline(userName1, NAME_LEN - 1);
 	cin.getline(userName2, NAME_LEN - 1);
-	facebook->cancelFriendship(userName1, userName2);
+	facebook->cancelFriendship(userName1, userName2);  //cancel friendship to both users
 }
