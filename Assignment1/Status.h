@@ -19,10 +19,10 @@ public:
 	~Status();
 
 private:
+	time_t currentTime;
 	const tm* const statusTime;
 	const Date dateOfStatus;
 	char* text;
-	time_t currentTime;
 	int textLen;
 
 	Status(const Status& other);  //disable the possibility of Status copy.	

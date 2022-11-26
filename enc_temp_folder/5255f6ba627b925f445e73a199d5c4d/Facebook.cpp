@@ -46,8 +46,10 @@ void Facebook::showAllFanpage()									const
 	cout << "Fanpages: " << endl;
 	for (int i = 0; i < numberOfFanpage; i++)
 	{
-		cout << i + 1 << "." << FanpagePtrArr[i]->getName() << endl;
+		cout << i + 1 << ".";
+		FanpagePtrArr[i]->printName();
 	}
+
 }
 void Facebook::showAllUsersAndFanpages()						const
 {
@@ -75,7 +77,7 @@ void Facebook::showStatusOfEntity(bool isPage, const char* name) const
 			cout << "This page does not exist, returning to menu" << endl;
 			return;
 		}
-		currentPage->showStatuses(); //shows all sattuses of a fanpage
+		currentPage->showStatuses();
 	}
 	else
 	{
@@ -85,7 +87,7 @@ void Facebook::showStatusOfEntity(bool isPage, const char* name) const
 			cout << "This user does not exist, returning to menu" << endl;
 			return;
 		}
-		currentUser->showStatuses(); //shows all sattuses of a user
+		currentUser->showStatuses();
 	}
 }
 void Facebook::showAllFriendsOrFans(bool isPage, const char* name)const
@@ -107,7 +109,7 @@ void Facebook::showAllFriends(const char* userName)					const
 		cout << "No user called " << userName << " was found, returning to menu." << endl;
 		return;
 	}
-	currentUser->showAllFriends();  //show all users friend listed.
+	currentUser->showAllFriends();
 }
 void Facebook::showAllFans(const char* pageName)				    const
 {
@@ -117,7 +119,7 @@ void Facebook::showAllFans(const char* pageName)				    const
 		cout << "No page called " << pageName << " was found, returning to menu." << endl;
 		return;
 	}
-	currentPage->showAllFans();  //show all fans of a page
+	currentPage->showAllFans();
 }
 
 User* Facebook::findUser(const char* name)                      const
@@ -125,7 +127,7 @@ User* Facebook::findUser(const char* name)                      const
 	for (int i = 0; i < numberOfUsers; i++)
 	{
 		if (!strcmp(name, UsersPtrArr[i]->getName()))
-		{//compare users by name (uniq)
+		{
 			return UsersPtrArr[i];
 		}
 	}
@@ -136,7 +138,7 @@ Fanpage* Facebook::findPage(const char* name)                   const
 	for (int i = 0; i < numberOfFanpage; i++)
 	{
 		if (!strcmp(name, FanpagePtrArr[i]->getName()))
-		{//compare fanpages by name (uniq)
+		{
 			return FanpagePtrArr[i];
 		}
 	}
@@ -157,7 +159,7 @@ void Facebook::addTextStatus(bool isPage, const char* name, const char* textStat
 			cout << "No user called " << name << " was found, returning to menu." << endl;
 			return;
 		}
-		Status* status = new Status(textStatus); //creates a new status by input and adds it to user.
+		Status* status = new Status(textStatus);
 		currentUser->addStatus(*status);
 	}
 	else
@@ -168,7 +170,7 @@ void Facebook::addTextStatus(bool isPage, const char* name, const char* textStat
 			cout << "No page called " << name << " was found, returning to menu" << endl;
 			return;
 		}
-		Status* status = new Status(textStatus); //creates a new status by input and adds it to fanpage.
+		Status* status = new Status(textStatus);
 		currentPage->addStatus(*status);
 	}
 }
@@ -179,8 +181,8 @@ void Facebook::addUser(char* userName, int day, int month, int year)
 		cout << "This user already exists, returning to menu" << endl;
 		return;
 	}
-	Date* userDate = new Date(day, month, year);  //creates a date.
-	User* user = new User(userName, *userDate);   //creats a user with given date (now)
+	Date* userDate = new Date(day, month, year);
+	User* user = new User(userName, *userDate);
 	if (numberOfUsers >= physicalNumberOfUsers)
 	{
 		makeDoubleUserssSpace();
@@ -205,7 +207,6 @@ void Facebook::addFanToPage(const char* pageName, const char* userName)
 	if (user->isFanOf(pageName))
 	{
 		cout << "User is already a fan of this page." << endl;
-		return;
 	}
 	page->addFan(*user);
 }

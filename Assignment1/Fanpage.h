@@ -13,8 +13,8 @@ public:
 	//show funcs
 	void printName()										const;
 	void showAllFans()										const;
-	void showStatuses(int numberOfPrintStatus = INT_MAX)	const;
-
+	void showFansStatuses(int numberOfPrintStatus = INT_MAX)const;
+	void showStatuses(int numberOfPrintStatus = INT_MAX)    const;
 	bool isAFan(const char* name)							const;
 
 	//action funcs

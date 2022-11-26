@@ -42,7 +42,10 @@ void User::showStatuses(int numberOfPrintStatus)			const
 	int i;
 	for (i = 0; i < numberOfStatus && i < numberOfPrintStatus; i++)
 	{
+		cout << "status number " << i + 1 << ": ";
 		statusPtrArr[i]->showText();
+		cout << "was posted on: ";
+		statusPtrArr[i]->showTime();
 	}
 	if (i < numberOfPrintStatus)
 	{// if didnt printed all statuses
