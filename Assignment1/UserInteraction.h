@@ -14,10 +14,12 @@ public:
 	void printMenu()							const;
 	void chooseFromMenu(int choice);
 
+	//show funcs
 	void showFriendStatus();
 	void showStatusOfEntity();
 	void showAllFriendsOrFans();
 
+	//action funcs
 	void addTextStatus();
 	void addUser();
 	void addFanToPage();
