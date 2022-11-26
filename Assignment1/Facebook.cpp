@@ -65,7 +65,7 @@ void Facebook::showFriendStatus(const char* userName)		    const
 		cout << "User doesnt exist, returning to menu" << endl;
 		return;
 	}
-	user->showStatuses(10);
+	user->showFriendsStatus(10);
 }
 void Facebook::showStatusOfEntity(bool isPage, const char* name) const
 {

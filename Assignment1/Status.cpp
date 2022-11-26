@@ -19,7 +19,7 @@ const char* Status::GetText() const
 {
 	return text;
 }
-void  Status::ShowText() const
+void  Status::showText() const
 {
 	cout << text << endl;
 }
