@@ -8,26 +8,25 @@ public:
 	Facebook();
 
 	//showing funcs
-	void showAllUsers()								const;
-	void showAllFanpage()							const;
-	void showAllUsersAndFanpages()					const;
-	void showFriendStatus(const User& user)			const;
-	void showStatusOfEntity(const User& user)		const;
-	void showStatusOfEntity(const Fanpage& fanpage)	const;
-	void showAllFriends(const User& user)			const;
-	void showAllFans(const Fanpage& fanpage)		const;
+	void showAllUsers()								   const;
+	void showAllFanpage()							   const;
+	void showAllUsersAndFanpages()					   const;
+	void showFriendStatus(const char* userName)        const;
+	void showStatusOfEntity(bool isPage, const char* name) const;
+	void showAllFriends(const char* name)			   const;
+	void showAllFans(const char* pageName)   		   const;
+	void showAllFriendsOrFans(bool isPage,const char* name) const;
 
 	//action funcs
-	User* findUser(const char* name);
-	Fanpage* findPage(const char* name);
-	void addUser(User& user);
-	void addFanpage(Fanpage& fanpage);
-	void addFanToPage(Fanpage& fanpage, User& user);
-	void addFriendship(User& user1, User& user2);
-	void addTextStatus(User& user, const Status& status);
-	void addTextStatus(Fanpage& fanpage, const Status& status);
-	void cancelFriendship(User& user1, User& user2);
-	void removeFanFromPage(Fanpage& fanpage, User& user);
+	User* findUser(const char* name)                const;
+	Fanpage* findPage(const char* name)             const;
+	void addUser(char* userName, int day, int month, int year);
+	void addFanpage(const char* pageName);
+	void addFanToPage(const char* pageName, const char* userName);
+	void addFriendship(const char* userName1, const char* userName2);
+	void addTextStatus(bool isPage, const char* name,const char* textStatus);
+	void cancelFriendship(const char* userName1, const char* userName2);
+	void removeFanFromPage(const char* pageName, const char* userName);
 	void Exit()										const;
 
 	~Facebook();
