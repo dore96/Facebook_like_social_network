@@ -36,7 +36,7 @@ void Fanpage::showAllFans()										const
 		cout << "Fan number " << (i + 1) << " is: " << arrOfFans[i]->getName() << endl;
 	}
 }
-void Fanpage::showFansStatuses(int numberOfPrintStatus)				const
+void Fanpage::showFansStatuses(int numberOfPrintStatus)			const
 {
 	for (int i = 0; i < numberOfFans; i++)
 	{
@@ -44,19 +44,16 @@ void Fanpage::showFansStatuses(int numberOfPrintStatus)				const
 		arrOfFans[i]->showStatuses();
 	}
 }
-void Fanpage::showStatuses(int numberOfPrintStatus)                  const
+void Fanpage::showStatuses(int numberOfPrintStatus)             const
 {
 	int i;
+	cout << name << " had posted " << numberOfStatus << " statuses." << endl;
 	for (i = 0; i < numberOfStatus && i < numberOfPrintStatus; i++)
 	{
 		cout << "status number " << i + 1 << ": ";
 		statusPtrArr[i]->showText();
 		cout << "was posted on: ";
 		statusPtrArr[i]->showTime();
-	}
-	if (i < numberOfPrintStatus)
-	{
-		cout << name << " had posted " << i << " statuses." << endl;
 	}
 }
 void Fanpage::printName()										const
@@ -144,6 +141,6 @@ Fanpage::~Fanpage()
 	delete[]name;
 	for (int i = 0; i < numberOfStatus; i++)
 		delete statusPtrArr[i];
-	delete arrOfFans;
-	delete statusPtrArr;
+	delete[] arrOfFans;
+	delete[] statusPtrArr;
 }

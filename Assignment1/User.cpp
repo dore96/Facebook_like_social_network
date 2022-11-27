@@ -40,16 +40,13 @@ const char* User::getName()									const
 void User::showStatuses(int numberOfPrintStatus)			const 
 {//user can limit how many statuses he wants to print - otherwise it will print all statuses.
 	int i;
+	cout << name << " had posted " << numberOfStatus << " statuses." << endl;
 	for (i = 0; i < numberOfStatus && i < numberOfPrintStatus; i++)
 	{
 		cout << "status number " << i + 1 << ": ";
 		statusPtrArr[i]->showText();
 		cout << "was posted on: ";
 		statusPtrArr[i]->showTime();
-	}
-	if (i < numberOfPrintStatus)
-	{// if didnt printed all statuses
-		cout << name << " had posted " << i << " statuses." << endl;
 	}
 }
 void User::showFriendsStatus(int numberOfPrintStatus)	    const
@@ -59,10 +56,22 @@ void User::showFriendsStatus(int numberOfPrintStatus)	    const
 		friendsPtrArr[i]->showStatuses(numberOfPrintStatus);
 	}
 }
+void User::showPagesStatus(int numberOfPrintStatus)	    const
+{//user can limit how many statuses he wants to print per page - otherwise it will prints all statuses.
+	for (int i = 0; i < numberOfLikedPages; i++)
+	{
+		fanpagePtrArr[i]->showStatuses(numberOfPrintStatus);
+	}
+}
 void User::showAllFriends()									const
 {
 	for (int i = 0; i < numberOfFriends; i++)
 		cout << "Friend number " << (i + 1) << " is: " << friendsPtrArr[i]->name << endl;
+}
+void User::showAllLikedPages()								const
+{
+	for (int i = 0; i < numberOfLikedPages; i++)
+		cout << "Page number " << (i + 1) << " is: " << fanpagePtrArr[i]->getName() << endl;
 }
 void User::printName()										const
 {
@@ -199,6 +208,7 @@ User::~User()		//Destructor
 	{//deletes all statuses
 		delete statusPtrArr[i];  
 	}
+	delete[]fanpagePtrArr;
 	delete[]friendsPtrArr;
 	delete[]statusPtrArr;
 }

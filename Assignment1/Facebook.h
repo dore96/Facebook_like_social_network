@@ -1,19 +1,20 @@
 #ifndef __Facebook_H
 #define __Facebook_H
 #include "UserInteraction.h"
+#define EXIT 12 
 
 class Facebook
 {
 public:
 	Facebook();
-
+	void runConsoleApp();
 	//showing funcs
 	void showAllUsers()										const;
 	void showAllFanpage()									const;
 	void showAllUsersAndFanpages()							const;
 	void showFriendStatus(const char* userName)				const;
 	void showStatusOfEntity(bool isPage, const char* name)  const;
-	void showAllFriends(const char* name)					const;
+	void showAllLinks(const char* name)					const;
 	void showAllFans(const char* pageName)   				const;
 	void showAllFriendsOrFans(bool isPage,const char* name) const;
 
@@ -30,10 +31,11 @@ public:
 	void removeFanFromPage(const char* pageName, const char* userName);
 
 	~Facebook();
-	UserInteraction userInterface;
+	
 private:
 	User** UsersPtrArr;
 	Fanpage** FanpagePtrArr;
+	UserInteraction userInterface;
 	int numberOfUsers, numberOfFanpage;
 	int physicalNumberOfUsers, physicalNumberOfFanpage;
 

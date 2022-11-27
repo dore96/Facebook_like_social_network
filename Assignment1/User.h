@@ -19,7 +19,9 @@ public:
 	void printName()										 const;
 	void showStatuses(int numberOfPrintStatus = INT_MAX)	 const;
 	void showFriendsStatus(int numberOfPrintStatus = INT_MAX)const;
+	void showPagesStatus(int numberOfPrintStatus = INT_MAX)	 const;
 	void showAllFriends()									 const;
+	void showAllLikedPages()								 const;
 
 	//boolean funcs
 	bool isFriendsWith(const char* friendName)				 const;

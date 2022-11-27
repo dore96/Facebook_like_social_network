@@ -1,15 +1,9 @@
 #include "Facebook.h"
-#define EXIT 12 
 
 int main()
 {
-	Facebook myFacebook;
-	int choice;
-	do
-	{
-		myFacebook.userInterface.printMenu();
-		cin >> choice;
-		myFacebook.userInterface.chooseFromMenu(choice);
-	} while (choice != EXIT);
+	Facebook* myFacebook = new Facebook();
+	myFacebook->runConsoleApp();
+	delete myFacebook;
 	return 0;
 }

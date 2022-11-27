@@ -33,6 +33,18 @@ Facebook::Facebook() : userInterface(*this)
 	addFanToPage("MTA course recomendations", "maor");
 }
 
+void Facebook::runConsoleApp()									
+{
+	int choice;
+	do
+	{
+		userInterface.printMenu();
+		cin >> choice;
+		userInterface.chooseFromMenu(choice);
+	} while (choice != EXIT);
+
+}
+
 void Facebook::showAllUsers()									const
 {
 	cout << "Users: " << endl;
@@ -64,6 +76,7 @@ void Facebook::showFriendStatus(const char* userName)		    const
 		return;
 	}
 	user->showFriendsStatus(10);
+	user->showPagesStatus(10);
 }
 void Facebook::showStatusOfEntity(bool isPage, const char* name) const
 {
@@ -96,10 +109,10 @@ void Facebook::showAllFriendsOrFans(bool isPage, const char* name)const
 	}
 	else
 	{
-		showAllFriends(name);
+		showAllLinks(name);
 	}
 }
-void Facebook::showAllFriends(const char* userName)					const
+void Facebook::showAllLinks(const char* userName)					const
 {
 	User* currentUser = findUser(userName);
 	if (currentUser == nullptr)
@@ -108,6 +121,7 @@ void Facebook::showAllFriends(const char* userName)					const
 		return;
 	}
 	currentUser->showAllFriends();  //show all users friend listed.
+	currentUser->showAllLikedPages();
 }
 void Facebook::showAllFans(const char* pageName)				    const
 {
@@ -179,8 +193,8 @@ void Facebook::addUser(char* userName, int day, int month, int year)
 		cout << "This user already exists, returning to menu" << endl;
 		return;
 	}
-	Date* userDate = new Date(day, month, year);  //creates a date.
-	User* user = new User(userName, *userDate);   //creats a user with given date (now)
+	Date userDate(day, month, year);  //creates a date.
+	User* user = new User(userName, userDate);   //creats a user with given date (now)
 	if (numberOfUsers >= physicalNumberOfUsers)
 	{
 		makeDoubleUserssSpace();

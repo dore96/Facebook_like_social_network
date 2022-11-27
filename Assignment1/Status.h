@@ -20,7 +20,7 @@ public:
 
 private:
 	time_t currentTime;
-	const tm* const statusTime;
+	const tm statusTime;
 	const Date dateOfStatus;
 	char* text;
 	int textLen;

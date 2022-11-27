@@ -118,7 +118,6 @@ void UserInteraction::addFanToPage()
 	CleanBuffer();
 	cin.getline(pageName, NAME_LEN - 1);
 	cout << "Which user would you like to add as a fan? ";
-	CleanBuffer();
 	cin.getline(fanName, NAME_LEN - 1);
 	facebook->addFanToPage(pageName, fanName);  //addes user to panpage and vice versa.
 }

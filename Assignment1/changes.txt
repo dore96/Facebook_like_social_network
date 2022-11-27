@@ -10,3 +10,8 @@ fanpage:
 
 facebook:
 1.UserInteraction is public ?
+
+
+bugs:
+statuses time change by the last status added.
+5.add fanpage and 6who posted it.
