@@ -1,17 +1,9 @@
 #include "Facebook.h"
-#define EXIT 12 
 
-//ptr arr const question.
 int main()
 {
-	Facebook myFacebook;
-	int choice;
-	do
-	{
-		myFacebook.PrintMenu();
-		cin >> choice;
-		myFacebook.ChooseFromMenu(choice);
-	} while (choice != EXIT);
+	Facebook* myFacebook = new Facebook();
+	myFacebook->runConsoleApp();
+	delete myFacebook;
 	return 0;
 }
-

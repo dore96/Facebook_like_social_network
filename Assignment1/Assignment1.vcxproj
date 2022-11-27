@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -133,6 +133,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Status.cpp" />
     <ClCompile Include="User.cpp" />
+    <ClCompile Include="UserInteraction.cpp" />
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -141,7 +142,11 @@
     <ClInclude Include="Fanpage.h" />
     <ClInclude Include="Status.h" />
     <ClInclude Include="User.h" />
+    <ClInclude Include="UserInteraction.h" />
     <ClInclude Include="Utilities.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="changes.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

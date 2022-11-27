@@ -2,34 +2,53 @@
 #define __User_H
 
 #include "Status.h" 
-
-const int InitNumber = 10;
+class Fanpage;									  //avoiding the two way include problam. (user - fanpage , fanpage - user)
+const int InitNumber = 10;						  //initiation number for the size of arrays of users,statuses and fanpages
 
 class User
 {
 public:
-	User(char* tryName, int tryYear, int tryMonth, int tryDay);//constructor
-	void AddFriend(User* addFriend);
-	void AddStatus(Status* status);
-	void ShowAllStatus()				const;
-	void ShowAllFriends()				const;
-	Date& GetBirthDate();
-	void UnFriend(const char* friendToRemove);
-	char* GetName()						const;
-	void PrintName()                    const;
-	int GetNumberOfStatus()		     	const;
-	~User();								//Destructor
+	User(char* tryName, const Date &dateOfBirth); //constructor 
+	//getters
+	const Date& getBirthDate()								 const;
+	int getNumberOfStatus()		     						 const;
+	int getNumberOfFriends()								 const;
+	const char* getName()									 const;
+
+	//printing funcs
+	void printName()										 const;
+	void showStatuses(int numberOfPrintStatus = INT_MAX)	 const;
+	void showFriendsStatus(int numberOfPrintStatus = INT_MAX)const;
+	void showPagesStatus(int numberOfPrintStatus = INT_MAX)	 const;
+	void showAllFriends()									 const;
+	void showAllLikedPages()								 const;
+
+	//boolean funcs
+	bool isFriendsWith(const char* friendName)				 const;
+	bool isFanOf(const char* pageName)                       const;
+
+	//action funcs 
+	void addFriend(User& addFriend);
+	void addStatus(const Status& status);		  //status is not able to change after creation - therefor const &
+	void unFriend(User& friendToRemove);
+	void likeAPage(Fanpage& page);
+	void unlikeAPage(Fanpage& page);
+	
+	~User();														
 private:
-	int numberOfFriends, numberOfStatus;
-	int physicalNumberOfFriends, physicalNumberOfStatus;
-	Date dateOfBirth;
+	int numberOfFriends, numberOfStatus,numberOfLikedPages;
+	int physicalNumberOfFriends, physicalNumberOfStatus,physicalNumberOfLikedPages;
+	const Date dateOfBirth;
 	char* name;
-	Status** statusPtrArr;
-	User** friendsPtrArr;
-	bool SetName(const char* tryName);
-	void MakeDoubleFriendsSpace();
-	void MakeDoubleStatusSpace();
-	User(const User&);           //disable the possibility of user copy.
+	const Status** statusPtrArr;
+	const User** friendsPtrArr;
+	const Fanpage** fanpagePtrArr;
+
+	bool setName(char* tryName);                               
+	void makeDoubleFriendsSpace();
+	void makeDoubleStatusSpace();
+	void makeDoublePageSpace();
+	User(const User&);												 //disable the possibility of user copy.
 };
 
 

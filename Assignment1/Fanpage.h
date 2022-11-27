@@ -5,23 +5,35 @@
 class Fanpage
 {
 public:
-	Fanpage(char* newName);
-	char* getName()     const;
-	void printName()    const;
-	void addFan(User* fan);
-	void addStatus(Status* status);
-	void showAllFans()  const;
-	void showAllStatus() const;
-	int getNumberOfStatus() const;
-	int getNumberOfFans() const;
+	Fanpage(const char* newName);
+	const char* getName()									const;
+	int getNumberOfStatus()		     						const;
+	int getNumberOfFans()									const;
+
+	//show funcs
+	void printName()										const;
+	void showAllFans()										const;
+	void showFansStatuses(int numberOfPrintStatus = INT_MAX)const;
+	void showStatuses(int numberOfPrintStatus = INT_MAX)    const;
+	bool isAFan(const char* name)							const;
+
+	//action funcs
+	void addFan(User& fan);
+	void removeFan(User& fan);
+	void addStatus(const Status& status);
+
+	void makeDoubleStatusSpace();
+	void makeDoubleFansSpace();
+
 	~Fanpage();
 private:
 	char* name;
-	int numberOfFans,numberOfStatus,physicalNumberOfFans,PhysicalNumberOfStatus;
-	User** arrOfFans;
-	bool setName(char* newName);
-	Status** statusPtrArr;
-	Fanpage(const Fanpage&);
+	int numberOfFans,numberOfStatus,physicalNumberOfFans,physicalNumberOfStatus;
+	const User** arrOfFans;
+	const Status** statusPtrArr;
+
+	bool setName(const char* newName);
+	Fanpage(const Fanpage&);													//disable the possibility of Fanpage copy.
 };
 
 
