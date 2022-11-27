@@ -30,6 +30,6 @@ public:
 
 private:
 	Facebook* facebook;
-	UserInteraction(const Facebook& other);
+	UserInteraction(const UserInteraction& other);
 };
 #endif
