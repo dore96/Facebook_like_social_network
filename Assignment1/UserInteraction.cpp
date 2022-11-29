@@ -33,7 +33,7 @@ void UserInteraction::chooseFromMenu(int choice)
 		break;
 	case 4:showStatusOfEntity();
 		break;
-	case 5:showFriendStatus();
+	case 5:showFeed();
 		break;
 	case 6:addFriendship();
 		break;
@@ -54,15 +54,15 @@ void UserInteraction::chooseFromMenu(int choice)
 	}
 }
 
-void UserInteraction::showFriendStatus()
+void UserInteraction::showFeed()                   const
 {
 	char userName[NAME_LEN];
 	cout << "Please enter the user name you would like to see his/her *all* friends 10 latest statuses:\n ";
 	CleanBuffer();
 	cin.getline(userName, NAME_LEN - 1);
-	facebook->showFriendStatus(userName);
+	facebook->showFeed(userName);
 }
-void UserInteraction::showStatusOfEntity()
+void UserInteraction::showStatusOfEntity()         const
 {
 	bool isPage;
 	cout << "Press 0 to show status for a user or 1 for a fanpage: ";
@@ -73,10 +73,10 @@ void UserInteraction::showStatusOfEntity()
 	cin.getline(name, NAME_LEN - 1);
 	facebook->showStatusOfEntity(isPage, name);
 }
-void UserInteraction::showAllFriendsOrFans()
+void UserInteraction::showAllFriendsOrFans()       const
 {
 	bool isPage;
-	cout << "Press 1 to see all fans of a page or 0 to see users friends ";
+	cout << "Press 1 to see all fans of a page or 0 to see users friends and liked pages ";
 	cin >> isPage;
 	CleanBuffer();
 	cout << "Enter your name: ";
@@ -132,9 +132,10 @@ void UserInteraction::addFanpage()
 void UserInteraction::addFriendship()
 {
 	char userName1[NAME_LEN], userName2[NAME_LEN];
-	cout << "Please enter the two user names you would like to be friends:\n ";
 	CleanBuffer();
+	cout << "Please enter the first user name: ";
 	cin.getline(userName1, NAME_LEN - 1);
+	cout << "Please enter the second user name: ";
 	cin.getline(userName2, NAME_LEN - 1);
 	facebook->addFriendship(userName1, userName2);
 }
@@ -152,9 +153,10 @@ void UserInteraction::removeFanFromPage()
 void UserInteraction::cancelFriendship()
 {
 	char userName1[NAME_LEN], userName2[NAME_LEN];
-	cout << "Please enter the two user names you would like to unfriend each other:\n ";
 	CleanBuffer();
+	cout << "Please enter the first user name: ";
 	cin.getline(userName1, NAME_LEN - 1);
+	cout << "Please enter the second user name: ";
 	cin.getline(userName2, NAME_LEN - 1);
 	facebook->cancelFriendship(userName1, userName2);  //cancel friendship to both users
 }

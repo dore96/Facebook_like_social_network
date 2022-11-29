@@ -15,9 +15,9 @@ public:
 	void chooseFromMenu(int choice);
 
 	//show funcs
-	void showFriendStatus();
-	void showStatusOfEntity();
-	void showAllFriendsOrFans();
+	void showFeed()                             const;
+	void showStatusOfEntity()                   const;
+	void showAllFriendsOrFans()                 const;
 
 	//action funcs
 	void addTextStatus();

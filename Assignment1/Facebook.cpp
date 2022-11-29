@@ -66,7 +66,7 @@ void Facebook::showAllUsersAndFanpages()						const
 	showAllUsers();
 	showAllFanpage();
 }
-void Facebook::showFriendStatus(const char* userName)		    const
+void Facebook::showFeed(const char* userName)		    const
 {
 	User* user;
 	user = findUser(userName);

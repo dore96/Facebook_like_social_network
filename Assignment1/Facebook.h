@@ -12,7 +12,7 @@ public:
 	void showAllUsers()										const;
 	void showAllFanpage()									const;
 	void showAllUsersAndFanpages()							const;
-	void showFriendStatus(const char* userName)				const;
+	void showFeed(const char* userName)				const;
 	void showStatusOfEntity(bool isPage, const char* name)  const;
 	void showAllLinks(const char* name)					const;
 	void showAllFans(const char* pageName)   				const;
