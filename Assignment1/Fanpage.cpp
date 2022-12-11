@@ -136,6 +136,20 @@ void Fanpage::makeDoubleFansSpace()
 	arrOfFans = newFansPtrArr;
 }
 
+const Fanpage& Fanpage::operator+=(User& addfan)
+{//Multiple placement support
+	addFan(addfan);
+	return *this;
+}
+bool Fanpage::operator >(const Fanpage& other)						 const
+{
+	return numberOfFans > other.numberOfFans;
+}
+bool Fanpage::operator <(const Fanpage& other)						 const
+{
+	return !(*this > other);
+}
+
 Fanpage::~Fanpage()
 {
 	delete[]name;

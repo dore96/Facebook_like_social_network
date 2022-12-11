@@ -201,6 +201,24 @@ void User::makeDoublePageSpace()
 	delete[] fanpagePtrArr;
 	fanpagePtrArr = newFanpagePtrArr;
 }
+
+const User& User::operator+=(User& addfriend)  
+{//Multiple placement support
+	addFriend(addfriend);
+	return *this;
+}
+bool User::operator >(const User& other)						 const
+{
+	return numberOfFriends > other.numberOfFriends;
+}
+bool User::operator <(const User& other)						 const
+{
+	return !(*this > other);
+}
+const Status& User::getStatuse(int index) 						 const
+{
+	return *(statusPtrArr[index]);
+}
 User::~User()		//Destructor
 {
 	delete[]name;

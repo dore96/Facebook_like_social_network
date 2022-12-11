@@ -16,8 +16,12 @@ public:
 
 	void showTime()				const;
 	void showText()				const;
-	~Status();
 
+	//operators funcs
+	bool operator ==(const Status& other)		const;
+	bool operator !=(const Status& other)		const;
+
+	~Status();
 private:
 	time_t currentTime;
 	const tm statusTime;

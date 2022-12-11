@@ -25,6 +25,11 @@ public:
 	void makeDoubleStatusSpace();
 	void makeDoubleFansSpace();
 
+	//operators funcs
+	const Fanpage& operator+=(User& addfan);
+	bool operator >(const Fanpage& other)					const;
+	bool operator <(const Fanpage& other)					const;
+
 	~Fanpage();
 private:
 	char* name;

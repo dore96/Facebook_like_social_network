@@ -20,11 +20,24 @@ Facebook::Facebook() : userInterface(*this)
 	addTextStatus(true, "Pro yogurt","29%");
 	addTextStatus(true, "Pro yogurt", "Cheap Quality");
 	addTextStatus(false,"dor", "Hi There");
-	addTextStatus(false, "dor", "2 points below Maor");
+	addTextStatus(false, "dor", "29%");
 	addTextStatus(false,"tovia","barkbark");
 	addTextStatus(false, "tovia", "whofwhof");
 	addTextStatus(false,"maor","ok here");
 	addTextStatus(false, "maor", "byebye");
+
+	bool ans = (*(UsersPtrArr[0])).getStatuse(0) != (*(UsersPtrArr[0])).getStatuse(0);  // == 0r != statuses ( delete get status later)
+	cout << ans;
+	*(UsersPtrArr[0]) += *(UsersPtrArr[1]);				// += user check to users
+	*(UsersPtrArr[0]) += *(UsersPtrArr[2]);  
+	ans = *(UsersPtrArr[2]) < *(UsersPtrArr[0]);	// < or > user check to users
+	cout << ans;
+	*(FanpagePtrArr[0]) += *(UsersPtrArr[1]);			// += user check to fanpage
+	*(FanpagePtrArr[0]) += *(UsersPtrArr[2]);
+	*(FanpagePtrArr[1]) += *(UsersPtrArr[2]);
+	ans = *(FanpagePtrArr[2]) < *(FanpagePtrArr[0]);	// < or > user check to users
+	cout << ans;
+
 	addFriendship("maor", "dor");
 	addFriendship("dor", "tovia");
 	addFriendship("tovia", "maor");

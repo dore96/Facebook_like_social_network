@@ -33,6 +33,15 @@ const Date& Status::getDate()		const
 {
 	return dateOfStatus;
 }
+bool Status::operator ==(const Status& other)		const
+{
+	return !strcmp(text, other.text);
+}
+bool Status::operator !=(const Status& other)		const
+{
+	return !(*this == other);
+}
+
 Status::~Status()  //d'tor - deletes the text char*.
 {
 	delete[]text;

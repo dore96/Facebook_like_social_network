@@ -34,6 +34,11 @@ public:
 	void likeAPage(Fanpage& page);
 	void unlikeAPage(Fanpage& page);
 	
+	//Operators funcs
+	const User& operator+=(User& addfriend);
+	bool operator >(const User& other)						 const;
+	bool operator <(const User& other)						 const;
+	const Status& getStatuse(int index) 					 const; //checking perpuse
 	~User();														
 private:
 	int numberOfFriends, numberOfStatus,numberOfLikedPages;
