@@ -1,59 +1,61 @@
 #include "Fanpage.h"
 
-Fanpage::Fanpage(const char* newName)
+Fanpage::Fanpage(const string& newName)
 {
+	if (!newName.compare(""))
+	{
+		throw invalid_argument("Cannot be an empty name");
+	}
 	setName(newName);
-	physicalNumberOfFans = InitNumber;
-	physicalNumberOfStatus = InitNumber;
-	numberOfFans = 0;
-	numberOfStatus = 0;
-	arrOfFans = new const User * [physicalNumberOfFans];
-	statusPtrArr = new const Status * [physicalNumberOfStatus];
 }
-bool Fanpage::setName(const char* newName)
+bool Fanpage::setName(const string& newName)
 {
-	name = new char[strlen(newName) + 1];
-	strcpy(name, newName);
+	name = newName;
 	return true;
 }
-const char* Fanpage::getName()									const
+const string& Fanpage::getName()								const
 {
 	return name;
 }
 int Fanpage::getNumberOfStatus()								const
 {
-	return numberOfStatus;
+	return statusPtrArr.size();
 }
 int Fanpage::getNumberOfFans()									const
 {
-	return numberOfFans;
+	return arrOfFans.size();
 }
 
 void Fanpage::showAllFans()										const
 {
-	for (int i = 0; i < numberOfFans; i++)
+	vector<const User*>::const_iterator itr = arrOfFans.begin();
+	vector<const User*>::const_iterator enditr = arrOfFans.end();
+	for (int i = 0; itr != enditr; ++itr, ++i)
 	{
-		cout << "Fan number " << (i + 1) << " is: " << arrOfFans[i]->getName() << endl;
+		cout << "Fan number " << (i + 1) << " is: " << (*itr)->getName() << endl;
 	}
 }
 void Fanpage::showFansStatuses(int numberOfPrintStatus)			const
 {
-	for (int i = 0; i < numberOfFans; i++)
+	vector<const User*>::const_iterator itr = arrOfFans.begin();
+	vector<const User*>::const_iterator enditr = arrOfFans.end();
+	for (; itr != enditr; ++itr)
 	{
-		cout << "\n" << arrOfFans[i]->getName() << " statuses:" << endl;
-		arrOfFans[i]->showStatuses();
+		cout << "\n" << (*itr)->getName() << " statuses:" << endl;
+		(*itr)->showStatuses(numberOfPrintStatus);
 	}
 }
 void Fanpage::showStatuses(int numberOfPrintStatus)             const
 {
-	int i;
-	cout << name << " had posted " << numberOfStatus << " statuses." << endl;
-	for (i = 0; i < numberOfStatus && i < numberOfPrintStatus; i++)
+	cout << name << " had posted " << statusPtrArr.size() << " statuses." << endl;
+	vector<const Status*>::const_iterator itr = statusPtrArr.begin();
+	vector<const Status*>::const_iterator enditr = statusPtrArr.end();
+	for (int i = 0; itr != enditr && i < numberOfPrintStatus; ++i, ++itr)
 	{
-		cout << "status number " << i + 1 << ": ";
-		statusPtrArr[i]->showText();
+		cout << "statusText number " << i + 1 << ": ";
+		(*itr)->showText();
 		cout << "was posted on: ";
-		statusPtrArr[i]->showTime();
+		(*itr)->showTime();
 	}
 }
 void Fanpage::printName()										const
@@ -61,79 +63,51 @@ void Fanpage::printName()										const
 	cout << name << endl;
 }
 
-bool Fanpage::isAFan(const char* name)							const
+bool Fanpage::isAFan(const string& name)					    const
 {
-	for (int i = 0; i < numberOfFans; i++)
+	vector<const User*>::const_iterator itr = arrOfFans.begin();
+	vector<const User*>::const_iterator enditr = arrOfFans.end();
+	for (; itr != enditr; ++itr)
 	{
-		if (!strcmp(arrOfFans[i]->getName(), name))
+		if (!(name.compare((*itr)->getName())))
 		{//compere fans by name (uniq)
 			return true;
 		}
 	}
 	return false;
 }
-
 void Fanpage::addFan(User& fan)
 {
 	if (isAFan(fan.getName()))
 	{//if user is a fan already return
 		return;
 	}
-	if (numberOfFans >= physicalNumberOfFans)
-	{
-		makeDoubleFansSpace();
-	}
-	arrOfFans[numberOfFans] = &fan;
-	numberOfFans++;
+	arrOfFans.push_back(&fan);
 	fan.likeAPage(*this); //add page to user fanpages
 }
 void Fanpage::removeFan(User& fan)
 {
+	vector<const User*>::const_iterator itr = arrOfFans.begin();
+	vector<const User*>::const_iterator enditr = arrOfFans.end();
 	if (!isAFan(fan.getName()))
 	{//if user do not fan page return
 		return;
 	}
-	for (int i = 0; i < numberOfFans; i++)
+	for (; itr != enditr; ++enditr)
 	{
-		if (arrOfFans[i] == &fan)
+		if ((*itr) == &fan)
 		{
-			arrOfFans[i] = arrOfFans[numberOfFans - 1];
-			numberOfFans--;
+			vector<const User*>::const_iterator tmp = --enditr;
+			swap(itr, tmp);
+			arrOfFans.pop_back();
+			return;
 		}
 	}
 	fan.unlikeAPage(*this); // remove page from users fanpages
 }
 void Fanpage::addStatus(const Status& status)
 {
-	if (numberOfStatus >= physicalNumberOfStatus)
-	{
-		makeDoubleStatusSpace();
-	}
-	statusPtrArr[numberOfStatus] = &status;
-	numberOfStatus++;
-}
-
-void Fanpage::makeDoubleStatusSpace()
-{
-	physicalNumberOfStatus *= 2;
-	const Status** newStatusPtrArr = new const Status * [physicalNumberOfStatus];
-	for (int i = 0; i < numberOfStatus; i++)
-	{
-		newStatusPtrArr[i] = statusPtrArr[i];
-	}
-	delete[]statusPtrArr;
-	statusPtrArr = newStatusPtrArr;
-}
-void Fanpage::makeDoubleFansSpace()
-{
-	physicalNumberOfFans *= 2;
-	const User** newFansPtrArr = new const User * [physicalNumberOfFans];
-	for (int i = 0; i < numberOfFans; i++)
-	{
-		newFansPtrArr[i] = arrOfFans[i];
-	}
-	delete[]arrOfFans;
-	arrOfFans = newFansPtrArr;
+	statusPtrArr.push_back(&status);
 }
 
 const Fanpage& Fanpage::operator+=(User& addfan)
@@ -143,18 +117,17 @@ const Fanpage& Fanpage::operator+=(User& addfan)
 }
 bool Fanpage::operator >(const Fanpage& other)						 const
 {
-	return numberOfFans > other.numberOfFans;
+	return arrOfFans.size() > other.arrOfFans.size();
 }
-bool Fanpage::operator <(const Fanpage& other)						 const
+bool Fanpage::operator <(const Fanpage& other)						 const//check with dor regarding ==
 {
 	return !(*this > other);
 }
 
 Fanpage::~Fanpage()
 {
-	delete[]name;
-	for (int i = 0; i < numberOfStatus; i++)
-		delete statusPtrArr[i];
-	delete[] arrOfFans;
-	delete[] statusPtrArr;
+	vector<const Status*>::const_iterator itr = statusPtrArr.begin();
+	vector<const Status*>::const_iterator enditr = statusPtrArr.end();
+	for (; itr != enditr; ++itr)
+		delete (*itr);
 }

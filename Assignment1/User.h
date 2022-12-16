@@ -29,7 +29,7 @@ public:
 
 	//action funcs 
 	void addFriend(User& addFriend);
-	void addStatus(const Status& status);		  //status is not able to change after creation - therefor const &
+	void addStatus(const Status& status);		  //statusText is not able to change after creation - therefor const &
 	void unFriend(User& friendToRemove);
 	void likeAPage(Fanpage& page);
 	void unlikeAPage(Fanpage& page);

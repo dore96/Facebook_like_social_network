@@ -1,9 +1,10 @@
 #include "Date.h"
-#include "Utilities.h"
-
 Date::Date(int inputDay, int inputMonth, int inputYear)
 {
-	setDate(inputDay, inputMonth, inputYear);
+	if (setDate(inputDay, inputMonth, inputYear) == false)
+	{
+		throw invalid_argument("Date given is not possible");
+	}
 }
 bool Date::setDate(int inputDay, int inputMonth, int inputYear)
 {
@@ -22,7 +23,7 @@ int Date::getDay()					const
 	return day;
 }
 bool Date::setYear(int year)
-{//every year is exeptable.
+{
 	this->year = year;
 	return true;
 }

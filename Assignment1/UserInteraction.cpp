@@ -10,9 +10,9 @@ void UserInteraction::printMenu()								const
 	cout << "Choose an action number from the above menu:" << endl;
 	cout << "1.Add user" << endl;
 	cout << "2.Add fanpage" << endl;
-	cout << "3.Add status to a user or fanpage" << endl;
-	cout << "4.Show all status of a user or fanpage" << endl;
-	cout << "5.Show a user feed (10 most recent friend/fanpage status)" << endl;
+	cout << "3.Add statusText to a user or fanpage" << endl;
+	cout << "4.Show all statusText of a user or fanpage" << endl;
+	cout << "5.Show a user feed (10 most recent friend/fanpage statusText)" << endl;
 	cout << "6.Add a friendship" << endl;
 	cout << "7.Cancel a friendship" << endl;
 	cout << "8.Add a fan to a fanpage" << endl;
@@ -65,7 +65,7 @@ void UserInteraction::showFeed()                   const
 void UserInteraction::showStatusOfEntity()         const
 {
 	bool isPage;
-	cout << "Press 0 to show status for a user or 1 for a fanpage: ";
+	cout << "Press 0 to show statusText for a user or 1 for a fanpage: ";
 	cin >> isPage;
 	CleanBuffer();
 	cout << "Enter your name: ";
@@ -89,7 +89,7 @@ void UserInteraction::addTextStatus()
 {
 	bool isPage;
 	char statusStr[STATUS_LEN];
-	cout << "Press 1 to add status for a fanpage or 0 for a user: ";
+	cout << "Press 1 to add statusText for a fanpage or 0 for a user: ";
 	cin >> isPage;
 	char name[NAME_LEN];
 	cout << "Enter its name: ";
@@ -97,7 +97,7 @@ void UserInteraction::addTextStatus()
 	cin.getline(name, NAME_LEN - 1);
 	cout << "Enter Status: ";
 	cin.getline(statusStr, STATUS_LEN - 1);
-	facebook->addTextStatus(isPage, name, statusStr);  //adds a status to user/fanpage
+	facebook->addTextStatus(isPage, name, statusStr);  //adds a statusText to user/fanpage
 }
 void UserInteraction::addUser()      
 {

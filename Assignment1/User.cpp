@@ -43,7 +43,7 @@ void User::showStatuses(int numberOfPrintStatus)			const
 	cout << name << " had posted " << numberOfStatus << " statuses." << endl;
 	for (i = 0; i < numberOfStatus && i < numberOfPrintStatus; i++)
 	{
-		cout << "status number " << i + 1 << ": ";
+		cout << "statusText number " << i + 1 << ": ";
 		statusPtrArr[i]->showText();
 		cout << "was posted on: ";
 		statusPtrArr[i]->showTime();
