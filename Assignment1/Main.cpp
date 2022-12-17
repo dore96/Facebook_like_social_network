@@ -1,6 +1,6 @@
 #include "Facebook.h"
 
-int main()
+int main()   //terminate
 {
 	Facebook* myFacebook = new Facebook();
 	myFacebook->runConsoleApp();

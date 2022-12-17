@@ -30,9 +30,6 @@
     <ClCompile Include="Facebook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Fanpage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -53,19 +50,11 @@
     <ClInclude Include="Facebook.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Fanpage.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="UserInteraction.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="changes.txt">
-      <Filter>Source Files</Filter>
-    </Text>
   </ItemGroup>
 </Project>

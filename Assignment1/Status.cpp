@@ -22,10 +22,6 @@ void  Status::showText()            const
 {
 	cout << statusText << endl;
 }
-int   Status::getTextLen()			const 
-{
-	return statusText.length();
-}
 const Date& Status::getDate()		const
 {
 	return dateOfStatus;

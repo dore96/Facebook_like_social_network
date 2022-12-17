@@ -11,7 +11,6 @@ public:
 
 	const tm& getTime()			const;    //func returns the time ref , with no option to change it.
 	const string& getString()	const;
-	int getTextLen()			const;
 	const Date& getDate()		const;
 	void showTime()				const;
 	void showText()				const;

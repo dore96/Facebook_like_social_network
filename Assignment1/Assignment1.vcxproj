@@ -134,7 +134,6 @@
     <ClCompile Include="Status.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="UserInteraction.cpp" />
-    <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Date.h" />
@@ -143,7 +142,6 @@
     <ClInclude Include="Status.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="UserInteraction.h" />
-    <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
