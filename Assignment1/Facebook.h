@@ -9,39 +9,33 @@ public:
 	Facebook();
 	void runConsoleApp();
 	//showing funcs
-	void showAllUsers()										const;
-	void showAllFanpage()									const;
-	void showAllUsersAndFanpages()							const;
-	void showFeed(const char* userName)				const;
-	void showStatusOfEntity(bool isPage, const char* name)  const;
-	void showAllLinks(const char* name)					const;
-	void showAllFans(const char* pageName)   				const;
-	void showAllFriendsOrFans(bool isPage,const char* name) const;
+	void showAllUsers()										  const;
+	void showAllFanpage()									  const;
+	void showAllUsersAndFanpages()							  const;
+	void showFeed(const string& userName)				      const;
+	void showStatusOfEntity(bool isPage, const char* name)    const;
+	void showAllLinks(const string& name)					  const;
+	void showAllFans(const string& pageName)   				  const;
+	void showAllFriendsOrFans(bool isPage,const string& name) const;
 
 	//action funcs
-	User* findUser(const char* name)						const;
-	Fanpage* findPage(const char* name)						const;
-	void Exit()												const;
-	void addUser(char* userName, int day, int month, int year);
-	void addFanpage(const char* pageName);
-	void addFanToPage(const char* pageName, const char* userName);
-	void addFriendship(const char* userName1, const char* userName2);
-	void addTextStatus(bool isPage, const char* name,const char* textStatus);
-	void cancelFriendship(const char* userName1, const char* userName2);
-	void removeFanFromPage(const char* pageName, const char* userName);
+	User* findUser(const string& name)						  const;
+	Fanpage& findPage(const string& name);
+	void Exit()												  const;
+	void addUser(string& userName, int day, int month, int year);
+	void addFanpage(const string& pageName);
+	void addFanToPage(const string& pageName, const string& userName);
+	void addFriendship(const string& userName1, const string& userName2);
+	void addTextStatus(bool isPage, const string& name,const string& textStatus);
+	void cancelFriendship(const string& userName1, const string& userName2);
+	void removeFanFromPage(const string& pageName, const string& userName);
 
 	~Facebook();
 	
 private:
-	User** UsersPtrArr;
-	Fanpage** FanpagePtrArr;
+	vector<User> usersVect;
+	vector<Fanpage> fanpageVect;
 	UserInteraction userInterface;
-	int numberOfUsers, numberOfFanpage;
-	int physicalNumberOfUsers, physicalNumberOfFanpage;
-
-	void makeDoubleUserssSpace();
-	void makeDoublePageSpace();
-	Facebook(const Facebook& other);
 };
 
 #endif
