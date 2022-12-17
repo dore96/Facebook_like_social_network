@@ -30,7 +30,7 @@ public:
 	~Fanpage();
 private:
 	string name;
-	vector<const User*> arrOfFans;
+	list<const User*> ListOfFans;
 	vector<const Status*> statusPtrArr;
 
 	bool setName(const string& newName);

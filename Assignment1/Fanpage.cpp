@@ -23,13 +23,13 @@ int Fanpage::getNumberOfStatus()								const
 }
 int Fanpage::getNumberOfFans()									const
 {
-	return arrOfFans.size();
+	return ListOfFans.size();
 }
 
 void Fanpage::showAllFans()										const
 {
-	vector<const User*>::const_iterator itr = arrOfFans.begin();
-	vector<const User*>::const_iterator enditr = arrOfFans.end();
+	list<const User*>::const_iterator itr = ListOfFans.begin();
+	list<const User*>::const_iterator enditr = ListOfFans.end();
 	for (int i = 0; itr != enditr; ++itr, ++i)
 	{
 		cout << "Fan number " << (i + 1) << " is: " << (*itr)->getName() << endl;
@@ -37,8 +37,8 @@ void Fanpage::showAllFans()										const
 }
 void Fanpage::showFansStatuses(int numberOfPrintStatus)			const
 {
-	vector<const User*>::const_iterator itr = arrOfFans.begin();
-	vector<const User*>::const_iterator enditr = arrOfFans.end();
+	list<const User*>::const_iterator itr = ListOfFans.begin();
+	list<const User*>::const_iterator enditr = ListOfFans.end();
 	for (; itr != enditr; ++itr)
 	{
 		cout << "\n" << (*itr)->getName() << " statuses:" << endl;
@@ -65,8 +65,8 @@ void Fanpage::printName()										const
 
 bool Fanpage::isAFan(const string& name)					    const
 {
-	vector<const User*>::const_iterator itr = arrOfFans.begin();
-	vector<const User*>::const_iterator enditr = arrOfFans.end();
+	list<const User*>::const_iterator itr = ListOfFans.begin();
+	list<const User*>::const_iterator enditr = ListOfFans.end();
 	for (; itr != enditr; ++itr)
 	{
 		if (!(name.compare((*itr)->getName())))
@@ -82,13 +82,13 @@ void Fanpage::addFan(User& fan)
 	{//if user is a fan already return
 		return;
 	}
-	arrOfFans.push_back(&fan);
+	ListOfFans.push_back(&fan);
 	fan.likeAPage(*this); //add page to user fanpages
 }
 void Fanpage::removeFan(User& fan)
 {
-	vector<const User*>::const_iterator itr = arrOfFans.begin();
-	vector<const User*>::const_iterator enditr = arrOfFans.end();
+	list<const User*>::const_iterator itr = ListOfFans.begin();
+	list<const User*>::const_iterator enditr = ListOfFans.end();
 	if (!isAFan(fan.getName()))
 	{//if user do not fan page return
 		return;
@@ -97,9 +97,7 @@ void Fanpage::removeFan(User& fan)
 	{
 		if ((*itr) == &fan)
 		{
-			vector<const User*>::const_iterator tmp = --enditr;
-			swap(itr, tmp);
-			arrOfFans.pop_back();
+			ListOfFans.erase(itr);
 			return;
 		}
 	}
@@ -117,7 +115,7 @@ const Fanpage& Fanpage::operator+=(User& addfan)
 }
 bool Fanpage::operator >(const Fanpage& other)						 const
 {
-	return arrOfFans.size() > other.arrOfFans.size();
+	return ListOfFans.size() > other.ListOfFans.size();
 }
 bool Fanpage::operator <(const Fanpage& other)						 const//check with dor regarding ==
 {
