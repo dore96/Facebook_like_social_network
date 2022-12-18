@@ -20,19 +20,18 @@ public:
 	//action funcs
 	void addFan(User& fan);
 	void removeFan(User& fan);
-	void addStatus(const Status& status);
+	void addStatus(const string& status);
 
 	//operators funcs
 	const Fanpage& operator+=(User& addfan);
 	bool operator >(const Fanpage& other)					const;
 	bool operator ==(const Fanpage& other)					const;
-	~Fanpage();
 private:
 	string name;
 	list<const User*> ListOfFans;
-	vector<const Status*> statusPtrArr;
+	vector<Status> statusPtrArr;
 
-	bool setName(const string& newName);
+	bool setName(const string& newName) noexcept(false);
 };
 
 

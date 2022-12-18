@@ -1,10 +1,11 @@
 #include "User.h"
 #include "Fanpage.h"
 
-User::User(const string& inputName, const Date& inputDateOfBirth) : dateOfBirth(inputDateOfBirth)      //constructor
+User::User(const string& inputName, const Date& inputDateOfBirth) noexcept(false) : dateOfBirth(inputDateOfBirth)//constructor
 {
 	setName(inputName);
 }
+
 void User::setName(const string& inputName) noexcept(false)
 {
 	if (!inputName.compare(""))
@@ -33,14 +34,14 @@ const string& User::getName()								const
 void User::showStatuses(int numberOfPrintStatus)			const 
 {//user can limit how many statuses he wants to print - otherwise it will print all statuses.
 	cout << name << " had posted " << statusVect.size() << " statuses." << endl;
-	vector<const Status*>::const_iterator itr = statusVect.begin();
-	vector<const Status*>::const_iterator enditr = statusVect.end();
+	vector<Status>::const_iterator itr = statusVect.begin();
+	vector<Status>::const_iterator enditr = statusVect.end();
 	for (int i = 0; itr != enditr && i < numberOfPrintStatus; ++i, ++itr)
 	{
-		cout << "statusText number " << i + 1 << ": ";
-		(*itr)->showText();
-		cout << "was posted on: " << (*itr)->getDate() << " ";
-		(*itr)->showTime();
+		cout << "status number " << i + 1 << ": ";
+		(*itr).showText();
+		cout << "was posted on: " << (*itr).getDate() << " ";
+		(*itr).showTime();
 	}
 }
 void User::showFriendsStatus(int numberOfPrintStatus)	    const
@@ -122,9 +123,9 @@ void User::addFriend(User& addFriend)
 	friendsList.push_back(&addFriend);
 	addFriend.addFriend(*this);  //add myself to friend list.
 }
-void User::addStatus(const Status& status)
+void User::addStatus(const string& status)
 {
-	statusVect.push_back(&status);
+	statusVect.push_back(status);
 }
 void User::unFriend(User& friendToRemove)
 {
@@ -139,7 +140,7 @@ void User::unFriend(User& friendToRemove)
 		if((*itr) == &friendToRemove)
 		{
 			friendsList.erase(itr);
-			return;
+			break;
 		}
 	}
 	friendToRemove.unFriend(*this);
@@ -157,7 +158,7 @@ void User::unlikeAPage(Fanpage& page)
 {
 	list<const Fanpage*>::const_iterator itr = pageList.begin();
 	list<const Fanpage*>::const_iterator enditr = pageList.end();
-	if (isFanOf(page))
+	if (!isFanOf(page))
 	{
 		return;
 	}
@@ -166,7 +167,7 @@ void User::unlikeAPage(Fanpage& page)
 		if ((*itr) == &page)
 		{
 			pageList.erase(itr);
-			return;
+			break;
 		}
 	}
 	page.removeFan(*this); //remove user from list of fans in fanpage
@@ -184,11 +185,4 @@ bool User::operator >(const User& other)					const
 bool User::operator ==(const User& other)					const
 {
 	return !name.compare(other.getName());
-}
-User::~User()
-{
-	vector<const Status*>::const_iterator itr = statusVect.begin();
-	vector<const Status*>::const_iterator enditr = statusVect.end();
-	for (; itr != enditr; ++itr)
-		delete (*itr);
 }

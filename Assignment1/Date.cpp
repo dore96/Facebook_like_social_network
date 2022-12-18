@@ -1,9 +1,9 @@
 #include "Date.h"
-Date::Date(int inputDay, int inputMonth, int inputYear)
+Date::Date(int inputDay, int inputMonth, int inputYear) noexcept(false)
 {
 	setDate(inputDay, inputMonth, inputYear);
 }
-void Date::setDate(int inputDay, int inputMonth, int inputYear)
+void Date::setDate(int inputDay, int inputMonth, int inputYear) noexcept(false)
 {
 	setYear(inputYear);
 	setMonth(inputMonth);

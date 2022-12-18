@@ -7,7 +7,7 @@ class Fanpage;									  //avoiding the two way include problam. (user - fanpage
 class User
 {
 public:
-	User(const string& tryName, const Date &dateOfBirth); //constructor 
+	User(const string& tryName, const Date &dateOfBirth); //constructor
 	//getters
 	const Date& getBirthDate()								 const;
 	int getNumberOfStatus()		     						 const;
@@ -28,7 +28,7 @@ public:
 
 	//action funcs 
 	void addFriend(User& addFriend);
-	void addStatus(const Status& status);		  //statusText is not able to change after creation - therefor const &
+	void addStatus(const string& status);		  //statusText is not able to change after creation - therefor const &
 	void unFriend(User& friendToRemove);
 	void likeAPage(Fanpage& page);
 	void unlikeAPage(Fanpage& page);
@@ -37,11 +37,10 @@ public:
 	const User& operator+=(User& addfriend);
 	bool operator >(const User& other)						 const;
 	bool operator ==(const User& other)						 const;
-	~User();
 private:
 	const Date dateOfBirth;
 	string name;
-	vector<const Status*> statusVect;
+	vector<Status> statusVect;
 	list<const User*> friendsList;
 	list<const Fanpage*> pageList;
 

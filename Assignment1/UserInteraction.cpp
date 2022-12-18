@@ -10,9 +10,9 @@ void UserInteraction::printMenu()								const
 	cout << "Choose an action number from the above menu:" << endl;
 	cout << "1.Add user" << endl;
 	cout << "2.Add fanpage" << endl;
-	cout << "3.Add statusText to a user or fanpage" << endl;
-	cout << "4.Show all statusText of a user or fanpage" << endl;
-	cout << "5.Show a user feed (10 most recent friend/fanpage statusText)" << endl;
+	cout << "3.Add a status to a user or fanpage" << endl;
+	cout << "4.Show all statuses of a user or fanpage" << endl;
+	cout << "5.Show a user feed (10 most recent friend/fanpage statuses)" << endl;
 	cout << "6.Add a friendship" << endl;
 	cout << "7.Cancel a friendship" << endl;
 	cout << "8.Add a fan to a fanpage" << endl;
@@ -21,7 +21,7 @@ void UserInteraction::printMenu()								const
 	cout << "11.Show all friends/fans of a User/Fanpage" << endl;
 	cout << "12.Exit" << endl;
 }
-void UserInteraction::chooseFromMenu(int choice)
+void UserInteraction::chooseFromMenu(int choice) noexcept(false)
 {
 	switch (choice)
 	{
@@ -65,7 +65,7 @@ void UserInteraction::showStatusOfEntity()         const
 {
 	bool isPage;
 	string name;
-	cout << "Press 0 to show statusText for a user or 1 for a fanpage: ";
+	cout << "Press 0 to show statuses of a user or 1 for a fanpage: ";
 	cin >> isPage;
 	CleanBuffer();
 	cout << "Enter your name: ";
@@ -88,7 +88,7 @@ void UserInteraction::addTextStatus()
 {
 	bool isPage;
 	string statusStr, name;
-	cout << "Press 1 to add statusText for a fanpage or 0 for a user: ";
+	cout << "Press 1 to add status for a fanpage or 0 for a user: ";
 	cin >> isPage;
 	cout << "Enter its name: ";
 	CleanBuffer();

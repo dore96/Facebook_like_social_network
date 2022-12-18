@@ -22,10 +22,10 @@ public:
 	int getMonth() const;
 	int getDay()   const;
 	//setters
-	void setDate(int inputDay, int inputMonth, int inputYear);
+	void setDate(int inputDay, int inputMonth, int inputYear) noexcept(false);
 	void setYear(int year);
-	void setMonth(int month);
-	void setDay(int day);
+	void setMonth(int month) noexcept(false);
+	void setDay(int day) noexcept(false);
 	friend ostream& operator <<(ostream& os, const Date& date);
 private:
 	int year, month, day;

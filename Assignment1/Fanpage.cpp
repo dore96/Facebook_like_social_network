@@ -2,14 +2,15 @@
 
 Fanpage::Fanpage(const string& newName) noexcept(false)
 {
-	if (!newName.compare(""))
-	{
-		throw invalid_argument("Name can not be an empty name");
-	}
 	setName(newName);
 }
-bool Fanpage::setName(const string& newName)
+
+bool Fanpage::setName(const string& newName) noexcept(false)
 {
+	if (!newName.compare(""))
+	{
+		throw invalid_argument("Name can not be empty");
+	}
 	name = newName;
 	return true;
 }
@@ -48,14 +49,14 @@ void Fanpage::showFansStatuses(int numberOfPrintStatus)			const
 void Fanpage::showStatuses(int numberOfPrintStatus)             const
 {
 	cout << name << " had posted " << statusPtrArr.size() << " statuses." << endl;
-	vector<const Status*>::const_iterator itr = statusPtrArr.begin();
-	vector<const Status*>::const_iterator enditr = statusPtrArr.end();
+	vector<Status>::const_iterator itr = statusPtrArr.begin();
+	vector<Status>::const_iterator enditr = statusPtrArr.end();
 	for (int i = 0; itr != enditr && i < numberOfPrintStatus; ++i, ++itr)
 	{
-		cout << "statusText number " << i + 1 << ": ";
-		(*itr)->showText();
+		cout << "status number " << i + 1 << ": ";
+		(*itr).showText();
 		cout << "was posted on: ";
-		(*itr)->showTime();
+		(*itr).showTime();
 	}
 }
 void Fanpage::printName()										const
@@ -98,14 +99,14 @@ void Fanpage::removeFan(User& fan)
 		if ((*itr) == &fan)
 		{
 			ListOfFans.erase(itr);
-			return;
+			break;
 		}
 	}
 	fan.unlikeAPage(*this); // remove page from users fanpages
 }
-void Fanpage::addStatus(const Status& status)
+void Fanpage::addStatus(const string& status)
 {
-	statusPtrArr.push_back(&status);
+	statusPtrArr.push_back(status);
 }
 
 const Fanpage& Fanpage::operator+=(User& addfan)
@@ -120,12 +121,4 @@ bool Fanpage::operator >(const Fanpage& other)						 const
 bool Fanpage::operator ==(const Fanpage& other)					const
 {
 	return !name.compare(other.getName());
-}
-
-Fanpage::~Fanpage()
-{
-	vector<const Status*>::const_iterator itr = statusPtrArr.begin();
-	vector<const Status*>::const_iterator enditr = statusPtrArr.end();
-	for (; itr != enditr; ++itr)
-		delete (*itr);
 }

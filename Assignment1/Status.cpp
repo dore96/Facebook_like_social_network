@@ -1,6 +1,6 @@
 #include "Status.h"
 
-Status::Status(const string& inputText)
+Status::Status(const string& inputText) noexcept(false)
 	: currentTime(time(NULL)), statusTime(*localtime(&currentTime)), dateOfStatus(statusTime.tm_mday, (statusTime.tm_mon) + 1, (statusTime.tm_year + 1900)),statusText(inputText)
 {
 }

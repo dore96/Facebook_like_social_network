@@ -7,7 +7,7 @@
 class Status
 {
 public:
-	Status(const string& inputText);
+	Status(const string& inputText) noexcept(false);
 
 	const tm& getTime()			const;    //func returns the time ref , with no option to change it.
 	const string& getString()	const;

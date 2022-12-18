@@ -41,7 +41,7 @@ void Facebook::runConsoleApp()
 		}
 		catch (invalid_argument& e)
 		{
-			cout << "Invalid argumant:" << e.what() << endl;
+			cout << "Invalid argument:" << e.what() << endl;
 		}
 		catch (out_of_range& e)
 		{
@@ -58,8 +58,8 @@ void Facebook::runConsoleApp()
 
 void Facebook::showAllUsers()										const
 {
-	vector<User>::const_iterator itr = usersVect.begin();
-	vector<User>::const_iterator enditr = usersVect.end();
+	list<User>::const_iterator itr = usersVect.begin();
+	list<User>::const_iterator enditr = usersVect.end();
 	cout << "Users: " << endl;
 	for (int i = 0; itr != enditr; ++itr, ++i)
 	{
@@ -68,8 +68,8 @@ void Facebook::showAllUsers()										const
 }
 void Facebook::showAllFanpage()										const
 {
-	vector<Fanpage>::const_iterator itr = fanpageVect.begin();
-	vector<Fanpage>::const_iterator enditr = fanpageVect.end();
+	list<Fanpage>::const_iterator itr = fanpageVect.begin();
+	list<Fanpage>::const_iterator enditr = fanpageVect.end();
 	cout << "Fanpages: " << endl;
 	for (int i = 0; itr != enditr; ++itr, ++i)
 	{
@@ -145,9 +145,9 @@ void Facebook::showAllFans(const string& pageName)				    const noexcept(false)
 
 User* Facebook::findUser(const string& name)                        
 {
-	vector<User>::iterator itr = usersVect.begin();
-	vector<User>::iterator end = usersVect.end();
-	for (int i = 0;itr < end; ++itr, i++)
+	list<User>::iterator itr = usersVect.begin();
+	list<User>::iterator end = usersVect.end();
+	for (int i = 0;itr != end; ++itr, i++)
 	{
 		if (!name.compare((*itr).getName()))
 		{//compare users by name (uniq)
@@ -158,9 +158,9 @@ User* Facebook::findUser(const string& name)
 }
 const User* Facebook::findUser(const string& name)					const
 {
-	vector<User>::const_iterator itr = usersVect.begin();
-	vector<User>::const_iterator end = usersVect.end();
-	for (int i = 0; itr < end; ++itr, i++)
+	list<User>::const_iterator itr = usersVect.begin();
+	list<User>::const_iterator end = usersVect.end();
+	for (int i = 0; itr != end; ++itr, i++)
 	{
 		if (!name.compare((*itr).getName()))
 		{//compare users by name (uniq)
@@ -171,9 +171,9 @@ const User* Facebook::findUser(const string& name)					const
 }
 Fanpage* Facebook::findPage(const string& name)                   
 {
-	vector<Fanpage>::iterator itr = fanpageVect.begin();
-	vector<Fanpage>::iterator end = fanpageVect.end();
-	for (; itr < end; ++itr)
+	list<Fanpage>::iterator itr = fanpageVect.begin();
+	list<Fanpage>::iterator end = fanpageVect.end();
+	for (; itr != end; ++itr)
 	{
 		if (!name.compare((*itr).getName()))
 		{//compare users by name (uniq)
@@ -184,9 +184,9 @@ Fanpage* Facebook::findPage(const string& name)
 }
 const Fanpage* Facebook::findPage(const string& name)               const
 {
-	vector<Fanpage>::const_iterator itr = fanpageVect.begin();
-	vector<Fanpage>::const_iterator end = fanpageVect.end();
-	for (; itr < end; ++itr)
+	list<Fanpage>::const_iterator itr = fanpageVect.begin();
+	list<Fanpage>::const_iterator end = fanpageVect.end();
+	for (; itr != end; ++itr)
 	{
 		if (!name.compare((*itr).getName()))
 		{//compare users by name (uniq)
@@ -202,26 +202,23 @@ void Facebook::Exit()											    const
 
 void Facebook::addTextStatus(bool isPage, const string& name, const string& textStatus) noexcept(false)
 {
-	Status* status = new Status(textStatus);
 	if (!isPage)
 	{
 		User* user = findUser(name);
 		if (user == nullptr)
 		{
-			delete status;
 			throw invalid_argument("No user with that name");
 		}
-		user->addStatus(*status);  //creates a new status by input and adds it to user.
+		user->addStatus(textStatus);
 	}
 	else
 	{
 		Fanpage* fanpage = findPage(name);
 		if (fanpage == nullptr)
 		{
-			delete status;
 			throw invalid_argument("No user with that name");
 		}
-		fanpage->addStatus(*status); //creates a new status by input and adds it to fanpage.
+		fanpage->addStatus(textStatus);
 	}
 }
 void Facebook::addUser(const string& userName, int day, int month, int year) noexcept(false)
@@ -266,6 +263,10 @@ void Facebook::addFriendship(const string& userName1, const string& userName2) n
 	//try catch
 	User* user1 = findUser(userName1);
 	User* user2 = findUser(userName2);
+	if (user1 == nullptr || user2 == nullptr)
+	{
+		throw invalid_argument("At least one of the users does not exist");
+	}
 	if (user1->isFriendsWith(*user2))
 	{
 		throw invalid_argument("Users are already friends.");
