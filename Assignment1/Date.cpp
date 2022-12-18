@@ -1,14 +1,13 @@
 #include "Date.h"
 Date::Date(int inputDay, int inputMonth, int inputYear)
 {
-	if (setDate(inputDay, inputMonth, inputYear) == false)
-	{
-		throw invalid_argument("Date given is not possible");
-	}
+	setDate(inputDay, inputMonth, inputYear);
 }
-bool Date::setDate(int inputDay, int inputMonth, int inputYear)
+void Date::setDate(int inputDay, int inputMonth, int inputYear)
 {
-	return (setYear(inputYear) && setMonth(inputMonth) && setDay(inputDay));
+	setYear(inputYear);
+	setMonth(inputMonth);
+	setDay(inputDay);
 }
 int Date::getYear()					const
 {
@@ -22,26 +21,36 @@ int Date::getDay()					const
 {
 	return day;
 }
-bool Date::setYear(int year)
+void Date::setYear(int year)
 {
 	this->year = year;
-	return true;
 }
-bool Date::setMonth(int month)
+void Date::setMonth(int month)
 {
 	if (!(month < 13 && month > 0))
 	{
-		return false;
+		throw invalid_argument("Date of month given is not possible");
 	}
 	this->month = month;
-	return true;
 }
-bool Date::setDay(int day)
+void Date::setDay(int day)
 {
 	if (day <= 0 || day > monthLen[getMonth()])
 	{
-		return false;
+		throw invalid_argument("Date of day given is not possible");
 	}
 	this->day = day;
-	return true;
+}
+ostream& operator <<(ostream& os, const Date& date)
+{
+	os << date.day << "/" << date.month << "/" << date.year;
+	return os;
+}
+void CleanBuffer()
+{
+	int c;
+	do
+	{
+		c = getchar();
+	} while (c != EOF && c != '\n');
 }

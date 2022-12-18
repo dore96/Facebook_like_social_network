@@ -5,10 +5,13 @@ User::User(const string& inputName, const Date& inputDateOfBirth) : dateOfBirth(
 {
 	setName(inputName);
 }
-bool User::setName(const string& inputName)
+void User::setName(const string& inputName) noexcept(false)
 {
+	if (!inputName.compare(""))
+	{
+		throw invalid_argument("Name can not be empty");
+	}
 	name = inputName;
-	return true;
 }
 const Date& User::getBirthDate()							const
 {
@@ -29,22 +32,21 @@ const string& User::getName()								const
 
 void User::showStatuses(int numberOfPrintStatus)			const 
 {//user can limit how many statuses he wants to print - otherwise it will print all statuses.
-	int i;
 	cout << name << " had posted " << statusVect.size() << " statuses." << endl;
-	vector<Status>::const_iterator itr = statusVect.begin();
-	vector<Status>::const_iterator enditr = statusVect.end();
+	vector<const Status*>::const_iterator itr = statusVect.begin();
+	vector<const Status*>::const_iterator enditr = statusVect.end();
 	for (int i = 0; itr != enditr && i < numberOfPrintStatus; ++i, ++itr)
 	{
 		cout << "statusText number " << i + 1 << ": ";
-		(*itr).showText();
-		cout << "was posted on: ";
-		(*itr).showTime();
+		(*itr)->showText();
+		cout << "was posted on: " << (*itr)->getDate() << " ";
+		(*itr)->showTime();
 	}
 }
 void User::showFriendsStatus(int numberOfPrintStatus)	    const
 {//user can limit how many statuses he wants to print per user - otherwise it will prints all statuses.
-	list<const User* const>::const_iterator itr = friendsList.begin();
-	list<const User* const>::const_iterator enditr = friendsList.end();
+	list<const User*>::const_iterator itr = friendsList.begin();
+	list<const User*>::const_iterator enditr = friendsList.end();
 	for (; itr != enditr; ++itr)
 	{
 		cout << "\n" << (*itr)->getName() << " statuses:" << endl;
@@ -53,8 +55,8 @@ void User::showFriendsStatus(int numberOfPrintStatus)	    const
 }
 void User::showPagesStatus(int numberOfPrintStatus)			const
 {//user can limit how many statuses he wants to print per page - otherwise it will prints all statuses.
-	list<const Fanpage* const>::const_iterator itr = pageList.begin();
-	list<const Fanpage* const>::const_iterator enditr = pageList.end();
+	list<const Fanpage*>::const_iterator itr = pageList.begin();
+	list<const Fanpage*>::const_iterator enditr = pageList.end();
 	for (; itr != enditr; ++itr)
 	{
 		cout << "\n" << (*itr)->getName() << " statuses:" << endl;
@@ -63,8 +65,8 @@ void User::showPagesStatus(int numberOfPrintStatus)			const
 }
 void User::showAllFriends()									const
 {
-	list<const User* const>::const_iterator itr = friendsList.begin();
-	list<const User* const>::const_iterator enditr = friendsList.end();
+	list<const User*>::const_iterator itr = friendsList.begin();
+	list<const User*>::const_iterator enditr = friendsList.end();
 	for (int i = 0; itr != enditr; ++itr, ++i)
 	{
 		cout << "Friend number " << (i + 1) << " is: " << (*itr)->name << endl;
@@ -72,8 +74,8 @@ void User::showAllFriends()									const
 }
 void User::showAllLikedPages()								const
 {
-	list<const Fanpage* const>::const_iterator itr = pageList.begin();
-	list<const Fanpage* const>::const_iterator enditr = pageList.end();
+	list<const Fanpage*>::const_iterator itr = pageList.begin();
+	list<const Fanpage*>::const_iterator enditr = pageList.end();
 	for (int i = 0; itr != enditr; ++itr, ++i)
 	{
 		cout << "Page number " << (i + 1) << " is: " << (*itr)->getName() << endl;
@@ -84,26 +86,26 @@ void User::printName()										const
 	cout << name << endl;
 }
 
-bool User::isFriendsWith(const string& friendName)			const
+bool User::isFriendsWith(const User& isfriend)			const
 {
-	list<const User* const>::const_iterator itr = friendsList.begin();
-	list<const User* const>::const_iterator enditr = friendsList.end();
+	list<const User*>::const_iterator itr = friendsList.begin();
+	list<const User*>::const_iterator enditr = friendsList.end();
 	for (; itr != enditr; ++itr)
 	{
-		if (!friendName.compare((*itr)->name))
+		if (isfriend == *(*itr))
 		{//compare by name of users (uniq)
 			return true;
 		}
 	}
 	return false;
 }
-bool User::isFanOf(const string& pageName)                  const
+bool User::isFanOf(const Fanpage& page)                  const
 {
-	list<const Fanpage* const>::const_iterator itr = pageList.begin();
-	list<const Fanpage* const>::const_iterator enditr = pageList.end();
+	list<const Fanpage*>::const_iterator itr = pageList.begin();
+	list<const Fanpage*>::const_iterator enditr = pageList.end();
 	for (; itr != enditr; ++itr)
 	{
-		if (!pageName.compare((*itr)->getName()))
+		if (page == **itr)
 		{//compare by name of users (uniq)
 			return true;
 		}
@@ -113,7 +115,7 @@ bool User::isFanOf(const string& pageName)                  const
 
 void User::addFriend(User& addFriend)
 {
-	if (isFriendsWith(addFriend.getName()))
+	if (isFriendsWith(addFriend))
 	{//if they are friends already - return
 		return;
 	}
@@ -122,13 +124,13 @@ void User::addFriend(User& addFriend)
 }
 void User::addStatus(const Status& status)
 {
-	statusVect.push_back(status);
+	statusVect.push_back(&status);
 }
 void User::unFriend(User& friendToRemove)
 {
-	list<const User* const>::const_iterator itr = friendsList.begin();
-	list<const User* const>::const_iterator enditr = friendsList.end();
-	if (!isFriendsWith(friendToRemove.getName()))
+	list<const User*>::const_iterator itr = friendsList.begin();
+	list<const User*>::const_iterator enditr = friendsList.end();
+	if (!isFriendsWith(friendToRemove))
 	{
 		return;
 	}
@@ -144,7 +146,7 @@ void User::unFriend(User& friendToRemove)
 }
 void User::likeAPage(Fanpage& page)
 {
-	if (isFanOf(page.getName()))
+	if (isFanOf(page))
 	{//if user is a fan of the page , return.
 		return;
 	}
@@ -153,9 +155,9 @@ void User::likeAPage(Fanpage& page)
 }
 void User::unlikeAPage(Fanpage& page)
 {
-	list<const Fanpage* const>::const_iterator itr = pageList.begin();
-	list<const Fanpage* const>::const_iterator enditr = pageList.end();
-	if (isFanOf(page.getName()))
+	list<const Fanpage*>::const_iterator itr = pageList.begin();
+	list<const Fanpage*>::const_iterator enditr = pageList.end();
+	if (isFanOf(page))
 	{
 		return;
 	}
@@ -179,7 +181,14 @@ bool User::operator >(const User& other)					const
 {
 	return friendsList.size() > other.friendsList.size();
 }
-const Status& User::getStatuse(int index) 					const
+bool User::operator ==(const User& other)					const
 {
-	return (statusVect[index]);
+	return !name.compare(other.getName());
+}
+User::~User()
+{
+	vector<const Status*>::const_iterator itr = statusVect.begin();
+	vector<const Status*>::const_iterator enditr = statusVect.end();
+	for (; itr != enditr; ++itr)
+		delete (*itr);
 }

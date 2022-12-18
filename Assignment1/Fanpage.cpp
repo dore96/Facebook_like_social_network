@@ -1,10 +1,10 @@
 #include "Fanpage.h"
 
-Fanpage::Fanpage(const string& newName)
+Fanpage::Fanpage(const string& newName) noexcept(false)
 {
 	if (!newName.compare(""))
 	{
-		throw invalid_argument("Cannot be an empty name");
+		throw invalid_argument("Name can not be an empty name");
 	}
 	setName(newName);
 }
@@ -63,14 +63,14 @@ void Fanpage::printName()										const
 	cout << name << endl;
 }
 
-bool Fanpage::isAFan(const string& name)					    const
+bool Fanpage::isAFan(const User& user)					    const
 {
 	list<const User*>::const_iterator itr = ListOfFans.begin();
 	list<const User*>::const_iterator enditr = ListOfFans.end();
 	for (; itr != enditr; ++itr)
 	{
-		if (!(name.compare((*itr)->getName())))
-		{//compere fans by name (uniq)
+		if (user == **itr)
+		{//compere fans by == operator (uniq names)
 			return true;
 		}
 	}
@@ -78,7 +78,7 @@ bool Fanpage::isAFan(const string& name)					    const
 }
 void Fanpage::addFan(User& fan)
 {
-	if (isAFan(fan.getName()))
+	if (isAFan(fan))
 	{//if user is a fan already return
 		return;
 	}
@@ -89,7 +89,7 @@ void Fanpage::removeFan(User& fan)
 {
 	list<const User*>::const_iterator itr = ListOfFans.begin();
 	list<const User*>::const_iterator enditr = ListOfFans.end();
-	if (!isAFan(fan.getName()))
+	if (!isAFan(fan))
 	{//if user do not fan page return
 		return;
 	}
@@ -117,9 +117,9 @@ bool Fanpage::operator >(const Fanpage& other)						 const
 {
 	return ListOfFans.size() > other.ListOfFans.size();
 }
-bool Fanpage::operator <(const Fanpage& other)						 const//check with dor regarding ==
+bool Fanpage::operator ==(const Fanpage& other)					const
 {
-	return !(*this > other);
+	return !name.compare(other.getName());
 }
 
 Fanpage::~Fanpage()

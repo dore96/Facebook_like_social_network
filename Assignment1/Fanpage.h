@@ -15,7 +15,7 @@ public:
 	void showAllFans()										const;
 	void showFansStatuses(int numberOfPrintStatus = INT_MAX)const;
 	void showStatuses(int numberOfPrintStatus = INT_MAX)    const;
-	bool isAFan(const string& name)							const;
+	bool isAFan(const User& user)							const;
 
 	//action funcs
 	void addFan(User& fan);
@@ -25,8 +25,7 @@ public:
 	//operators funcs
 	const Fanpage& operator+=(User& addfan);
 	bool operator >(const Fanpage& other)					const;
-	bool operator <(const Fanpage& other)					const;
-
+	bool operator ==(const Fanpage& other)					const;
 	~Fanpage();
 private:
 	string name;

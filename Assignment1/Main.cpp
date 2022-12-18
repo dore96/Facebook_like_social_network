@@ -1,9 +1,15 @@
 #include "Facebook.h"
 
-int main()   //terminate
+void newTerminate()
 {
-	Facebook* myFacebook = new Facebook();
-	myFacebook->runConsoleApp();
-	delete myFacebook;
+	cout << "There was a unexpected error , exiting the program.";
+	exit(1);
+}
+
+int main() 
+{
+	set_terminate(newTerminate);
+	Facebook myFacebook;
+	myFacebook.runConsoleApp();
 	return 0;
 }

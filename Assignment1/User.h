@@ -23,8 +23,8 @@ public:
 	void showAllLikedPages()								 const;
 
 	//boolean funcs
-	bool isFriendsWith(const string& friendName)			 const;
-	bool isFanOf(const string& pageName)                     const;
+	bool isFriendsWith(const User& isfriend)			 const;
+	bool isFanOf(const Fanpage& page)                     const;
 
 	//action funcs 
 	void addFriend(User& addFriend);
@@ -36,16 +36,16 @@ public:
 	//Operators funcs
 	const User& operator+=(User& addfriend);
 	bool operator >(const User& other)						 const;
-	const Status& getStatuse(int index) 					 const; //checking perpuse
-
+	bool operator ==(const User& other)						 const;
+	~User();
 private:
 	const Date dateOfBirth;
 	string name;
-	vector<Status> statusVect;
-	list<const User* const> friendsList;
-	list<const Fanpage* const> pageList;
+	vector<const Status*> statusVect;
+	list<const User*> friendsList;
+	list<const Fanpage*> pageList;
 
-	bool setName(const string& tryName);
+	void setName(const string& tryName)  noexcept(false);
 };
 
 

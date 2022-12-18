@@ -18,9 +18,9 @@ const string& Status::getString()	const
 {
 	return statusText;
 }
-void  Status::showText()            const
+void Status::showText()            const
 {
-	cout << statusText << endl;
+	cout << statusText.data() << endl;
 }
 const Date& Status::getDate()		const
 {
