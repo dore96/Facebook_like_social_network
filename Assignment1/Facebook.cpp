@@ -43,6 +43,14 @@ void Facebook::runConsoleApp()
 		{
 			cout << "Invalid argumant:" << e.what() << endl;
 		}
+		catch (out_of_range& e)
+		{
+			cout << "Out of range:" << e.what() << endl;
+		}
+		catch (...)
+		{
+			cout << "There was a unexpected error, please try again." << endl;
+		}
 
 	} while (choice != EXIT);
 
@@ -73,7 +81,7 @@ void Facebook::showAllUsersAndFanpages()							const
 	showAllUsers();
 	showAllFanpage();
 }
-void Facebook::showFeed(const string& userName)						const
+void Facebook::showFeed(const string& userName)						const noexcept(false)
 {
 	const User* user = findUser(userName);
 	if(user == nullptr)
@@ -83,7 +91,7 @@ void Facebook::showFeed(const string& userName)						const
 	user->showFriendsStatus(10);
 	user->showPagesStatus(10);
 }
-void Facebook::showStatusOfEntity(bool isPage, const string& name)  const
+void Facebook::showStatusOfEntity(bool isPage, const string& name)  const noexcept(false)
 {
 	if (isPage)
 	{
@@ -104,7 +112,7 @@ void Facebook::showStatusOfEntity(bool isPage, const string& name)  const
 		currentUser->showStatuses(); //shows all sattuses of a user
 	}
 }
-void Facebook::showAllFriendsOrFans(bool isPage, const string& name)const
+void Facebook::showAllFriendsOrFans(bool isPage, const string& name)const noexcept(false)
 {
 	if (isPage)
 	{
@@ -115,7 +123,7 @@ void Facebook::showAllFriendsOrFans(bool isPage, const string& name)const
 		showAllLinks(name);
 	}
 }
-void Facebook::showAllLinks(const string& userName)					const
+void Facebook::showAllLinks(const string& userName)					const noexcept(false)
 {
 	const User* currentUser = findUser(userName);
 	if (currentUser == nullptr)
@@ -125,7 +133,7 @@ void Facebook::showAllLinks(const string& userName)					const
 	currentUser->showAllFriends();  //show all users friend listed.
 	currentUser->showAllLikedPages();
 }
-void Facebook::showAllFans(const string& pageName)				    const
+void Facebook::showAllFans(const string& pageName)				    const noexcept(false)
 {
 	const Fanpage* currentPage = findPage(pageName);
 	if (currentPage == nullptr)
@@ -192,7 +200,7 @@ void Facebook::Exit()											    const
 	cout << "Thank you for using FaceBook, goodbye !" << endl;
 }
 
-void Facebook::addTextStatus(bool isPage, const string& name, const string& textStatus)
+void Facebook::addTextStatus(bool isPage, const string& name, const string& textStatus) noexcept(false)
 {
 	Status* status = new Status(textStatus);
 	if (!isPage)
@@ -216,7 +224,7 @@ void Facebook::addTextStatus(bool isPage, const string& name, const string& text
 		fanpage->addStatus(*status); //creates a new status by input and adds it to fanpage.
 	}
 }
-void Facebook::addUser(const string& userName, int day, int month, int year)
+void Facebook::addUser(const string& userName, int day, int month, int year) noexcept(false)
 {
 	User* user = findUser(userName);
 	if (user != nullptr)
@@ -226,7 +234,7 @@ void Facebook::addUser(const string& userName, int day, int month, int year)
 	Date userDate(day, month, year);					  //creates a date.
 	usersVect.push_back(User(userName, userDate));   //creats a user with given date (now) - and use of default move ctor.
 }
-void Facebook::addFanToPage(const string& pageName, const string& userName)
+void Facebook::addFanToPage(const string& pageName, const string& userName) noexcept(false)
 {
 	Fanpage* page = findPage(pageName);
 	User* user = findUser(userName);
@@ -244,7 +252,7 @@ void Facebook::addFanToPage(const string& pageName, const string& userName)
 	}
 	page->addFan(*user);
 }
-void Facebook::addFanpage(const string& pageName)
+void Facebook::addFanpage(const string& pageName) noexcept(false)
 {
 	Fanpage* page = findPage(pageName);
 	if (page != nullptr)
@@ -253,7 +261,7 @@ void Facebook::addFanpage(const string& pageName)
 	}
 	fanpageVect.push_back(Fanpage(pageName));  //creats a fan page with given name - and use of default move ctor.
 }
-void Facebook::addFriendship(const string& userName1, const string& userName2)
+void Facebook::addFriendship(const string& userName1, const string& userName2) noexcept(false)
 {
 	//try catch
 	User* user1 = findUser(userName1);
@@ -264,7 +272,7 @@ void Facebook::addFriendship(const string& userName1, const string& userName2)
 	}
 	user1->addFriend(*user2);
 }
-void Facebook::removeFanFromPage(const string& pageName, const string& userName)
+void Facebook::removeFanFromPage(const string& pageName, const string& userName) noexcept(false)
 {
 	Fanpage* page = findPage(pageName);
 	User* user = findUser(userName);
@@ -283,7 +291,7 @@ void Facebook::removeFanFromPage(const string& pageName, const string& userName)
 	}
 	page->removeFan(*user);
 }
-void Facebook::cancelFriendship(const string& userName1, const string& userName2)
+void Facebook::cancelFriendship(const string& userName1, const string& userName2) noexcept(false)
 {
 	//try catch
 	User* user1 = findUser(userName1);

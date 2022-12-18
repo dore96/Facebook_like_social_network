@@ -49,8 +49,7 @@ void UserInteraction::chooseFromMenu(int choice)
 		break;
 	case 12: facebook->Exit();
 		break;
-	default: cout << "Invalid choice, choose again" << endl;
-		break;
+	default: throw out_of_range(" choice needs to bo between 1 - 12");
 	}
 }
 
