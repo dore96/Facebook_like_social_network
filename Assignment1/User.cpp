@@ -3,6 +3,12 @@
 
 User::User(const string& inputName, const Date& inputDateOfBirth) noexcept(false) : dateOfBirth(inputDateOfBirth)//constructor
 {
+	time_t currentTime = time(NULL);
+	const tm birthdayTime = *localtime(&currentTime);
+	if ((inputDateOfBirth.getYear() < 1900 || inputDateOfBirth.getYear() > (birthdayTime.tm_year + 1900)))
+	{
+		throw invalid_argument("Year of Birth given is not possible");
+	}
 	setName(inputName);
 }
 

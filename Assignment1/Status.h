@@ -2,7 +2,6 @@
 #define __Status_H
 #define TIME_FORMAT_LEN 100
 #include "Date.h"
-#include <ctime>
 
 class Status
 {

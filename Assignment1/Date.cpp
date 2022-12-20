@@ -35,7 +35,7 @@ void Date::setMonth(int month)
 }
 void Date::setDay(int day)
 {
-	if (day <= 0 || day > monthLen[getMonth()])
+	if (day <= 0 || day > monthLen[month])
 	{
 		throw invalid_argument("Date of day given is not possible");
 	}

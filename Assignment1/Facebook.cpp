@@ -260,7 +260,6 @@ void Facebook::addFanpage(const string& pageName) noexcept(false)
 }
 void Facebook::addFriendship(const string& userName1, const string& userName2) noexcept(false)
 {
-	//try catch
 	User* user1 = findUser(userName1);
 	User* user2 = findUser(userName2);
 	if (user1 == nullptr || user2 == nullptr)
