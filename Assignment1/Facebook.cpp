@@ -271,6 +271,10 @@ void Facebook::addFriendship(const string& userName1, const string& userName2) n
 	{
 		throw invalid_argument("Users are already friends.");
 	}
+	if (user1 ==user2)
+	{
+		throw invalid_argument("User can not add itself as a friend");
+	}
 	user1->addFriend(*user2);
 }
 void Facebook::removeFanFromPage(const string& pageName, const string& userName) noexcept(false)
