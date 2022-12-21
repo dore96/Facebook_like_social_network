@@ -25,6 +25,7 @@ public:
 	//operators funcs
 	const Fanpage& operator+=(User& addfan);
 	bool operator >(const Fanpage& other)					const;
+	bool operator >(const User& user)					    const;
 	bool operator ==(const Fanpage& other)					const;
 private:
 	string name;

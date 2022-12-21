@@ -36,6 +36,7 @@ public:
 	//Operators funcs
 	const User& operator+=(User& addfriend);
 	bool operator >(const User& other)						 const;
+	bool operator >(const Fanpage& page)					 const;
 	bool operator ==(const User& other)						 const;
 private:
 	const Date dateOfBirth;

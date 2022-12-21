@@ -26,6 +26,11 @@ Facebook::Facebook() : userInterface(*this)
 	addFanToPage("Merge Halicod & Meretz", "dor");
 	addFanToPage("Pro yogurt", "tovia");
 	addFanToPage("MTA course recomendations", "maor");
+	User* m = findUser("maor");
+	User* d = findUser("dor");
+	Fanpage* p = findPage("Pro yogurt");
+	Fanpage* h = findPage("Merge Halicod & Meretz");
+	cout << (*m > *d) << (*m > *p) << (*m > *h) << (*p > *h) << (*d > *h) << (*h > *m) << (*h > *p);
 }
 
 void Facebook::runConsoleApp()									
@@ -58,8 +63,8 @@ void Facebook::runConsoleApp()
 
 void Facebook::showAllUsers()										const
 {
-	list<User>::const_iterator itr = usersVect.begin();
-	list<User>::const_iterator enditr = usersVect.end();
+	list<User>::const_iterator itr = usersInSystem.begin();
+	list<User>::const_iterator enditr = usersInSystem.end();
 	cout << "Users: " << endl;
 	for (int i = 0; itr != enditr; ++itr, ++i)
 	{
@@ -68,8 +73,8 @@ void Facebook::showAllUsers()										const
 }
 void Facebook::showAllFanpage()										const
 {
-	list<Fanpage>::const_iterator itr = fanpageVect.begin();
-	list<Fanpage>::const_iterator enditr = fanpageVect.end();
+	list<Fanpage>::const_iterator itr = fanpagesInSystem.begin();
+	list<Fanpage>::const_iterator enditr = fanpagesInSystem.end();
 	cout << "Fanpages: " << endl;
 	for (int i = 0; itr != enditr; ++itr, ++i)
 	{
@@ -145,8 +150,8 @@ void Facebook::showAllFans(const string& pageName)				    const noexcept(false)
 
 User* Facebook::findUser(const string& name)                        
 {
-	list<User>::iterator itr = usersVect.begin();
-	list<User>::iterator end = usersVect.end();
+	list<User>::iterator itr = usersInSystem.begin();
+	list<User>::iterator end = usersInSystem.end();
 	for (int i = 0;itr != end; ++itr, i++)
 	{
 		if (!name.compare((*itr).getName()))
@@ -158,8 +163,8 @@ User* Facebook::findUser(const string& name)
 }
 const User* Facebook::findUser(const string& name)					const
 {
-	list<User>::const_iterator itr = usersVect.begin();
-	list<User>::const_iterator end = usersVect.end();
+	list<User>::const_iterator itr = usersInSystem.begin();
+	list<User>::const_iterator end = usersInSystem.end();
 	for (int i = 0; itr != end; ++itr, i++)
 	{
 		if (!name.compare((*itr).getName()))
@@ -171,8 +176,8 @@ const User* Facebook::findUser(const string& name)					const
 }
 Fanpage* Facebook::findPage(const string& name)                   
 {
-	list<Fanpage>::iterator itr = fanpageVect.begin();
-	list<Fanpage>::iterator end = fanpageVect.end();
+	list<Fanpage>::iterator itr = fanpagesInSystem.begin();
+	list<Fanpage>::iterator end = fanpagesInSystem.end();
 	for (; itr != end; ++itr)
 	{
 		if (!name.compare((*itr).getName()))
@@ -184,8 +189,8 @@ Fanpage* Facebook::findPage(const string& name)
 }
 const Fanpage* Facebook::findPage(const string& name)               const
 {
-	list<Fanpage>::const_iterator itr = fanpageVect.begin();
-	list<Fanpage>::const_iterator end = fanpageVect.end();
+	list<Fanpage>::const_iterator itr = fanpagesInSystem.begin();
+	list<Fanpage>::const_iterator end = fanpagesInSystem.end();
 	for (; itr != end; ++itr)
 	{
 		if (!name.compare((*itr).getName()))
@@ -229,7 +234,7 @@ void Facebook::addUser(const string& userName, int day, int month, int year) noe
 		throw invalid_argument("This user already exists, returning to menu");
 	}
 	Date userDate(day, month, year);					  //creates a date.
-	usersVect.push_back(User(userName, userDate));   //creats a user with given date (now) - and use of default move ctor.
+	usersInSystem.push_back(User(userName, userDate));   //creats a user with given date (now) - and use of default move ctor.
 }
 void Facebook::addFanToPage(const string& pageName, const string& userName) noexcept(false)
 {
@@ -256,7 +261,7 @@ void Facebook::addFanpage(const string& pageName) noexcept(false)
 	{
 		throw invalid_argument("This page already exists");
 	}
-	fanpageVect.push_back(Fanpage(pageName));  //creats a fan page with given name - and use of default move ctor.
+	fanpagesInSystem.push_back(Fanpage(pageName));  //creats a fan page with given name - and use of default move ctor.
 }
 void Facebook::addFriendship(const string& userName1, const string& userName2) noexcept(false)
 {

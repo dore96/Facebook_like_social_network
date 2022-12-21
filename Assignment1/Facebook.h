@@ -33,8 +33,8 @@ public:
 	void removeFanFromPage(const string& pageName, const string& userName)		noexcept(false);
 	
 private:
-	list<User> usersVect;
-	list<Fanpage> fanpageVect;
+	list<User> usersInSystem;
+	list<Fanpage> fanpagesInSystem;
 	UserInteraction userInterface;
 };
 
