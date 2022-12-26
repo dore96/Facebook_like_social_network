@@ -7,7 +7,7 @@ User::User(const string& inputName, const Date& inputDateOfBirth) noexcept(false
 	const tm birthdayTime = *localtime(&currentTime);
 	if ((inputDateOfBirth.getYear() < 1900 || inputDateOfBirth.getYear() > (birthdayTime.tm_year + 1900)))
 	{
-		throw invalid_argument("Year of Birth given is not possible");
+		throw invalidYearException();
 	}
 	setName(inputName);
 }
@@ -16,7 +16,7 @@ void User::setName(const string& inputName) noexcept(false)
 {
 	if (!inputName.compare(""))
 	{
-		throw invalid_argument("Name can not be empty");
+		throw emptyUserNameException();
 	}
 	name = inputName;
 }

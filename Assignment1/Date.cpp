@@ -29,7 +29,7 @@ void Date::setMonth(int month)
 {
 	if (!(month < 13 && month > 0))
 	{
-		throw invalid_argument("Date of month given is not possible");
+		throw invalidMonthException();
 	}
 	this->month = month;
 }
@@ -37,7 +37,7 @@ void Date::setDay(int day)
 {
 	if (day <= 0 || day > monthLen[month])
 	{
-		throw invalid_argument("Date of day given is not possible");
+		throw invalidDayException();
 	}
 	this->day = day;
 }

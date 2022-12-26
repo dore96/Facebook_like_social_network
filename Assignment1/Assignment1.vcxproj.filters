@@ -56,5 +56,8 @@
     <ClInclude Include="UserInteraction.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Exceptions.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

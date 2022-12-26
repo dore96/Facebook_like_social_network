@@ -9,7 +9,7 @@ bool Fanpage::setName(const string& newName) noexcept(false)
 {
 	if (!newName.compare(""))
 	{
-		throw invalid_argument("Name can not be empty");
+		throw emptyFanpageNameException();
 	}
 	name = newName;
 	return true;
