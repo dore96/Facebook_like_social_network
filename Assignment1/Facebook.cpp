@@ -51,6 +51,67 @@ void Facebook::runConsoleApp()
 		{
 			cout << "Out of range:" << e.what() << endl;
 		}
+		//general facebook exception
+		catch (emptyNameException& e)
+		{
+			cout << e.what() << endl;
+		}
+		catch (duplicateConnactionException& e)
+		{
+			cout << e.what() << endl;
+		}
+		catch (notFoundException& e)
+		{
+			cout << e.what() << endl;
+		}
+		//date exceptions
+		catch (invalidDayException& e)
+		{
+			cout << e.what() << endl;
+		}
+		catch (invalidMonthException& e)
+		{
+			cout << e.what() << endl;
+		}
+		catch (invalidYearException& e)
+		{
+			cout << e.what() << endl;
+		}
+		catch (dateException& e)
+		{
+			cout << e.what() << endl;
+		}
+		//user exceptions
+		catch (constructUserException& e)
+		{
+			cout << e.what() << endl;
+		}
+		catch (duplicateUserException& e)
+		{
+			cout << e.what() << endl;
+		}
+		catch (userException& e)
+		{
+			cout << e.what() << endl;
+		}
+		//fanpage exceptions
+		catch (constructFanpageException& e)
+		{
+			cout << e.what() << endl;
+		}
+		catch (duplicateFanpageException& e)
+		{
+			cout << e.what() << endl;
+		}
+		catch (fanpageException& e)
+		{
+			cout << e.what() << endl;
+		}
+		
+		catch (generalFacebookException& e)
+		{
+			cout << e.what() << endl;
+		}
 		catch (...)
 		{
 			cout << "There was a unexpected error, please try again." << endl;
@@ -90,7 +151,7 @@ void Facebook::showFeed(const string& userName)						const noexcept(false)
 	const User* user = findUser(userName);
 	if(user == nullptr)
 	{
-		throw invalid_argument("No user with that name");
+		throw notFoundException();
 	}
 	user->showFriendsStatus(10);
 	user->showPagesStatus(10);
@@ -102,16 +163,16 @@ void Facebook::showStatusOfEntity(bool isPage, const string& name)  const noexce
 		const Fanpage* currentPage = findPage(name);
 		if (currentPage == nullptr)
 		{
-			throw invalid_argument("No fan page with that name");
+			throw notFoundException();
 		}
-		currentPage->showStatuses(); //shows all sattuses of a fanpage
+		currentPage->showStatuses(); //shows all satatuses of a fanpage
 	}
 	else
 	{
 		const User* currentUser = findUser(name);
 		if (currentUser == nullptr)
 		{
-			throw invalid_argument("No user with that name");
+			throw notFoundException();
 		}
 		currentUser->showStatuses(); //shows all sattuses of a user
 	}
@@ -132,7 +193,7 @@ void Facebook::showAllLinks(const string& userName)					const noexcept(false)
 	const User* currentUser = findUser(userName);
 	if (currentUser == nullptr)
 	{
-		throw invalid_argument("No user with that name");
+		throw notFoundException();
 	}
 	currentUser->showAllFriends();  //show all users friend listed.
 	currentUser->showAllLikedPages();
@@ -142,7 +203,7 @@ void Facebook::showAllFans(const string& pageName)				    const noexcept(false)
 	const Fanpage* currentPage = findPage(pageName);
 	if (currentPage == nullptr)
 	{
-		throw invalid_argument("No fan page with that name");
+		throw notFoundException();
 	}
 	currentPage->showAllFans();  //show all fans of a page
 }
@@ -211,7 +272,7 @@ void Facebook::addTextStatus(bool isPage, const string& name, const string& text
 		User* user = findUser(name);
 		if (user == nullptr)
 		{
-			throw invalid_argument("No user with that name");
+			throw notFoundException();
 		}
 		user->addStatus(textStatus);
 	}
@@ -220,7 +281,7 @@ void Facebook::addTextStatus(bool isPage, const string& name, const string& text
 		Fanpage* fanpage = findPage(name);
 		if (fanpage == nullptr)
 		{
-			throw invalid_argument("No user with that name");
+			throw notFoundException();
 		}
 		fanpage->addStatus(textStatus);
 	}
@@ -230,9 +291,9 @@ void Facebook::addUser(const string& userName, int day, int month, int year) noe
 	User* user = findUser(userName);
 	if (user != nullptr)
 	{
-		throw invalid_argument("This user already exists, returning to menu");
+		throw duplicateUserException();
 	}
-	Date userDate(day, month, year);					  //creates a date.
+	Date userDate(day, month, year);					      //creates a date.
 	usersInSystem.push_back(User(userName, userDate));   //creats a user with given date (now) - and use of default move ctor.
 }
 void Facebook::addFanToPage(const string& pageName, const string& userName) noexcept(false)
@@ -241,15 +302,15 @@ void Facebook::addFanToPage(const string& pageName, const string& userName) noex
 	User* user = findUser(userName);
 	if (page == nullptr)
 	{
-		throw invalid_argument("No page called" + pageName + " was found");
+		throw notFoundException();
 	}
 	if (user == nullptr)
 	{
-		throw invalid_argument("No user called" + userName + " was found");
+		throw notFoundException();
 	}
 	if (user->isFanOf(pageName))
 	{
-		throw invalid_argument("User is already a fan of this page.");
+		throw duplicateConnactionException();
 	}
 	page->addFan(*user);
 }
@@ -258,7 +319,7 @@ void Facebook::addFanpage(const string& pageName) noexcept(false)
 	Fanpage* page = findPage(pageName);
 	if (page != nullptr)
 	{
-		throw invalid_argument("This page already exists");
+		throw duplicateFanpageException();
 	}
 	fanpagesInSystem.push_back(Fanpage(pageName));  //creats a fan page with given name - and use of default move ctor.
 }
@@ -268,11 +329,11 @@ void Facebook::addFriendship(const string& userName1, const string& userName2) n
 	User* user2 = findUser(userName2);
 	if (user1 == nullptr || user2 == nullptr)
 	{
-		throw invalid_argument("At least one of the users does not exist");
+		throw notFoundException();
 	}
 	if (user1->isFriendsWith(*user2))
 	{
-		throw invalid_argument("Users are already friends.");
+		throw duplicateConnactionException();
 	}
 	if (user1 ==user2)
 	{
@@ -286,11 +347,11 @@ void Facebook::removeFanFromPage(const string& pageName, const string& userName)
 	User* user = findUser(userName);
 	if (page == nullptr)
 	{
-		throw invalid_argument("No page called " + pageName + " was found");
+		throw notFoundException();
 	}
 	if (user == nullptr)
 	{
-		throw invalid_argument("No user called " + userName + " was found");
+		throw notFoundException();
 	}
 	if (!user->isFanOf(*page))
 	{
@@ -301,12 +362,11 @@ void Facebook::removeFanFromPage(const string& pageName, const string& userName)
 }
 void Facebook::cancelFriendship(const string& userName1, const string& userName2) noexcept(false)
 {
-	//try catch
 	User* user1 = findUser(userName1);
 	User* user2 = findUser(userName2);
 	if (user1==nullptr || user2 == nullptr)
 	{
-		throw invalid_argument("At least one of the users does not exist");
+		throw notFoundException();
 	}
 	if (!user1->isFriendsWith(*user2))
 	{

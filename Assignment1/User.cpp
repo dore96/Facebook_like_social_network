@@ -16,7 +16,7 @@ void User::setName(const string& inputName) noexcept(false)
 {
 	if (!inputName.compare(""))
 	{
-		throw emptyUserNameException();
+		throw emptyNameException();
 	}
 	name = inputName;
 }

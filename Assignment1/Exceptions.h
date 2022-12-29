@@ -10,55 +10,83 @@ using namespace std;
 #pragma warning (disable: 4996)
 #pragma warning (disable: 4267)
 
-//date exceptions
-class dateException : public exception
+//general facebook exception
+class generalFacebookException : public exception
 {
 public:
-	const char* what() const { return "Failed while constructing a date\n"; }
+	virtual const char* what() const { return "An error has occurred"; }
+};
+class emptyNameException : public generalFacebookException
+{
+public:
+	virtual const char* what() const override { return "Name can not be empty"; }
+};
+class notFoundException : public generalFacebookException
+{
+public:
+	virtual const char* what() const override { return "No entity/s with the given name/s was found"; }
+};
+class duplicateConnactionException : public generalFacebookException
+{
+public:
+	virtual const char* what() const override { return "Entities are already linked"; }
 };
 
+//date exceptions
+class dateException : public generalFacebookException
+{
+public:
+	virtual const char* what() const override { return "Failed while constructing a date"; }
+};
 class invalidMonthException : public dateException
 {
 public:
-	const char* what() const { return "Date of month given is not possible\n"; }
+	virtual const char* what() const override { return "Date of month given is not possible"; }
 };
-
 class invalidDayException : public dateException
 {
 public:
-	const char* what() const { return "Date of day given is not possible\n"; }
+	virtual const char* what() const override { return "Date of day given is not possible"; }
+};
+class invalidYearException : public dateException
+{
+public:
+	virtual const char* what() const override { return "Year of Birth given is not possible"; }
 };
 
 //user exceptions
-class userException : public exception
+class userException : public generalFacebookException
 {
 public:
-	const char* what() const { return "Failed while constructing a user\n"; }
+	virtual const char* what() const override { return "An error occurred related to user"; }
 };
-
-class invalidYearException : public userException
+class constructUserException : public userException
 {
 public:
-	const char* what() const { return "Year of Birth given is not possible\n"; }
+	virtual const char* what() const override { return "Failed while constructing a user"; }
 };
-
-class emptyUserNameException : public userException
+class duplicateUserException : public userException
 {
 public:
-	const char* what() const { return "Name can not be empty\n"; }
+	virtual const char* what() const override { return "User already exist"; }
 };
 
 //fanpage exceptions
-class fanpageException : public exception
+class fanpageException : public generalFacebookException
 {
 public:
-	const char* what() const { return "Failed while constructing a fanpage\n"; }
+	virtual const char* what() const override { return "An error occurred related to fanpage"; }
+};
+class constructFanpageException : public fanpageException
+{
+public:
+	virtual const char* what() const override { return "Failed while constructing a fanpage"; }
+};
+class duplicateFanpageException : public fanpageException
+{
+public:
+	virtual const char* what() const override { return "Fanpage already exist"; }
 };
 
-class emptyFanpageNameException : public fanpageException
-{
-public:
-	const char* what() const { return "Name can not be empty\n"; }
-};
 
 #endif
