@@ -30,6 +30,11 @@ Facebook::Facebook() : userInterface(*this)
 	User* d = findUser("dor");
 	Fanpage* p = findPage("Pro yogurt");
 	Fanpage* h = findPage("Merge Halicod & Meretz");
+	*h += *m;
+	cout << (*m > *d) << (*m > *p) << (*m > *h) << (*p > *h) << (*d > *h) << (*h > *m) << (*h > *p)<<endl;
+	cout << (*d > *m) << (*p > *m) << (*h > *m) << (*h > *p) << (*h > *d) << (*m > *h) << (*p > *h)<<endl;
+	cout << (*d < *m) << (*p < *m) << (*h < *m) << (*h < *p) << (*h < *d) << (*m < *h) << (*p < *h) << endl;
+	cout << (*m == *h) << (*p == *h) << endl;
 }
 
 void Facebook::runConsoleApp()									
