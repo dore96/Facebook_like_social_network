@@ -188,9 +188,21 @@ bool User::operator >(const User& other)					const
 {
 	return friendsList.size() > other.friendsList.size();
 }
+bool User::operator <(const User& other)					const
+{
+	return friendsList.size() < other.friendsList.size();
+}
 bool User::operator >(const Fanpage& page)					const
 {
 	return friendsList.size() > page.getNumberOfFans();
+}
+bool User::operator <(const Fanpage& page)					const
+{
+	return friendsList.size() < page.getNumberOfFans();
+}
+bool User::operator == (const Fanpage& page)				const
+{
+	return friendsList.size() == page.getNumberOfFans();
 }
 bool User::operator ==(const User& other)					const
 {

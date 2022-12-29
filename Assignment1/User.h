@@ -38,6 +38,9 @@ public:
 	bool operator >(const User& other)						 const;
 	bool operator >(const Fanpage& page)					 const;
 	bool operator ==(const User& other)						 const;
+	bool operator <(const User& other)						 const;
+	bool operator <(const Fanpage& page)					 const;
+	bool operator ==(const Fanpage& page)					 const;
 private:
 	const Date dateOfBirth;
 	string name;
