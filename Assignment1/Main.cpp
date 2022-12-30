@@ -1,4 +1,4 @@
-#include "Facebook.h"
+#include "UserInteraction.h"
 
 void newTerminate()
 {
@@ -10,6 +10,7 @@ int main()
 {
 	set_terminate(newTerminate);
 	Facebook myFacebook;
-	myFacebook.runConsoleApp();
+	UserInteraction userInteraction(myFacebook);
+	userInteraction.runConsoleApp();
 	return 0;
 }

@@ -5,6 +5,37 @@ UserInteraction::UserInteraction(Facebook& inputfacebook)
 {
 	facebook = &inputfacebook;
 }
+void UserInteraction::runConsoleApp()
+{
+	int choice;
+	do
+	{
+		try
+		{
+			printMenu();
+			cin >> choice;
+			chooseFromMenu(choice);
+		}
+		catch (invalid_argument& e)
+		{
+			cout << "Invalid argument:" << e.what() << endl;
+		}
+		catch (out_of_range& e)
+		{
+			cout << "Out of range:" << e.what() << endl;
+		}
+		catch (generalFacebookException& e)
+		{//all the inherit exceptions will search for their virtual override "what" func
+			cout << e.what() << endl;
+		}
+		catch (...)
+		{
+			cout << "There was a unexpected error, please try again." << endl;
+		}
+
+	} while (choice != EXIT);
+
+}
 void UserInteraction::printMenu()								const
 {
 	cout << "Choose an action number from the above menu:" << endl;
@@ -47,7 +78,7 @@ void UserInteraction::chooseFromMenu(int choice) noexcept(false)
 		break;
 	case 11: showAllFriendsOrFans();
 		break;
-	case 12: facebook->Exit();
+	case 12: Exit();
 		break;
 	default: throw out_of_range(" choice needs to bo between 1 - 12");
 	}
@@ -155,4 +186,8 @@ void UserInteraction::cancelFriendship()
 	cout << "Please enter the second user name: ";
 	getline(cin, userName2);
 	facebook->cancelFriendship(userName1, userName2);  //cancel friendship to both users
+}
+void UserInteraction::Exit()						const
+{
+	cout << "Thank you for using FaceBook, goodbye !" << endl;
 }

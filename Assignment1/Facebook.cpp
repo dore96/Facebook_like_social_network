@@ -1,6 +1,6 @@
 #include "Facebook.h"
 
-Facebook::Facebook() : userInterface(*this)
+Facebook::Facebook()
 {
 	addUser("dor",25,07,1996);
 	addUser("maor",29,04,1999);
@@ -26,104 +26,6 @@ Facebook::Facebook() : userInterface(*this)
 	addFanToPage("Merge Halicod & Meretz", "dor");
 	addFanToPage("Pro yogurt", "tovia");
 	addFanToPage("MTA course recomendations", "maor");
-	User* m = findUser("maor");
-	User* d = findUser("dor");
-	Fanpage* p = findPage("Pro yogurt");
-	Fanpage* h = findPage("Merge Halicod & Meretz");
-	*h += *m;
-	cout << (*m > *d) << (*m > *p) << (*m > *h) << (*p > *h) << (*d > *h) << (*h > *m) << (*h > *p)<<endl;
-	cout << (*d > *m) << (*p > *m) << (*h > *m) << (*h > *p) << (*h > *d) << (*m > *h) << (*p > *h)<<endl;
-	cout << (*d < *m) << (*p < *m) << (*h < *m) << (*h < *p) << (*h < *d) << (*m < *h) << (*p < *h) << endl;
-	cout << (*m == *h) << (*p == *h) << endl;
-}
-
-void Facebook::runConsoleApp()									
-{
-	int choice;
-	do
-	{
-		try
-		{
-			userInterface.printMenu();
-			cin >> choice;
-			userInterface.chooseFromMenu(choice);
-		}
-		catch (invalid_argument& e)
-		{
-			cout << "Invalid argument:" << e.what() << endl;
-		}
-		catch (out_of_range& e)
-		{
-			cout << "Out of range:" << e.what() << endl;
-		}
-		//general facebook exception
-		catch (emptyNameException& e)
-		{
-			cout << e.what() << endl;
-		}
-		catch (duplicateConnactionException& e)
-		{
-			cout << e.what() << endl;
-		}
-		catch (notFoundException& e)
-		{
-			cout << e.what() << endl;
-		}
-		//date exceptions
-		catch (invalidDayException& e)
-		{
-			cout << e.what() << endl;
-		}
-		catch (invalidMonthException& e)
-		{
-			cout << e.what() << endl;
-		}
-		catch (invalidYearException& e)
-		{
-			cout << e.what() << endl;
-		}
-		catch (dateException& e)
-		{
-			cout << e.what() << endl;
-		}
-		//user exceptions
-		catch (constructUserException& e)
-		{
-			cout << e.what() << endl;
-		}
-		catch (duplicateUserException& e)
-		{
-			cout << e.what() << endl;
-		}
-		catch (userException& e)
-		{
-			cout << e.what() << endl;
-		}
-		//fanpage exceptions
-		catch (constructFanpageException& e)
-		{
-			cout << e.what() << endl;
-		}
-		catch (duplicateFanpageException& e)
-		{
-			cout << e.what() << endl;
-		}
-		catch (fanpageException& e)
-		{
-			cout << e.what() << endl;
-		}
-		
-		catch (generalFacebookException& e)
-		{
-			cout << e.what() << endl;
-		}
-		catch (...)
-		{
-			cout << "There was a unexpected error, please try again." << endl;
-		}
-
-	} while (choice != EXIT);
-
 }
 
 void Facebook::showAllUsers()										const
@@ -264,10 +166,6 @@ const Fanpage* Facebook::findPage(const string& name)               const
 		}
 	}
 	return nullptr;
-}
-void Facebook::Exit()											    const
-{
-	cout << "Thank you for using FaceBook, goodbye !" << endl;
 }
 
 void Facebook::addTextStatus(bool isPage, const string& name, const string& textStatus) noexcept(false)

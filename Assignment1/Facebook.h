@@ -1,13 +1,11 @@
 #ifndef __Facebook_H
 #define __Facebook_H
-#include "UserInteraction.h"
-#define EXIT 12 
+#include "Fanpage.h"
 
 class Facebook
 {
 public:
 	Facebook();
-	void runConsoleApp();
 	//showing funcs
 	void showAllUsers()										  const;
 	void showAllFanpage()									  const;
@@ -23,7 +21,7 @@ public:
 	const User* findUser(const string& name)				  const;
 	Fanpage* findPage(const string& name);
 	const Fanpage* findPage(const string& name)				  const;
-	void Exit()												  const;
+
 	void addUser(const string& userName, int day, int month, int year)			noexcept(false);
 	void addFanpage(const string& pageName)										noexcept(false);
 	void addFanToPage(const string& pageName, const string& userName)			noexcept(false);
@@ -35,7 +33,6 @@ public:
 private:
 	list<User> usersInSystem;
 	list<Fanpage> fanpagesInSystem;
-	UserInteraction userInterface;
 };
 
 #endif
