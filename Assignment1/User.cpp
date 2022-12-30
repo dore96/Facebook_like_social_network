@@ -1,24 +1,24 @@
 #include "User.h"
 #include "Fanpage.h"
 
-User::User(char* inputName, const Date& inputDateOfBirth) : dateOfBirth(inputDateOfBirth)      //constructor
+User::User(const string& inputName, const Date& inputDateOfBirth) noexcept(false) : dateOfBirth(inputDateOfBirth)//constructor
 {
+	time_t currentTime = time(NULL);
+	const tm birthdayTime = *localtime(&currentTime);
+	if ((inputDateOfBirth.getYear() < 1900 || inputDateOfBirth.getYear() > (birthdayTime.tm_year + 1900)))
+	{
+		throw invalidYearException();
+	}
 	setName(inputName);
-	numberOfFriends = 0;
-	numberOfStatus = 0;
-	numberOfLikedPages = 0;
-	physicalNumberOfLikedPages = InitNumber;
-	physicalNumberOfFriends = InitNumber;
-	physicalNumberOfStatus = InitNumber;
-	statusPtrArr = new const Status * [physicalNumberOfStatus];
-	friendsPtrArr = new const User * [physicalNumberOfFriends];
-	fanpagePtrArr = new const Fanpage * [physicalNumberOfLikedPages];
 }
-bool User::setName(char* inputName)
+
+void User::setName(const string& inputName) noexcept(false)
 {
-	name = new char[strlen(inputName) + 1];
-	strcpy(name, inputName);
-	return true;
+	if (!inputName.compare(""))
+	{
+		throw emptyNameException();
+	}
+	name = inputName;
 }
 const Date& User::getBirthDate()							const
 {
@@ -26,75 +26,94 @@ const Date& User::getBirthDate()							const
 }
 int User::getNumberOfStatus()								const
 {
-	return numberOfStatus;
+	return statusVect.size();
 }
 int User::getNumberOfFriends()								const
 {
-	return numberOfFriends;
+	return friendsList.size();
 }
-const char* User::getName()									const
+const string& User::getName()								const
 {
 	return name;
 }
 
 void User::showStatuses(int numberOfPrintStatus)			const 
 {//user can limit how many statuses he wants to print - otherwise it will print all statuses.
-	int i;
-	cout << name << " had posted " << numberOfStatus << " statuses." << endl;
-	for (i = 0; i < numberOfStatus && i < numberOfPrintStatus; i++)
+	cout << name << " had posted " << statusVect.size() << " statuses." << endl;
+	vector<Status>::const_iterator itr = statusVect.begin();
+	vector<Status>::const_iterator enditr = statusVect.end();
+	for (int i = 0; itr != enditr && i < numberOfPrintStatus; ++i, ++itr)
 	{
 		cout << "status number " << i + 1 << ": ";
-		statusPtrArr[i]->showText();
-		cout << "was posted on: ";
-		statusPtrArr[i]->showTime();
+		(*itr).showText();
+		cout << "was posted on: " << (*itr).getDate() << " ";
+		(*itr).showTime();
 	}
 }
 void User::showFriendsStatus(int numberOfPrintStatus)	    const
 {//user can limit how many statuses he wants to print per user - otherwise it will prints all statuses.
-	for (int i = 0; i < numberOfFriends; i++)
+	list<const User*>::const_iterator itr = friendsList.begin();
+	list<const User*>::const_iterator enditr = friendsList.end();
+	for (; itr != enditr; ++itr)
 	{
-		friendsPtrArr[i]->showStatuses(numberOfPrintStatus);
+		cout << "\n" << (*itr)->getName() << " statuses:" << endl;
+		(*itr)->showStatuses(numberOfPrintStatus);
 	}
 }
-void User::showPagesStatus(int numberOfPrintStatus)	    const
+void User::showPagesStatus(int numberOfPrintStatus)			const
 {//user can limit how many statuses he wants to print per page - otherwise it will prints all statuses.
-	for (int i = 0; i < numberOfLikedPages; i++)
+	list<const Fanpage*>::const_iterator itr = pageList.begin();
+	list<const Fanpage*>::const_iterator enditr = pageList.end();
+	for (; itr != enditr; ++itr)
 	{
-		fanpagePtrArr[i]->showStatuses(numberOfPrintStatus);
+		cout << "\n" << (*itr)->getName() << " statuses:" << endl;
+		(*itr)->showStatuses(numberOfPrintStatus);
 	}
 }
 void User::showAllFriends()									const
 {
-	for (int i = 0; i < numberOfFriends; i++)
-		cout << "Friend number " << (i + 1) << " is: " << friendsPtrArr[i]->name << endl;
+	list<const User*>::const_iterator itr = friendsList.begin();
+	list<const User*>::const_iterator enditr = friendsList.end();
+	for (int i = 0; itr != enditr; ++itr, ++i)
+	{
+		cout << "Friend number " << (i + 1) << " is: " << (*itr)->name << endl;
+	}
 }
 void User::showAllLikedPages()								const
 {
-	for (int i = 0; i < numberOfLikedPages; i++)
-		cout << "Page number " << (i + 1) << " is: " << fanpagePtrArr[i]->getName() << endl;
+	list<const Fanpage*>::const_iterator itr = pageList.begin();
+	list<const Fanpage*>::const_iterator enditr = pageList.end();
+	for (int i = 0; itr != enditr; ++itr, ++i)
+	{
+		cout << "Page number " << (i + 1) << " is: " << (*itr)->getName() << endl;
+	}
 }
 void User::printName()										const
 {
 	cout << name << endl;
 }
 
-bool User::isFriendsWith(const char* friendName)			const
+bool User::isFriendsWith(const User& isfriend)			const
 {
-	for (int i = 0; i < numberOfFriends; i++)
+	list<const User*>::const_iterator itr = friendsList.begin();
+	list<const User*>::const_iterator enditr = friendsList.end();
+	for (; itr != enditr; ++itr)
 	{
-		if (!strcmp(friendsPtrArr[i]->getName(), friendName)) 
+		if (isfriend == *(*itr))
 		{//compare by name of users (uniq)
 			return true;
 		}
 	}
 	return false;
 }
-bool User::isFanOf(const char* pageName)                    const
+bool User::isFanOf(const Fanpage& page)                  const
 {
-	for (int i = 0; i < numberOfLikedPages; i++)
+	list<const Fanpage*>::const_iterator itr = pageList.begin();
+	list<const Fanpage*>::const_iterator enditr = pageList.end();
+	for (; itr != enditr; ++itr)
 	{
-		if (!strcmp(fanpagePtrArr[i]->getName(), pageName))
-		{//compare by name of fanpages (uniq)
+		if (page == **itr)
+		{//compare by name of users (uniq)
 			return true;
 		}
 	}
@@ -103,112 +122,89 @@ bool User::isFanOf(const char* pageName)                    const
 
 void User::addFriend(User& addFriend)
 {
-	if (isFriendsWith(addFriend.getName()))
+	if (isFriendsWith(addFriend))
 	{//if they are friends already - return
 		return;
 	}
-
-	if (numberOfFriends >= physicalNumberOfFriends)
-		makeDoubleFriendsSpace();
-
-	friendsPtrArr[numberOfFriends] = &addFriend;
-	numberOfFriends++;
+	friendsList.push_back(&addFriend);
 	addFriend.addFriend(*this);  //add myself to friend list.
 }
-void User::addStatus(const Status& status)
+void User::addStatus(const string& status)
 {
-	if (numberOfStatus >= physicalNumberOfStatus)
-		makeDoubleStatusSpace();
-
-	statusPtrArr[numberOfStatus] = &status;
-	numberOfStatus++;
+	statusVect.push_back(status);
 }
 void User::unFriend(User& friendToRemove)
 {
-	if (!isFriendsWith(friendToRemove.getName()))
+	list<const User*>::const_iterator itr = friendsList.begin();
+	list<const User*>::const_iterator enditr = friendsList.end();
+	if (!isFriendsWith(friendToRemove))
 	{
 		return;
 	}
-	for (int i = 0; i < numberOfFriends; i++)
-	{//if they are friends - remove the friend and put in their place the last friend.
-		if (friendsPtrArr[i] == &friendToRemove)
+	for (; itr != enditr; ++itr)
+	{
+		if((*itr) == &friendToRemove)
 		{
-			friendsPtrArr[i] = friendsPtrArr[numberOfFriends - 1];
-			numberOfFriends--;
+			friendsList.erase(itr);
+			break;
 		}
 	}
 	friendToRemove.unFriend(*this);
 }
 void User::likeAPage(Fanpage& page)
 {
-	if (isFanOf(page.getName()))
+	if (isFanOf(page))
 	{//if user is a fan of the page , return.
 		return;
 	}
-	if (numberOfLikedPages >= physicalNumberOfLikedPages)
-		makeDoublePageSpace();
-	fanpagePtrArr[numberOfLikedPages] = &page;
-	numberOfLikedPages++;
+	pageList.push_back(& page);
 	page.addFan(*this);  //add user to fans of fanpage.
 }
 void User::unlikeAPage(Fanpage& page)
 {
-	if (!isFanOf(page.getName()))
-	{//if user do not fan of page - return
+	list<const Fanpage*>::const_iterator itr = pageList.begin();
+	list<const Fanpage*>::const_iterator enditr = pageList.end();
+	if (!isFanOf(page))
+	{
 		return;
 	}
-	for (int i = 0; i < numberOfLikedPages; i++)
+	for (; itr != enditr; ++itr)
 	{
-		if (fanpagePtrArr[i] == &page)
+		if ((*itr) == &page)
 		{
-			fanpagePtrArr[i] = fanpagePtrArr[numberOfLikedPages - 1];
-			numberOfLikedPages--;
+			pageList.erase(itr);
+			break;
 		}
 	}
 	page.removeFan(*this); //remove user from list of fans in fanpage
 }
 
-void User::makeDoubleFriendsSpace()
-{
-	physicalNumberOfFriends *= 2;
-	const User** newFriendsPtrArr = new const User * [physicalNumberOfFriends];
-	for (int i = 0; i < numberOfFriends; i++)
-	{
-		newFriendsPtrArr[i] = friendsPtrArr[i];
-	}
-	delete[]friendsPtrArr;
-	friendsPtrArr = newFriendsPtrArr;
+const User& User::operator+=(User& addfriend)  
+{//Multiple placement support
+	addFriend(addfriend);
+	return *this;
 }
-void User::makeDoubleStatusSpace()
+bool User::operator >(const User& other)					const
 {
-	physicalNumberOfStatus *= 2;
-	const Status** newStatusPtrArr = new const Status * [physicalNumberOfStatus];
-	for (int i = 0; i < numberOfStatus; i++)
-	{
-		newStatusPtrArr[i] = statusPtrArr[i];
-	}
-	delete[]statusPtrArr;
-	statusPtrArr = newStatusPtrArr;
+	return friendsList.size() > other.friendsList.size();
 }
-void User::makeDoublePageSpace()
+bool User::operator <(const User& other)					const
 {
-	physicalNumberOfLikedPages *= 2;
-	const Fanpage** newFanpagePtrArr = new const Fanpage * [physicalNumberOfLikedPages];
-	for (int i = 0; i < numberOfLikedPages; i++)
-	{
-		newFanpagePtrArr[i] = fanpagePtrArr[i];
-	}
-	delete[] fanpagePtrArr;
-	fanpagePtrArr = newFanpagePtrArr;
+	return friendsList.size() < other.friendsList.size();
 }
-User::~User()		//Destructor
+bool User::operator >(const Fanpage& page)					const
 {
-	delete[]name;
-	for (int i = 0; i < numberOfStatus; i++)
-	{//deletes all statuses
-		delete statusPtrArr[i];  
-	}
-	delete[]fanpagePtrArr;
-	delete[]friendsPtrArr;
-	delete[]statusPtrArr;
+	return friendsList.size() > page.getNumberOfFans();
+}
+bool User::operator <(const Fanpage& page)					const
+{
+	return friendsList.size() < page.getNumberOfFans();
+}
+bool User::operator == (const Fanpage& page)				const
+{
+	return friendsList.size() == page.getNumberOfFans();
+}
+bool User::operator ==(const User& other)					const
+{
+	return !name.compare(other.getName());
 }

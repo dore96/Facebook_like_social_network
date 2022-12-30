@@ -5,14 +5,45 @@ UserInteraction::UserInteraction(Facebook& inputfacebook)
 {
 	facebook = &inputfacebook;
 }
+void UserInteraction::runConsoleApp()
+{
+	int choice;
+	do
+	{
+		try
+		{
+			printMenu();
+			cin >> choice;
+			chooseFromMenu(choice);
+		}
+		catch (invalid_argument& e)
+		{
+			cout << "Invalid argument:" << e.what() << endl;
+		}
+		catch (out_of_range& e)
+		{
+			cout << "Out of range:" << e.what() << endl;
+		}
+		catch (generalFacebookException& e)
+		{//all the inherit exceptions will search for their virtual override "what" func
+			cout << e.what() << endl;
+		}
+		catch (...)
+		{
+			cout << "There was a unexpected error, please try again." << endl;
+		}
+
+	} while (choice != EXIT);
+
+}
 void UserInteraction::printMenu()								const
 {
 	cout << "Choose an action number from the above menu:" << endl;
 	cout << "1.Add user" << endl;
 	cout << "2.Add fanpage" << endl;
-	cout << "3.Add status to a user or fanpage" << endl;
-	cout << "4.Show all status of a user or fanpage" << endl;
-	cout << "5.Show a user feed (10 most recent friend/fanpage status)" << endl;
+	cout << "3.Add a status to a user or fanpage" << endl;
+	cout << "4.Show all statuses of a user or fanpage" << endl;
+	cout << "5.Show a user feed (10 most recent friend/fanpage statuses)" << endl;
 	cout << "6.Add a friendship" << endl;
 	cout << "7.Cancel a friendship" << endl;
 	cout << "8.Add a fan to a fanpage" << endl;
@@ -21,7 +52,7 @@ void UserInteraction::printMenu()								const
 	cout << "11.Show all friends/fans of a User/Fanpage" << endl;
 	cout << "12.Exit" << endl;
 }
-void UserInteraction::chooseFromMenu(int choice)
+void UserInteraction::chooseFromMenu(int choice) noexcept(false)
 {
 	switch (choice)
 	{
@@ -47,30 +78,29 @@ void UserInteraction::chooseFromMenu(int choice)
 		break;
 	case 11: showAllFriendsOrFans();
 		break;
-	case 12: facebook->Exit();
+	case 12: Exit();
 		break;
-	default: cout << "Invalid choice, choose again" << endl;
-		break;
+	default: throw out_of_range(" choice needs to bo between 1 - 12");
 	}
 }
 
 void UserInteraction::showFeed()                   const
 {
-	char userName[NAME_LEN];
+	string userName;
 	cout << "Please enter the user name you would like to see his/her *all* friends 10 latest statuses:\n ";
 	CleanBuffer();
-	cin.getline(userName, NAME_LEN - 1);
+	getline(cin, userName);
 	facebook->showFeed(userName);
 }
 void UserInteraction::showStatusOfEntity()         const
 {
 	bool isPage;
-	cout << "Press 0 to show status for a user or 1 for a fanpage: ";
+	string name;
+	cout << "Press 0 to show statuses of a user or 1 for a fanpage: ";
 	cin >> isPage;
 	CleanBuffer();
 	cout << "Enter your name: ";
-	char name[NAME_LEN];
-	cin.getline(name, NAME_LEN - 1);
+	getline(cin, name);
 	facebook->showStatusOfEntity(isPage, name);
 }
 void UserInteraction::showAllFriendsOrFans()       const
@@ -80,83 +110,84 @@ void UserInteraction::showAllFriendsOrFans()       const
 	cin >> isPage;
 	CleanBuffer();
 	cout << "Enter your name: ";
-	char name[NAME_LEN];
-	cin.getline(name, NAME_LEN - 1);
+	string name;
+	getline(cin, name);
 	facebook->showAllFriendsOrFans(isPage, name);
 }
 
 void UserInteraction::addTextStatus()
 {
 	bool isPage;
-	char statusStr[STATUS_LEN];
+	string statusStr, name;
 	cout << "Press 1 to add status for a fanpage or 0 for a user: ";
 	cin >> isPage;
-	char name[NAME_LEN];
 	cout << "Enter its name: ";
 	CleanBuffer();
-	cin.getline(name, NAME_LEN - 1);
+	getline(cin, name);
 	cout << "Enter Status: ";
-	cin.getline(statusStr, STATUS_LEN - 1);
-	facebook->addTextStatus(isPage, name, statusStr);  //adds a status to user/fanpage
+	getline(cin , statusStr);
+	facebook->addTextStatus(isPage, name, statusStr);  //adds a statusText to user/fanpage
 }
 void UserInteraction::addUser()      
 {
 	int day, month, year;
-	char name[NAME_LEN];
+	string name;
 	cout << "Please Enter the user's name: ";
 	CleanBuffer();
-	cin.getline(name, NAME_LEN - 1);
+	getline(cin, name);
 	cout << "Please enter birthdate of the user (dd mm yy): ";
-	cin >> day >> month >> year;
+ 	cin >> day >> month >> year;
 	facebook->addUser(name,day,month,year);  //addes new user to system
 }
 void UserInteraction::addFanToPage()
 {
-	char pageName[NAME_LEN];
-	char fanName[NAME_LEN];
+	string pageName,fanName;
 	cout << "To which page would you like to add a fan? ";
 	CleanBuffer();
-	cin.getline(pageName, NAME_LEN - 1);
+	getline(cin, pageName);
 	cout << "Which user would you like to add as a fan? ";
-	cin.getline(fanName, NAME_LEN - 1);
+	getline(cin, fanName);
 	facebook->addFanToPage(pageName, fanName);  //addes user to panpage and vice versa.
 }
 void UserInteraction::addFanpage()
 {
-	char name[NAME_LEN];
+	string name;
 	cout << "Please enter the page's name: ";
 	CleanBuffer();
-	cin.getline(name, NAME_LEN - 1);
+	getline(cin, name);
 	facebook->addFanpage(name);
 }
 void UserInteraction::addFriendship()
 {
-	char userName1[NAME_LEN], userName2[NAME_LEN];
+	string userName1, userName2;
 	CleanBuffer();
 	cout << "Please enter the first user name: ";
-	cin.getline(userName1, NAME_LEN - 1);
+	getline(cin, userName1);
 	cout << "Please enter the second user name: ";
-	cin.getline(userName2, NAME_LEN - 1);
+	getline(cin, userName2);
 	facebook->addFriendship(userName1, userName2);
 }
 void UserInteraction::removeFanFromPage()
 {
-	char pageName[NAME_LEN];
-	char fanName[NAME_LEN];
+	string pageName, fanName;
 	cout << "From which page would you like to remove a fan? ";
 	CleanBuffer();
-	cin.getline(pageName, NAME_LEN - 1);
+	getline(cin, pageName);
 	cout << "Which user would you like to remove as a fan? ";
-	cin.getline(fanName, NAME_LEN - 1);
+	getline(cin, fanName);
 	facebook->removeFanFromPage(pageName, fanName);  //removes fan from fanpage and vice versa.
 }
 void UserInteraction::cancelFriendship()
 {
-	char userName1[NAME_LEN], userName2[NAME_LEN];
+	string userName1, userName2;
 	CleanBuffer();
 	cout << "Please enter the first user name: ";
-	cin.getline(userName1, NAME_LEN - 1);
+	getline(cin, userName1);
 	cout << "Please enter the second user name: ";
-	cin.getline(userName2, NAME_LEN - 1);
+	getline(cin, userName2);
 	facebook->cancelFriendship(userName1, userName2);  //cancel friendship to both users
+}
+void UserInteraction::Exit()						const
+{
+	cout << "Thank you for using FaceBook, goodbye !" << endl;
 }

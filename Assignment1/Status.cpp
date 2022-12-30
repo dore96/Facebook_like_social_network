@@ -1,11 +1,8 @@
 #include "Status.h"
 
-Status::Status(const char* inputText)
-	: currentTime(time(NULL)), statusTime(*localtime(&currentTime)), dateOfStatus(statusTime.tm_mday, (statusTime.tm_mon) + 1, (statusTime.tm_year + 1900))
-{//ctor how initiate the time and date of a status.
-	textLen = strlen(inputText) + 1;
-	text = new char[textLen];
-	strcpy(text, inputText);
+Status::Status(const string& inputText) noexcept(false)
+	: currentTime(time(NULL)), statusTime(*localtime(&currentTime)), dateOfStatus(statusTime.tm_mday, (statusTime.tm_mon) + 1, (statusTime.tm_year + 1900)),statusText(inputText)
+{
 }
 const tm& Status::getTime()			const
 {
@@ -17,23 +14,23 @@ void Status::showTime()				const
 	strftime(time_string, TIME_FORMAT_LEN-1, "%T", &statusTime);
 	cout << time_string << endl;
 }
-const char* Status::getText()		const
+const string& Status::getString()	const
 {
-	return text;
+	return statusText;
 }
-void  Status::showText() const
+void Status::showText()            const
 {
-	cout << text << endl;
-}
-int   Status::getTextLen()			const
-{
-	return  strlen(text);
+	cout << statusText.data() << endl;
 }
 const Date& Status::getDate()		const
 {
 	return dateOfStatus;
 }
-Status::~Status()  //d'tor - deletes the text char*.
+bool Status::operator ==(const Status& other)		const
 {
-	delete[]text;
+	return !(statusText.compare(other.statusText));
+}
+bool Status::operator !=(const Status& other)		const
+{
+	return !(*this == other);
 }

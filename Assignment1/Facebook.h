@@ -1,47 +1,38 @@
 #ifndef __Facebook_H
 #define __Facebook_H
-#include "UserInteraction.h"
-#define EXIT 12 
+#include "Fanpage.h"
 
 class Facebook
 {
 public:
 	Facebook();
-	void runConsoleApp();
 	//showing funcs
-	void showAllUsers()										const;
-	void showAllFanpage()									const;
-	void showAllUsersAndFanpages()							const;
-	void showFeed(const char* userName)				const;
-	void showStatusOfEntity(bool isPage, const char* name)  const;
-	void showAllLinks(const char* name)					const;
-	void showAllFans(const char* pageName)   				const;
-	void showAllFriendsOrFans(bool isPage,const char* name) const;
+	void showAllUsers()										  const;
+	void showAllFanpage()									  const;
+	void showAllUsersAndFanpages()							  const;
+	void showFeed(const string& userName)					  const noexcept(false);
+	void showStatusOfEntity(bool isPage, const string& name)  const noexcept(false);
+	void showAllLinks(const string& name)					  const noexcept(false);
+	void showAllFans(const string& pageName)   				  const noexcept(false);
+	void showAllFriendsOrFans(bool isPage,const string& name) const noexcept(false);
 
 	//action funcs
-	User* findUser(const char* name)						const;
-	Fanpage* findPage(const char* name)						const;
-	void Exit()												const;
-	void addUser(char* userName, int day, int month, int year);
-	void addFanpage(const char* pageName);
-	void addFanToPage(const char* pageName, const char* userName);
-	void addFriendship(const char* userName1, const char* userName2);
-	void addTextStatus(bool isPage, const char* name,const char* textStatus);
-	void cancelFriendship(const char* userName1, const char* userName2);
-	void removeFanFromPage(const char* pageName, const char* userName);
+	User* findUser(const string& name);
+	const User* findUser(const string& name)				  const;
+	Fanpage* findPage(const string& name);
+	const Fanpage* findPage(const string& name)				  const;
 
-	~Facebook();
+	void addUser(const string& userName, int day, int month, int year)			noexcept(false);
+	void addFanpage(const string& pageName)										noexcept(false);
+	void addFanToPage(const string& pageName, const string& userName)			noexcept(false);
+	void addFriendship(const string& userName1, const string& userName2)		noexcept(false);
+	void addTextStatus(bool isPage, const string& name,const string& textStatus)noexcept(false);
+	void cancelFriendship(const string& userName1, const string& userName2)		noexcept(false);
+	void removeFanFromPage(const string& pageName, const string& userName)		noexcept(false);
 	
 private:
-	User** UsersPtrArr;
-	Fanpage** FanpagePtrArr;
-	UserInteraction userInterface;
-	int numberOfUsers, numberOfFanpage;
-	int physicalNumberOfUsers, physicalNumberOfFanpage;
-
-	void makeDoubleUserssSpace();
-	void makeDoublePageSpace();
-	Facebook(const Facebook& other);
+	list<User> usersInSystem;
+	list<Fanpage> fanpagesInSystem;
 };
 
 #endif

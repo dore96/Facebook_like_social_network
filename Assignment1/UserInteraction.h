@@ -1,18 +1,15 @@
 #ifndef __UserInteraction_H
 #define __UserInteraction_H
-#include "Fanpage.h"
-
-#define NAME_LEN 50
-#define STATUS_LEN 120
-
-class Facebook;
+#include "Facebook.h"
+#define EXIT 12
 
 class UserInteraction
 {
 public:
 	UserInteraction(Facebook& facebook);
+	void runConsoleApp();
 	void printMenu()							const;
-	void chooseFromMenu(int choice);
+	void chooseFromMenu(int choice) noexcept(false);
 
 	//show funcs
 	void showFeed()                             const;
@@ -27,9 +24,9 @@ public:
 	void addFriendship();
 	void removeFanFromPage();
 	void cancelFriendship();
+	void Exit()									const;
 
 private:
 	Facebook* facebook;
-	UserInteraction(const UserInteraction& other);
 };
 #endif

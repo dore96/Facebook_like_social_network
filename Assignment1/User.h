@@ -3,17 +3,16 @@
 
 #include "Status.h" 
 class Fanpage;									  //avoiding the two way include problam. (user - fanpage , fanpage - user)
-const int InitNumber = 10;						  //initiation number for the size of arrays of users,statuses and fanpages
 
 class User
 {
 public:
-	User(char* tryName, const Date &dateOfBirth); //constructor 
+	User(const string& tryName, const Date &dateOfBirth); //constructor
 	//getters
 	const Date& getBirthDate()								 const;
 	int getNumberOfStatus()		     						 const;
 	int getNumberOfFriends()								 const;
-	const char* getName()									 const;
+	const string& getName()									 const;
 
 	//printing funcs
 	void printName()										 const;
@@ -24,31 +23,32 @@ public:
 	void showAllLikedPages()								 const;
 
 	//boolean funcs
-	bool isFriendsWith(const char* friendName)				 const;
-	bool isFanOf(const char* pageName)                       const;
+	bool isFriendsWith(const User& isfriend)			 const;
+	bool isFanOf(const Fanpage& page)                     const;
 
 	//action funcs 
 	void addFriend(User& addFriend);
-	void addStatus(const Status& status);		  //status is not able to change after creation - therefor const &
+	void addStatus(const string& status);		  //statusText is not able to change after creation - therefor const &
 	void unFriend(User& friendToRemove);
 	void likeAPage(Fanpage& page);
 	void unlikeAPage(Fanpage& page);
 	
-	~User();														
+	//Operators funcs
+	const User& operator+=(User& addfriend);
+	bool operator >(const User& other)						 const;
+	bool operator >(const Fanpage& page)					 const;
+	bool operator ==(const User& other)						 const;
+	bool operator <(const User& other)						 const;
+	bool operator <(const Fanpage& page)					 const;
+	bool operator ==(const Fanpage& page)					 const;
 private:
-	int numberOfFriends, numberOfStatus,numberOfLikedPages;
-	int physicalNumberOfFriends, physicalNumberOfStatus,physicalNumberOfLikedPages;
 	const Date dateOfBirth;
-	char* name;
-	const Status** statusPtrArr;
-	const User** friendsPtrArr;
-	const Fanpage** fanpagePtrArr;
+	string name;
+	vector<Status> statusVect;
+	list<const User*> friendsList;
+	list<const Fanpage*> pageList;
 
-	bool setName(char* tryName);                               
-	void makeDoubleFriendsSpace();
-	void makeDoubleStatusSpace();
-	void makeDoublePageSpace();
-	User(const User&);												 //disable the possibility of user copy.
+	void setName(const string& tryName)  noexcept(false);
 };
 
 
