@@ -45,7 +45,7 @@ void User::showStatuses(int numberOfPrintStatus)			const
 	for (int i = 0; itr != enditr && i < numberOfPrintStatus; ++i, ++itr)
 	{
 		cout << "status number " << i + 1 << ": ";
-		(*itr).showText();
+		(*itr).showStatus();
 		cout << "was posted on: " << (*itr).getDate() << " ";
 		(*itr).showTime();
 	}

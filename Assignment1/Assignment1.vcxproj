@@ -132,18 +132,22 @@
     <ClCompile Include="Facebook.cpp" />
     <ClCompile Include="Fanpage.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="PictureStatus.cpp" />
     <ClCompile Include="Status.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="UserInteraction.cpp" />
+    <ClCompile Include="VideoStatus.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Date.h" />
     <ClInclude Include="Exceptions.h" />
     <ClInclude Include="Facebook.h" />
     <ClInclude Include="Fanpage.h" />
+    <ClInclude Include="PictureStatus.h" />
     <ClInclude Include="Status.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="UserInteraction.h" />
+    <ClInclude Include="VideoStatus.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

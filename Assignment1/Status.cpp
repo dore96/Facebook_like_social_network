@@ -1,5 +1,4 @@
 #include "Status.h"
-
 Status::Status(const string& inputText) noexcept(false)
 	: currentTime(time(NULL)), statusTime(*localtime(&currentTime)), dateOfStatus(statusTime.tm_mday, (statusTime.tm_mon) + 1, (statusTime.tm_year + 1900)),statusText(inputText)
 {
@@ -14,11 +13,11 @@ void Status::showTime()				const
 	strftime(time_string, TIME_FORMAT_LEN-1, "%T", &statusTime);
 	cout << time_string << endl;
 }
-const string& Status::getString()	const
+const string& Status::getText()	const
 {
 	return statusText;
 }
-void Status::showText()            const
+void Status::showStatus()            const
 {
 	cout << statusText.data() << endl;
 }

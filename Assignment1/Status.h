@@ -8,18 +8,20 @@ class Status
 public:
 	Status(const string& inputText) noexcept(false);
 
-	const tm& getTime()			const;    //func returns the time ref , with no option to change it.
-	const string& getString()	const;
-	const Date& getDate()		const;
-	void showTime()				const;
-	void showText()				const;
+	const tm& getTime()					const;    //func returns the time ref , with no option to change it.
+	const Date& getDate()				const;
+	const string& getText()				const;
+	void showTime()						const;
+	virtual void showStatus()				const;
 	//operators funcs
-	bool operator ==(const Status& other)		const;
-	bool operator !=(const Status& other)		const;
-private:
+	virtual bool operator ==(const Status& other)		const;
+	virtual bool operator !=(const Status& other)		const;
+	virtual ~Status(){}
+protected:
 	time_t currentTime;
 	const tm statusTime;
 	const Date dateOfStatus;
 	const string statusText;
 };
+
 #endif
