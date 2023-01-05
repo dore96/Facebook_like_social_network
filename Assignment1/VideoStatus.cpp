@@ -29,3 +29,15 @@ bool VideoStatus::operator !=(const Status& other)		const
 {
 	return !(*this == other);
 }
+
+void VideoStatus::toOs(ostream& os) const
+{
+	if (typeid(os) == typeid(ofstream))
+	{//if we are writing to file
+		os << videoString << endl;
+	}
+	else
+	{//to the screen
+		this->showVideo();
+	}
+}

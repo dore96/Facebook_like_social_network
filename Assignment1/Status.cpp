@@ -33,3 +33,9 @@ bool Status::operator !=(const Status& other)		const
 {
 	return !(*this == other);
 }
+ostream& operator <<(ostream& os, const Status& status)
+{
+	status.showStatus();
+	status.toOs(os);
+	return os;
+}

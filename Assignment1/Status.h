@@ -13,9 +13,14 @@ public:
 	const string& getText()				const;
 	void showTime()						const;
 	virtual void showStatus()				const;
+
 	//operators funcs
 	virtual bool operator ==(const Status& other)		const;
 	virtual bool operator !=(const Status& other)		const;
+
+	//<< functions
+	virtual void toOs(ostream& os) const {}
+	friend ostream& operator <<(ostream& os, const Status& status);
 	virtual ~Status(){}
 protected:
 	time_t currentTime;

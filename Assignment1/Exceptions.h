@@ -6,6 +6,7 @@
 #include "string"
 #include <ctime>
 #include <iostream>
+#include <fstream>
 using namespace std;
 #pragma warning (disable: 4996)
 #pragma warning (disable: 4267)

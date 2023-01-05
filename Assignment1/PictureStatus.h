@@ -11,6 +11,7 @@ public:
 	//operators funcs
 	virtual bool operator ==(const Status& other)		const override;
 	virtual bool operator !=(const Status& other)		const override;
+	virtual void toOs(ostream& os) const override;
 	virtual ~PictureStatus() {}
 protected:
 	const string pictureString;
