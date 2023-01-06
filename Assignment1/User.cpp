@@ -32,7 +32,7 @@ void User::addEntity(Entity& entity)
 	if (temp2 != NULL)
 	{//if is fanpage
 		Entity::addEntity(entity, UserList);
-		temp2->addEntity(*this);
+		temp2->addFan(*this);
 	}
 }
 void User::Unlink(Entity& entityToRemove)
@@ -48,7 +48,7 @@ void User::Unlink(Entity& entityToRemove)
 	if (temp2 != NULL)
 	{//if is user
 		Entity::Unlink(entityToRemove, pageList);
-		temp2->Unlink(*this);
+		temp2->removeFan(*this);
 	}
 
 }
@@ -68,7 +68,7 @@ bool User::operator >(const Entity& other)					const
 	const Fanpage* temp2 = dynamic_cast<const Fanpage*>(&other);
 	if (temp2 != NULL)
 	{//if is user
-		return UserList.size() > temp2->getNumberOfFans();
+		return UserList.size() > temp2->getNumberOfLinkedUser();
 	}
 	else
 	{
@@ -85,7 +85,7 @@ bool User::operator <(const Entity& other)					const
 	const Fanpage* temp2 = dynamic_cast<const Fanpage*>(&other);
 	if (temp2 != NULL)
 	{//if is user
-		return UserList.size() < temp2->getNumberOfFans();
+		return UserList.size() < temp2->getNumberOfLinkedUser();
 	}
 	else
 	{
@@ -102,7 +102,7 @@ bool User::operator == (const Entity& other)				const
 	const Fanpage* temp2 = dynamic_cast<const Fanpage*>(&other);
 	if (temp2 != NULL)
 	{//if is user
-		return UserList.size() == temp2->getNumberOfFans();
+		return UserList.size() == temp2->getNumberOfLinkedUser();
 	}
 	else
 	{
