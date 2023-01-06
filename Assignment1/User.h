@@ -11,9 +11,13 @@ public:
 	//getters
 	const Date& getBirthDate()					  const;
 	int getNumberOfFanpages()					  const;
+	const list<const Entity*>& getPageList()      const;
 
 	void addEntity(Entity& entity);
 	void Unlink(Entity& entityToRemove);
+
+	virtual void showLinkedEntityStatus(int numberOfPrintStatus = INT_MAX) const;
+	virtual void showAllLinkedEntity() const;
 
 	//Operators funcs
 	virtual const Entity& operator+=(Entity& addEntity);

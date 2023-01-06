@@ -5,7 +5,6 @@ Entity::Entity(const string& inputName) noexcept(false)
 {
 	setName(inputName);
 }
-
 void Entity::setName(const string& inputName) noexcept(false)
 {
 	if (!inputName.compare(""))
@@ -40,24 +39,23 @@ void Entity::showStatuses(int numberOfPrintStatus)			const
 		(*itr).showTime();
 	}
 }
-void Entity::showLinkedEntityStatus(list<const Entity*> entityList,int numberOfPrintStatus)	    const
+void Entity::showLinkedEntityStatus(int numberOfPrintStatus)	    const
 {//user can limit how many statuses he wants to print per user - otherwise it will prints all statuses.
-	list<const Entity*>::const_iterator itr = entityList.begin();
-	list<const Entity*>::const_iterator enditr = entityList.end();
+	list<const Entity*>::const_iterator itr = UserList.begin();
+	list<const Entity*>::const_iterator enditr = UserList.end();
 	for (; itr != enditr; ++itr)
 	{
 		cout << "\n" << (*itr)->getName() << " statuses:" << endl;
 		(*itr)->showStatuses(numberOfPrintStatus);
 	}
 }
-
-void Entity::showAllLinkedEntity(list<const Entity*> entityList)									const
+void Entity::showAllLinkedEntity()									const
 {
-	list<const Entity*>::const_iterator itr = entityList.begin();
-	list<const Entity*>::const_iterator enditr = entityList.end();
+	list<const Entity*>::const_iterator itr = UserList.begin();
+	list<const Entity*>::const_iterator enditr = UserList.end();
 	for (int i = 0; itr != enditr; ++itr, ++i)
 	{
-		cout << "Friend number " << (i + 1) << " is: " << (*itr)->name << endl;
+		cout << "user Number " << (i + 1) << " is: " << (*itr)->name << endl;
 	}
 }
 

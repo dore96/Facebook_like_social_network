@@ -60,9 +60,13 @@ void Facebook::showFeed(const string& userName)						const noexcept(false)
 	{
 		throw notFoundException();
 	}
-	user->showFriendsStatus(10);
-	user->showPagesStatus(10);
+	user->showLinkedEntityStatus(10);
 }
+
+
+
+
+
 void Facebook::showStatusOfEntity(bool isPage, const string& name)  const noexcept(false)
 {
 	if (isPage)
@@ -102,8 +106,7 @@ void Facebook::showAllLinks(const string& userName)					const noexcept(false)
 	{
 		throw notFoundException();
 	}
-	currentUser->showAllFriends();  //show all users friend listed.
-	currentUser->showAllLikedPages();
+	currentUser->showAllLinkedEntity();  //show all users friend listed.
 }
 void Facebook::showAllFans(const string& pageName)				    const noexcept(false)
 {
@@ -112,8 +115,12 @@ void Facebook::showAllFans(const string& pageName)				    const noexcept(false)
 	{
 		throw notFoundException();
 	}
-	currentPage->showAllFans();  //show all fans of a page
+	currentPage->showAllLinkedEntity();  //show all fans of a page
 }
+
+
+
+
 
 User* Facebook::findUser(const string& name)                        
 {
@@ -271,7 +278,7 @@ void Facebook::cancelFriendship(const string& userName1, const string& userName2
 	{
 		throw notFoundException();
 	}
-	if (!user1->isFriendsWith(*user2))
+	if (!user1->isLinkedTO(*user2))
 	{
 		throw invalid_argument("No friendship exist between " + userName1+ 
 			" and " + userName2);

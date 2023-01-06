@@ -52,7 +52,6 @@ void User::Unlink(Entity& entityToRemove)
 	}
 
 }
-
 const Entity& User::operator+=(Entity& EntityToAdd)
 {//Multiple placement support
 	addEntity(EntityToAdd);
@@ -107,5 +106,27 @@ bool User::operator == (const Entity& other)				const
 	else
 	{
 		//handle error
+	}
+}
+
+void User::showLinkedEntityStatus(int numberOfPrintStatus) const
+{
+	Entity::showLinkedEntityStatus(numberOfPrintStatus);
+	list<const Entity*>::const_iterator itr = pageList.begin();
+	list<const Entity*>::const_iterator enditr = pageList.end();
+	for (; itr != enditr; ++itr)
+	{
+		cout << "\n" << (*itr)->getName() << " statuses:" << endl;
+		(*itr)->showStatuses(numberOfPrintStatus);
+	}
+}
+void User::showAllLinkedEntity() const
+{
+	Entity::showAllLinkedEntity();
+	list<const Entity*>::const_iterator itr = pageList.begin();
+	list<const Entity*>::const_iterator enditr = pageList.end();
+	for (int i = 0; itr != enditr; ++itr, ++i)
+	{
+		cout << "user Number " << (i + 1) << " is: " << (*itr)->getName() << endl;
 	}
 }

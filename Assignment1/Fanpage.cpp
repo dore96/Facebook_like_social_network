@@ -44,7 +44,7 @@ bool Fanpage::operator <(const Entity& other)						 const
 		return UserList.size() < other.getNumberOfLinkedUser();
 	}
 }
-bool Fanpage::operator ==(const Entity& entity)						     const
+bool Fanpage::operator ==(const Entity& entity)						 const
 {
 	const Fanpage* fanpage = dynamic_cast<const Fanpage*>(&entity);
 	if (!fanpage)
@@ -53,3 +53,4 @@ bool Fanpage::operator ==(const Entity& entity)						     const
 	}
 	return name == entity.getName();
 }
+

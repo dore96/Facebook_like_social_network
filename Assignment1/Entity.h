@@ -16,8 +16,8 @@ public:
 	//printing funcs
 	void printName()										 const;
 	void showStatuses(int numberOfPrintStatus = INT_MAX)	 const;
-	void showLinkedEntityStatus(list<const Entity*> entityList,int numberOfPrintStatus = INT_MAX) const;
-	void showAllLinkedEntity(list<const Entity*> entityList) const;
+	virtual void showLinkedEntityStatus(int numberOfPrintStatus = INT_MAX) const;
+	virtual void showAllLinkedEntity() const;
 
 	//boolean funcs
 	bool isLinkedTO(const Entity& isfriend, list<const Entity*> entityList)	const;
@@ -28,7 +28,7 @@ public:
 	void Unlink(Entity& entityToRemove, list<const Entity*> entityList);
 
 	//Operators funcs
-	virtual const Entity& operator+=(Entity& addEntity) = 0;
+	virtual const Entity& operator+=(Entity& addEntity);
 	virtual bool operator >(const Entity& other)  const = 0;
 	virtual bool operator ==(const Entity& other) const = 0;
 	virtual bool operator <(const Entity& page)	  const = 0;
