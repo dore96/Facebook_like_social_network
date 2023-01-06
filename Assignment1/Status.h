@@ -12,7 +12,7 @@ public:
 	const Date& getDate()				const;
 	const string& getText()				const;
 	void showTime()						const;
-	virtual void showStatus()				const;
+	virtual void showStatus()			const;
 
 	//operators funcs
 	virtual bool operator ==(const Status& other)		const;

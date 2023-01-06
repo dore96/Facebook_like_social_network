@@ -1,7 +1,7 @@
 #include "User.h"
 #include "Fanpage.h"
 
-User::User(const string& inputName, const Date& inputDateOfBirth) noexcept(false) : dateOfBirth(inputDateOfBirth)//constructor
+User::User(const string& inputName, const Date& inputDateOfBirth) noexcept(false) : Entity(inputName), dateOfBirth(inputDateOfBirth)//constructor
 {
 	time_t currentTime = time(NULL);
 	const tm birthdayTime = *localtime(&currentTime);
@@ -9,202 +9,103 @@ User::User(const string& inputName, const Date& inputDateOfBirth) noexcept(false
 	{
 		throw invalidYearException();
 	}
-	setName(inputName);
-}
-
-void User::setName(const string& inputName) noexcept(false)
-{
-	if (!inputName.compare(""))
-	{
-		throw emptyNameException();
-	}
-	name = inputName;
 }
 const Date& User::getBirthDate()							const
 {
 	return dateOfBirth;
 }
-int User::getNumberOfStatus()								const
+int User::getNumberOfFanpages()								const
 {
-	return statusVect.size();
-}
-int User::getNumberOfFriends()								const
-{
-	return friendsList.size();
-}
-const string& User::getName()								const
-{
-	return name;
+	return pageList.size();
 }
 
-void User::showStatuses(int numberOfPrintStatus)			const 
-{//user can limit how many statuses he wants to print - otherwise it will print all statuses.
-	cout << name << " had posted " << statusVect.size() << " statuses." << endl;
-	vector<Status>::const_iterator itr = statusVect.begin();
-	vector<Status>::const_iterator enditr = statusVect.end();
-	for (int i = 0; itr != enditr && i < numberOfPrintStatus; ++i, ++itr)
-	{
-		cout << "status number " << i + 1 << ": ";
-		(*itr).showStatus();
-		cout << "was posted on: " << (*itr).getDate() << " ";
-		(*itr).showTime();
-	}
-}
-void User::showFriendsStatus(int numberOfPrintStatus)	    const
-{//user can limit how many statuses he wants to print per user - otherwise it will prints all statuses.
-	list<const User*>::const_iterator itr = friendsList.begin();
-	list<const User*>::const_iterator enditr = friendsList.end();
-	for (; itr != enditr; ++itr)
-	{
-		cout << "\n" << (*itr)->getName() << " statuses:" << endl;
-		(*itr)->showStatuses(numberOfPrintStatus);
-	}
-}
-void User::showPagesStatus(int numberOfPrintStatus)			const
-{//user can limit how many statuses he wants to print per page - otherwise it will prints all statuses.
-	list<const Fanpage*>::const_iterator itr = pageList.begin();
-	list<const Fanpage*>::const_iterator enditr = pageList.end();
-	for (; itr != enditr; ++itr)
-	{
-		cout << "\n" << (*itr)->getName() << " statuses:" << endl;
-		(*itr)->showStatuses(numberOfPrintStatus);
-	}
-}
-void User::showAllFriends()									const
+void User::addEntity(Entity& entity)
 {
-	list<const User*>::const_iterator itr = friendsList.begin();
-	list<const User*>::const_iterator enditr = friendsList.end();
-	for (int i = 0; itr != enditr; ++itr, ++i)
-	{
-		cout << "Friend number " << (i + 1) << " is: " << (*itr)->name << endl;
+	User* temp = dynamic_cast<User*>(&entity);
+	if (temp != NULL)
+	{//if is user
+		Entity::addEntity(entity, pageList);
+		temp->addEntity(*this);
+	}
+
+	Fanpage* temp2 = dynamic_cast<Fanpage*>(&entity);
+	if (temp2 != NULL)
+	{//if is fanpage
+		Entity::addEntity(entity, UserList);
+		temp2->addEntity(*this);
 	}
 }
-void User::showAllLikedPages()								const
+void User::Unlink(Entity& entityToRemove)
 {
-	list<const Fanpage*>::const_iterator itr = pageList.begin();
-	list<const Fanpage*>::const_iterator enditr = pageList.end();
-	for (int i = 0; itr != enditr; ++itr, ++i)
-	{
-		cout << "Page number " << (i + 1) << " is: " << (*itr)->getName() << endl;
+	User* temp = dynamic_cast<User*>(&entityToRemove);
+	if (temp != NULL)
+	{//if is user
+		Entity::Unlink(entityToRemove, UserList);
+		temp->Unlink(*this);
 	}
-}
-void User::printName()										const
-{
-	cout << name << endl;
+
+	Fanpage* temp2 = dynamic_cast<Fanpage*>(&entityToRemove);
+	if (temp2 != NULL)
+	{//if is user
+		Entity::Unlink(entityToRemove, pageList);
+		temp2->Unlink(*this);
+	}
+
 }
 
-bool User::isFriendsWith(const User& isfriend)			const
-{
-	list<const User*>::const_iterator itr = friendsList.begin();
-	list<const User*>::const_iterator enditr = friendsList.end();
-	for (; itr != enditr; ++itr)
-	{
-		if (isfriend == *(*itr))
-		{//compare by name of users (uniq)
-			return true;
-		}
-	}
-	return false;
-}
-bool User::isFanOf(const Fanpage& page)                  const
-{
-	list<const Fanpage*>::const_iterator itr = pageList.begin();
-	list<const Fanpage*>::const_iterator enditr = pageList.end();
-	for (; itr != enditr; ++itr)
-	{
-		if (page == **itr)
-		{//compare by name of users (uniq)
-			return true;
-		}
-	}
-	return  false;
-}
-
-void User::addFriend(User& addFriend)
-{
-	if (isFriendsWith(addFriend))
-	{//if they are friends already - return
-		return;
-	}
-	friendsList.push_back(&addFriend);
-	addFriend.addFriend(*this);  //add myself to friend list.
-}
-void User::addStatus(const string& status)
-{
-	statusVect.push_back(status);
-}
-void User::unFriend(User& friendToRemove)
-{
-	list<const User*>::const_iterator itr = friendsList.begin();
-	list<const User*>::const_iterator enditr = friendsList.end();
-	if (!isFriendsWith(friendToRemove))
-	{
-		return;
-	}
-	for (; itr != enditr; ++itr)
-	{
-		if((*itr) == &friendToRemove)
-		{
-			friendsList.erase(itr);
-			break;
-		}
-	}
-	friendToRemove.unFriend(*this);
-}
-void User::likeAPage(Fanpage& page)
-{
-	if (isFanOf(page))
-	{//if user is a fan of the page , return.
-		return;
-	}
-	pageList.push_back(& page);
-	page.addFan(*this);  //add user to fans of fanpage.
-}
-void User::unlikeAPage(Fanpage& page)
-{
-	list<const Fanpage*>::const_iterator itr = pageList.begin();
-	list<const Fanpage*>::const_iterator enditr = pageList.end();
-	if (!isFanOf(page))
-	{
-		return;
-	}
-	for (; itr != enditr; ++itr)
-	{
-		if ((*itr) == &page)
-		{
-			pageList.erase(itr);
-			break;
-		}
-	}
-	page.removeFan(*this); //remove user from list of fans in fanpage
-}
-
-const User& User::operator+=(User& addfriend)  
+const Entity& User::operator+=(Entity& EntityToAdd)
 {//Multiple placement support
-	addFriend(addfriend);
+	addEntity(EntityToAdd);
 	return *this;
 }
-bool User::operator >(const User& other)					const
+bool User::operator >(const Entity& other)					const
 {
-	return friendsList.size() > other.friendsList.size();
+	const User* temp = dynamic_cast<const User*>(&other);
+	if (temp != NULL)
+	{//if is user
+		return UserList.size() > temp->UserList.size();
+	}
+	const Fanpage* temp2 = dynamic_cast<const Fanpage*>(&other);
+	if (temp2 != NULL)
+	{//if is user
+		return UserList.size() > temp2->getNumberOfFans();
+	}
+	else
+	{
+		//handle error
+	}
 }
-bool User::operator <(const User& other)					const
+bool User::operator <(const Entity& other)					const
 {
-	return friendsList.size() < other.friendsList.size();
+	const User* temp = dynamic_cast<const User*>(&other);
+	if (temp != NULL)
+	{//if is user
+		return UserList.size() < temp->UserList.size();
+	}
+	const Fanpage* temp2 = dynamic_cast<const Fanpage*>(&other);
+	if (temp2 != NULL)
+	{//if is user
+		return UserList.size() < temp2->getNumberOfFans();
+	}
+	else
+	{
+		//handle error
+	}
 }
-bool User::operator >(const Fanpage& page)					const
+bool User::operator == (const Entity& other)				const
 {
-	return friendsList.size() > page.getNumberOfFans();
-}
-bool User::operator <(const Fanpage& page)					const
-{
-	return friendsList.size() < page.getNumberOfFans();
-}
-bool User::operator == (const Fanpage& page)				const
-{
-	return friendsList.size() == page.getNumberOfFans();
-}
-bool User::operator ==(const User& other)					const
-{
-	return !name.compare(other.getName());
+	const User* temp = dynamic_cast<const User*>(&other);
+	if (temp != NULL)
+	{//if is user
+		return UserList.size() == temp->UserList.size();
+	}
+	const Fanpage* temp2 = dynamic_cast<const Fanpage*>(&other);
+	if (temp2 != NULL)
+	{//if is user
+		return UserList.size() == temp2->getNumberOfFans();
+	}
+	else
+	{
+		//handle error
+	}
 }

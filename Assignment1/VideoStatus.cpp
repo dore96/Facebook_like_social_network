@@ -29,7 +29,6 @@ bool VideoStatus::operator !=(const Status& other)		const
 {
 	return !(*this == other);
 }
-
 void VideoStatus::toOs(ostream& os) const
 {
 	if (typeid(os) == typeid(ofstream))
