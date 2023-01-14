@@ -27,7 +27,11 @@ Facebook::Facebook()
 	addFanToPage("Pro yogurt", "tovia");
 	addFanToPage("MTA course recomendations", "maor");
 }
+Facebook::Facebook(ifstream& in)
+{
+	in >> *this;
 
+}
 void Facebook::showAllUsers()										const
 {
 	list<User>::const_iterator itr = usersInSystem.begin();
@@ -320,8 +324,88 @@ void Facebook::cancelFriendship(const string& userName1, const string& userName2
 	user1->unFriend(*user2);
 }
 
+istream& operator>>(istream& in, Facebook& facebook)
+{
+	int numberofUsers , numberOfFanpages, nameLen;
+	in >> numberofUsers >> numberOfFanpages;
+	char* name;
+	for (int i = 0; i < numberofUsers; i++)
+	{
+		int year, month, day;
+		in >> nameLen;
+		name = new char[nameLen];
+		in >> name;
+		name[nameLen] = '\0';
+		in >> day >> month >> year;
+		facebook.addUser(name, day, month, year);
+		delete[]name;
+	}
+	for (int i = 0; i < numberOfFanpages; i++)
+	{
+		in >> nameLen;
+		name = new char[nameLen];
+		in >> name;
+		name[nameLen] = '\0';
+		facebook.addFanpage(name);
+		delete[]name;
+	}
+	list<User>::iterator itr = facebook.usersInSystem.begin();
+	list<User>::iterator enditr = facebook.usersInSystem.end();
+	list<Fanpage>::iterator itr2 = facebook.fanpagesInSystem.begin();
+	list<Fanpage>::iterator enditr2 = facebook.fanpagesInSystem.end();
+
+	for (; itr != enditr; ++itr)
+	{
+		in >> (*itr);
+	}
+	for (; itr2 != enditr2; ++itr2)
+	{
+		in >> (*itr2);
+	}
+	return in;
+}
+ostream& operator<<(ostream& os, const Facebook& facebook)
+{
+	os << facebook.usersInSystem.size() << endl;
+	os << facebook.fanpagesInSystem.size() << endl;
+
+	list<User>::const_iterator itr = facebook.usersInSystem.begin();
+	list<User>::const_iterator enditr = facebook.usersInSystem.end();
+	list<Fanpage>::const_iterator itr2 = facebook.fanpagesInSystem.begin();
+	list<Fanpage>::const_iterator enditr2 = facebook.fanpagesInSystem.end();
+
+	os << endl << endl<< "names of fanpage and users: "  << endl;		/////////////////
+	for (; itr != enditr; ++itr)
+	{
+		os << (*itr).getName().size() << endl;
+		os << (*itr).getName() << endl;
+		os << (*itr).getBirthDate().getDay() << endl;
+		os << (*itr).getBirthDate().getMonth() << endl;
+		os << (*itr).getBirthDate().getYear() << endl;
+	}
+	for (; itr2 != enditr2; ++itr2)
+	{
+		os << (*itr2).getName() << endl;
+	}
+
+
+	os<< endl << endl << "users :" << endl ;			/////////////////
+	for(itr = facebook.usersInSystem.begin();itr != enditr; ++itr)
+	{
+		os << (*itr) << endl << endl << endl;
+	}
+	os << endl << endl << "fanpages :" << endl;           /////////////////
+	for (itr2 = facebook.fanpagesInSystem.begin(); itr2 != enditr2; ++itr2)
+	{
+		os << (*itr2) << endl << endl << endl;
+	}
+	return os;
+}
 Facebook::~Facebook()
 {
+	ofstream outfile("saveFacebook.txt", ios::trunc);
+	outfile << *this << endl;
+
 	vector<const Status*>::const_iterator itr = allStatuses.begin();
 	vector<const Status*>::const_iterator end = allStatuses.end();
 	for (; itr != end; ++itr)

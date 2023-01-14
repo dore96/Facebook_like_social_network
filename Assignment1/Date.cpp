@@ -46,6 +46,18 @@ ostream& operator <<(ostream& os, const Date& date)
 	os << date.day << "/" << date.month << "/" << date.year;
 	return os;
 }
+
+char* getString(istream& in)
+{
+	char* res;
+	int Len;
+	in >> Len;
+	res = new char[Len];
+	in >> res;
+	res[Len] = '\0';
+	return res;
+}
+
 void CleanBuffer()
 {
 	int c;

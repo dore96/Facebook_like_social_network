@@ -4,6 +4,7 @@
 
 const int monthLen[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };  //how many days are in each month
 void CleanBuffer();													 //utilitie func
+char* getString(istream& in);
 
 class Date
 {

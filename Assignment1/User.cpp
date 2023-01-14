@@ -10,6 +10,10 @@ User::User(const string& inputName, const Date& inputDateOfBirth) noexcept(false
 		throw invalidYearException();
 	}
 }
+User::User(ifstream& in) : Entity(in)
+{
+	in >> *this;
+}
 const Date& User::getBirthDate()							const
 {
 	return dateOfBirth;
@@ -103,6 +107,33 @@ void User::unlikeAPage(Fanpage& page)
 	}
 	pageList.erase(itr);
 	page.removeFan(*this); //remove user from list of fans in fanpage
+}
+
+void User::toOs(ostream& os) const
+{
+	os << dateOfBirth << endl;
+	os << friendsList.size() << endl;
+	os << pageList.size() << endl;
+
+	list<const User*>::const_iterator itr = friendsList.begin();
+	list<const User*>::const_iterator enditr = friendsList.end();
+	for (; itr != enditr; ++itr)
+	{
+		os << (*itr)->getName().size() << endl;
+		os << (*itr)->getName() << endl;
+	}
+
+	list<const Fanpage*>::const_iterator itr2 = pageList.begin();
+	list<const Fanpage*>::const_iterator enditr2 = pageList.end();
+	for (; itr2 != enditr2; ++itr2)
+	{
+		os << (*itr2)->getName().size() << endl;
+		os << (*itr2)->getName() << endl;
+	}
+}
+void User::fromOs(istream& in) : dateOfBirth(in)
+{
+
 }
 
 const User& User::operator+=(User& addfriend)  

@@ -1,0 +1,151 @@
+3
+3
+12
+
+
+names of fanpage and users: 
+3
+dor
+25
+7
+1996
+4
+maor
+29
+4
+1999
+5
+tovia
+4
+8
+2022
+MTA course recomendations
+Pro yogurt
+Merge Halicod & Meretz
+
+
+users :
+3
+dor
+2
+2023 1 14 15:32:40
+8
+Hi There
+
+2023 1 14 15:32:40
+3
+29%
+
+25/7/1996
+2
+1
+4
+maor
+5
+tovia
+22
+Merge Halicod & Meretz
+
+
+
+4
+maor
+2
+2023 1 14 15:32:40
+7
+ok here
+
+2023 1 14 15:32:40
+6
+byebye
+
+29/4/1999
+2
+1
+3
+dor
+5
+tovia
+25
+MTA course recomendations
+
+
+
+5
+tovia
+2
+2023 1 14 15:32:40
+8
+barkbark
+
+2023 1 14 15:32:40
+8
+whofwhof
+
+4/8/2022
+2
+1
+3
+dor
+4
+maor
+10
+Pro yogurt
+
+
+
+
+
+fanpages :
+25
+MTA course recomendations
+2
+2023 1 14 15:32:40
+19
+c++ course is great
+
+2023 1 14 15:32:40
+22
+no time in this course
+
+1
+4
+maor
+
+
+
+10
+Pro yogurt
+2
+2023 1 14 15:32:40
+3
+29%
+
+2023 1 14 15:32:40
+13
+Cheap Quality
+
+1
+5
+tovia
+
+
+
+22
+Merge Halicod & Meretz
+2
+2023 1 14 15:32:40
+5
+yammi
+
+2023 1 14 15:32:40
+12
+Henlo Wornld
+
+1
+3
+dor
+
+
+
+

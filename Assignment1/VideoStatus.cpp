@@ -34,6 +34,8 @@ void VideoStatus::toOs(ostream& os) const
 {
 	if (typeid(os) == typeid(ofstream))
 	{//if we are writing to file
+		os << video << endl;
+		os << videoUrl.size() << endl;
 		os << videoUrl << endl;
 	}
 	else

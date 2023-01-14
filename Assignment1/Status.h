@@ -2,7 +2,7 @@
 #define __Status_H
 #define TIME_FORMAT_LEN 100
 #include "Date.h"
-
+enum eStatusType { text, image, video };
 class Status
 {
 public:
@@ -20,7 +20,7 @@ public:
 	virtual bool operator !=(const Status& other)		const;
 
 	//<< functions
-	virtual void toOs(ostream& os) const {}
+	virtual void toOs(ostream& os) const;
 	friend ostream& operator <<(ostream& os, const Status& status);
 
 	//virtual void save(ofstream& out) const;

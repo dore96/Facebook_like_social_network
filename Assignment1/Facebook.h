@@ -1,12 +1,12 @@
 #ifndef __Facebook_H
 #define __Facebook_H
 #include "Fanpage.h"
-enum eStatusType { text, image, video };
 
 class Facebook
 {
 public:
 	Facebook();
+	Facebook(ifstream& in);
 	//showing funcs
 	void showAllUsers()										  const;
 	void showAllFanpage()									  const;
@@ -32,6 +32,8 @@ public:
 	void cancelFriendship(const string& userName1, const string& userName2)		noexcept(false);
 	void removeFanFromPage(const string& pageName, const string& userName)		noexcept(false);
 
+	friend ostream& operator<<(ostream& os, const Facebook& facebook);
+	friend istream& operator>>(istream& in, Facebook& facebook);
 	~Facebook();
 private:
 	list<User> usersInSystem;
