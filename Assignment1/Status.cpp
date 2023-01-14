@@ -3,6 +3,11 @@ Status::Status(const string& inputText) noexcept(false)
 	: currentTime(time(NULL)), statusTime(*localtime(&currentTime)), dateOfStatus(statusTime.tm_mday, (statusTime.tm_mon) + 1, (statusTime.tm_year + 1900)),statusText(inputText)
 {
 }
+/*
+Status::Status(ifstream& in)
+{
+	in.read((char*)this, sizeof(*this));
+}*/
 const tm& Status::getTime()			const
 {
 	return statusTime;
@@ -39,3 +44,7 @@ ostream& operator <<(ostream& os, const Status& status)
 	status.toOs(os);
 	return os;
 }
+/*void Status::save(ofstream& out) const
+{
+	out.write((const char*)this, sizeof(*this));
+}*/

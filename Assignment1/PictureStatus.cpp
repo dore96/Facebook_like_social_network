@@ -3,6 +3,10 @@
 PictureStatus::PictureStatus(const string& pictureString, const string& inputText) : Status(inputText), pictureString(pictureString)
 {
 }
+/*PictureStatus::PictureStatus(ifstream& in) : Status(in)
+{
+	in.read((char*)this, sizeof(*this));
+}*/
 void PictureStatus::showPicture()						  const
 {//check if valid
 	system("start OOP-CPP");

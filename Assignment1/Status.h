@@ -7,11 +7,12 @@ class Status
 {
 public:
 	Status(const string& inputText) noexcept(false);
+	//Status(ifstream& in);
 
-	const tm& getTime()					const;    //func returns the time ref , with no option to change it.
-	const Date& getDate()				const;
-	const string& getText()				const;
-	void showTime()						const;
+	const tm& getTime()						const;    //func returns the time ref , with no option to change it.
+	const Date& getDate()					const;
+	const string& getText()					const;
+	void showTime()							const;
 	virtual void showStatus()				const;
 
 	//operators funcs
@@ -21,6 +22,8 @@ public:
 	//<< functions
 	virtual void toOs(ostream& os) const {}
 	friend ostream& operator <<(ostream& os, const Status& status);
+
+	//virtual void save(ofstream& out) const;
 	virtual ~Status(){}
 protected:
 	time_t currentTime;

@@ -1,27 +1,9 @@
 #include "Fanpage.h"
 
-Fanpage::Fanpage(const string& newName) noexcept(false)
+Fanpage::Fanpage(const string& newName): Entity(newName)
 {
-	setName(newName);
 }
 
-bool Fanpage::setName(const string& newName) noexcept(false)
-{
-	if (!newName.compare(""))
-	{
-		throw emptyNameException();
-	}
-	name = newName;
-	return true;
-}
-const string& Fanpage::getName()								const
-{
-	return name;
-}
-int Fanpage::getNumberOfStatus()								const
-{
-	return statusPtrArr.size();
-}
 int Fanpage::getNumberOfFans()									const
 {
 	return ListOfFans.size();
@@ -46,36 +28,10 @@ void Fanpage::showFansStatuses(int numberOfPrintStatus)			const
 		(*itr)->showStatuses(numberOfPrintStatus);
 	}
 }
-void Fanpage::showStatuses(int numberOfPrintStatus)             const
-{
-	cout << name << " had posted " << statusPtrArr.size() << " statuses." << endl;
-	vector<Status>::const_iterator itr = statusPtrArr.begin();
-	vector<Status>::const_iterator enditr = statusPtrArr.end();
-	for (int i = 0; itr != enditr && i < numberOfPrintStatus; ++i, ++itr)
-	{
-		cout << "status number " << i + 1 << ": ";
-		(*itr).showStatus();
-		cout << "was posted on: ";
-		(*itr).showTime();
-	}
-}
-void Fanpage::printName()										const
-{
-	cout << name << endl;
-}
 
 bool Fanpage::isAFan(const User& user)					    const
 {
-	list<const User*>::const_iterator itr = ListOfFans.begin();
-	list<const User*>::const_iterator enditr = ListOfFans.end();
-	for (; itr != enditr; ++itr)
-	{
-		if (user == **itr)
-		{//compere fans by == operator (uniq names)
-			return true;
-		}
-	}
-	return false;
+	return find(ListOfFans.begin(), ListOfFans.end(), &user) != ListOfFans.end();
 }
 void Fanpage::addFan(User& fan)
 {
@@ -88,25 +44,13 @@ void Fanpage::addFan(User& fan)
 }
 void Fanpage::removeFan(User& fan)
 {
-	list<const User*>::const_iterator itr = ListOfFans.begin();
-	list<const User*>::const_iterator enditr = ListOfFans.end();
-	if (!isAFan(fan))
+	list<const User*>::const_iterator itr = find(ListOfFans.begin(), ListOfFans.end(), &fan);
+	if (itr == ListOfFans.end())
 	{//if user do not fan page return
 		return;
 	}
-	for (; itr != enditr; ++enditr)
-	{
-		if ((*itr) == &fan)
-		{
-			ListOfFans.erase(itr);
-			break;
-		}
-	}
+	ListOfFans.erase(itr);
 	fan.unlikeAPage(*this); // remove page from users fanpages
-}
-void Fanpage::addStatus(const string& status)
-{
-	statusPtrArr.push_back(status);
 }
 
 const Fanpage& Fanpage::operator+=(User& addfan)

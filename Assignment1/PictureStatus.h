@@ -6,6 +6,7 @@ class PictureStatus : public Status
 {
 public:
 	PictureStatus(const string& pictureString, const string& inputText) noexcept(false);
+	//PictureStatus(ifstream& in);
 	virtual void showStatus()							const override;
 	void showPicture()									const;
 	//operators funcs

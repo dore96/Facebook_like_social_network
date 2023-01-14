@@ -42,6 +42,9 @@
     <ClCompile Include="PictureStatus.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Status.h">
@@ -69,6 +72,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="PictureStatus.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

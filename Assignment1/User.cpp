@@ -1,7 +1,7 @@
 #include "User.h"
 #include "Fanpage.h"
 
-User::User(const string& inputName, const Date& inputDateOfBirth) noexcept(false) : dateOfBirth(inputDateOfBirth)//constructor
+User::User(const string& inputName, const Date& inputDateOfBirth) noexcept(false) : Entity(inputName),dateOfBirth(inputDateOfBirth)
 {
 	time_t currentTime = time(NULL);
 	const tm birthdayTime = *localtime(&currentTime);
@@ -9,46 +9,14 @@ User::User(const string& inputName, const Date& inputDateOfBirth) noexcept(false
 	{
 		throw invalidYearException();
 	}
-	setName(inputName);
-}
-
-void User::setName(const string& inputName) noexcept(false)
-{
-	if (!inputName.compare(""))
-	{
-		throw emptyNameException();
-	}
-	name = inputName;
 }
 const Date& User::getBirthDate()							const
 {
 	return dateOfBirth;
 }
-int User::getNumberOfStatus()								const
-{
-	return statusVect.size();
-}
 int User::getNumberOfFriends()								const
 {
 	return friendsList.size();
-}
-const string& User::getName()								const
-{
-	return name;
-}
-
-void User::showStatuses(int numberOfPrintStatus)			const 
-{//user can limit how many statuses he wants to print - otherwise it will print all statuses.
-	cout << name << " had posted " << statusVect.size() << " statuses." << endl;
-	vector<Status>::const_iterator itr = statusVect.begin();
-	vector<Status>::const_iterator enditr = statusVect.end();
-	for (int i = 0; itr != enditr && i < numberOfPrintStatus; ++i, ++itr)
-	{
-		cout << "status number " << i + 1 << ": ";
-		(*itr).showStatus();
-		cout << "was posted on: " << (*itr).getDate() << " ";
-		(*itr).showTime();
-	}
 }
 void User::showFriendsStatus(int numberOfPrintStatus)	    const
 {//user can limit how many statuses he wants to print per user - otherwise it will prints all statuses.
@@ -88,36 +56,14 @@ void User::showAllLikedPages()								const
 		cout << "Page number " << (i + 1) << " is: " << (*itr)->getName() << endl;
 	}
 }
-void User::printName()										const
-{
-	cout << name << endl;
-}
 
 bool User::isFriendsWith(const User& isfriend)			const
 {
-	list<const User*>::const_iterator itr = friendsList.begin();
-	list<const User*>::const_iterator enditr = friendsList.end();
-	for (; itr != enditr; ++itr)
-	{
-		if (isfriend == *(*itr))
-		{//compare by name of users (uniq)
-			return true;
-		}
-	}
-	return false;
+	return find(friendsList.begin(), friendsList.end(), &isfriend) != friendsList.end();
 }
 bool User::isFanOf(const Fanpage& page)                  const
 {
-	list<const Fanpage*>::const_iterator itr = pageList.begin();
-	list<const Fanpage*>::const_iterator enditr = pageList.end();
-	for (; itr != enditr; ++itr)
-	{
-		if (page == **itr)
-		{//compare by name of users (uniq)
-			return true;
-		}
-	}
-	return  false;
+	return find(pageList.begin(), pageList.end(), &page) != pageList.end();
 }
 
 void User::addFriend(User& addFriend)
@@ -129,26 +75,14 @@ void User::addFriend(User& addFriend)
 	friendsList.push_back(&addFriend);
 	addFriend.addFriend(*this);  //add myself to friend list.
 }
-void User::addStatus(const string& status)
-{
-	statusVect.push_back(status);
-}
 void User::unFriend(User& friendToRemove)
 {
-	list<const User*>::const_iterator itr = friendsList.begin();
-	list<const User*>::const_iterator enditr = friendsList.end();
-	if (!isFriendsWith(friendToRemove))
+	list<const User*>::const_iterator itr = find(friendsList.begin(), friendsList.end(), &friendToRemove);
+	if (itr == friendsList.end())
 	{
 		return;
 	}
-	for (; itr != enditr; ++itr)
-	{
-		if((*itr) == &friendToRemove)
-		{
-			friendsList.erase(itr);
-			break;
-		}
-	}
+	friendsList.erase(itr);
 	friendToRemove.unFriend(*this);
 }
 void User::likeAPage(Fanpage& page)
@@ -162,20 +96,12 @@ void User::likeAPage(Fanpage& page)
 }
 void User::unlikeAPage(Fanpage& page)
 {
-	list<const Fanpage*>::const_iterator itr = pageList.begin();
-	list<const Fanpage*>::const_iterator enditr = pageList.end();
-	if (!isFanOf(page))
+	list<const Fanpage*>::const_iterator itr = find(pageList.begin(), pageList.end(), &page);
+	if (itr == pageList.end())
 	{
 		return;
 	}
-	for (; itr != enditr; ++itr)
-	{
-		if ((*itr) == &page)
-		{
-			pageList.erase(itr);
-			break;
-		}
-	}
+	pageList.erase(itr);
 	page.removeFan(*this); //remove user from list of fans in fanpage
 }
 
