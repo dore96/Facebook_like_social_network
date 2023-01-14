@@ -3,6 +3,7 @@
 #include "Facebook.h"
 #define EXIT 12
 
+
 class UserInteraction
 {
 public:
@@ -17,7 +18,7 @@ public:
 	void showAllFriendsOrFans()                 const;
 
 	//action funcs
-	void addTextStatus();
+	void addStatus();
 	void addUser();
 	void addFanToPage();
 	void addFanpage();

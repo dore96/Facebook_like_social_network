@@ -2,6 +2,8 @@
 #define __Entity_H
 
 #include "Status.h"
+#include "VideoStatus.h"
+#include "PictureStatus.h"
 
 class Entity
 {
@@ -11,11 +13,11 @@ public:
 	const string& getName()									 const;
 	void printName()										 const;
 	void showStatuses(int numberOfPrintStatus = INT_MAX)	 const;
-	void addStatus(const Status& status);
-	virtual ~Entity() {};
+	void addStatus(const Status* status);
+	virtual ~Entity(){};
 protected:
 	string name;
-	vector<Status> statusVect;
+	vector<const Status*> statusVect;
 
 	void setName(const string& name)  noexcept(false);
 };

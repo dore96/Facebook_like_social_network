@@ -177,7 +177,8 @@ void Facebook::addTextStatus(bool isPage, const string& name, const string& text
 		{
 			throw notFoundException();
 		}
-		user->addStatus(textStatus);
+		allStatuses.push_back(new Status(textStatus));
+		user->addStatus(allStatuses.back());
 	}
 	else
 	{
@@ -186,7 +187,47 @@ void Facebook::addTextStatus(bool isPage, const string& name, const string& text
 		{
 			throw notFoundException();
 		}
-		fanpage->addStatus(textStatus);
+		allStatuses.push_back(new Status(textStatus));
+		fanpage->addStatus(allStatuses.back());
+	}
+}
+void Facebook::addMediaStatus(bool isPage, const string& name, const string& textStatus, string& url, int type) noexcept(false)
+{
+	if (!isPage)
+	{
+		User* user = findUser(name);
+		if (user == nullptr)
+		{
+			throw notFoundException();
+		}
+		if(type == video)
+		{
+			allStatuses.push_back(new VideoStatus(url, textStatus));
+			user->addStatus(allStatuses.back());
+		}
+		else
+		{
+			allStatuses.push_back(new PictureStatus(url, textStatus));
+			user->addStatus(allStatuses.back());
+		}
+	}
+	else
+	{
+		Fanpage* fanpage = findPage(name);
+		if (fanpage == nullptr)
+		{
+			throw notFoundException();
+		}
+		if (type == video)
+		{
+			allStatuses.push_back(new VideoStatus(url, textStatus));
+			fanpage->addStatus(allStatuses.back());
+		}
+		else
+		{
+			allStatuses.push_back(new PictureStatus(url, textStatus));
+			fanpage->addStatus(allStatuses.back());
+		}
 	}
 }
 void Facebook::addUser(const string& userName, int day, int month, int year) noexcept(false)
@@ -277,4 +318,14 @@ void Facebook::cancelFriendship(const string& userName1, const string& userName2
 			" and " + userName2);
 	}
 	user1->unFriend(*user2);
+}
+
+Facebook::~Facebook()
+{
+	vector<const Status*>::const_iterator itr = allStatuses.begin();
+	vector<const Status*>::const_iterator end = allStatuses.end();
+	for (; itr != end; ++itr)
+	{
+		delete (*itr);
+	}
 }

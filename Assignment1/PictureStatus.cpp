@@ -1,6 +1,6 @@
 #include "PictureStatus.h"
 
-PictureStatus::PictureStatus(const string& pictureString, const string& inputText) : Status(inputText), pictureString(pictureString)
+PictureStatus::PictureStatus(const string& pictureString, const string& inputText) : Status(inputText), pictureUrl(pictureString)
 {
 }
 /*PictureStatus::PictureStatus(ifstream& in) : Status(in)
@@ -9,7 +9,7 @@ PictureStatus::PictureStatus(const string& pictureString, const string& inputTex
 }*/
 void PictureStatus::showPicture()						  const
 {//check if valid
-	system("start OOP-CPP");
+	system("start OOP-CPP.jpg");
 }
 void PictureStatus::showStatus()						  const
 {
@@ -27,7 +27,7 @@ bool PictureStatus::operator ==(const Status& other)	  const
 	{
 		return false;
 	}
-	return pictureString == temp->pictureString;
+	return pictureUrl == temp->pictureUrl;
 }
 bool PictureStatus::operator !=(const Status& other)	  const
 {
@@ -37,7 +37,7 @@ void PictureStatus::toOs(ostream& os)					  const
 {
 	if (typeid(os) == typeid(ofstream))
 	{//if we are writing to file
-		os << pictureString << endl;
+		os << pictureUrl << endl;
 	}
 	else
 	{//to the screen

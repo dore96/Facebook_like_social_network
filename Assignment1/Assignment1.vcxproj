@@ -154,6 +154,12 @@
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="keren-video.mp4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="OOP-CPP.jpg" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

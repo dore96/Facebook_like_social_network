@@ -1,11 +1,11 @@
 #include "VideoStatus.h"
 
-VideoStatus::VideoStatus(const string& videoString, const string& inputText) : Status(inputText) ,videoString(videoString)
+VideoStatus::VideoStatus(const string& videoString, const string& inputText) : Status(inputText) ,videoUrl(videoString)
 {
 }
 void VideoStatus::showVideo()  const
 {//check if valid
-	system("start keren-video");      
+	system("start keren-video.mp4");      
 }
 void VideoStatus::showStatus()				const
 {
@@ -23,7 +23,7 @@ bool VideoStatus::operator ==(const Status& other)		const
 	{
 		return false;
 	}
-	return videoString == temp->videoString;
+	return videoUrl == temp->videoUrl;
 }
 bool VideoStatus::operator !=(const Status& other)		const
 {
@@ -34,7 +34,7 @@ void VideoStatus::toOs(ostream& os) const
 {
 	if (typeid(os) == typeid(ofstream))
 	{//if we are writing to file
-		os << videoString << endl;
+		os << videoUrl << endl;
 	}
 	else
 	{//to the screen

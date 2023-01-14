@@ -14,7 +14,7 @@ public:
 	virtual void toOs(ostream& os) const override;
 	virtual ~VideoStatus(){}
 protected:
-	const string videoString;
+	const string videoUrl;
 };
 
 #endif

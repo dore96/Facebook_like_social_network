@@ -1,6 +1,7 @@
 #ifndef __Facebook_H
 #define __Facebook_H
 #include "Fanpage.h"
+enum eStatusType { text, image, video };
 
 class Facebook
 {
@@ -27,12 +28,15 @@ public:
 	void addFanToPage(const string& pageName, const string& userName)			noexcept(false);
 	void addFriendship(const string& userName1, const string& userName2)		noexcept(false);
 	void addTextStatus(bool isPage, const string& name,const string& textStatus)noexcept(false);
+	void addMediaStatus(bool isPage, const string& name, const string& textStatus, string& url, int type) noexcept(false);
 	void cancelFriendship(const string& userName1, const string& userName2)		noexcept(false);
 	void removeFanFromPage(const string& pageName, const string& userName)		noexcept(false);
-	
+
+	~Facebook();
 private:
 	list<User> usersInSystem;
 	list<Fanpage> fanpagesInSystem;
+	vector<const Status*> allStatuses;
 };
 
 #endif

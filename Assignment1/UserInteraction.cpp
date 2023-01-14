@@ -60,7 +60,7 @@ void UserInteraction::chooseFromMenu(int choice) noexcept(false)
 		break;
 	case 2: addFanpage();
 		break;
-	case 3:addTextStatus();
+	case 3:addStatus();
 		break;
 	case 4:showStatusOfEntity();
 		break;
@@ -115,18 +115,34 @@ void UserInteraction::showAllFriendsOrFans()       const
 	facebook->showAllFriendsOrFans(isPage, name);
 }
 
-void UserInteraction::addTextStatus()
+void UserInteraction::addStatus()
 {
 	bool isPage;
-	string statusStr, name;
+	int statusType;
+	string statusStr, name, statusUrl;
 	cout << "Press 1 to add status for a fanpage or 0 for a user: ";
 	cin >> isPage;
+	cout << "Press 0 to add text status, 1 for image status, 2 for video status:";
+	cin >> statusType;
 	cout << "Enter its name: ";
 	CleanBuffer();
 	getline(cin, name);
-	cout << "Enter Status: ";
+	cout << "Enter Status text: ";
 	getline(cin , statusStr);
-	facebook->addTextStatus(isPage, name, statusStr);  //adds a statusText to user/fanpage
+	switch(statusType)
+	{
+	case text:
+		facebook->addTextStatus(isPage, name, statusStr);  //adds a statusText to user/fanpage
+		break;
+	case image:
+	case video:
+		cout << "Enter Media url: ";
+		getline(cin, statusUrl);
+		facebook->addMediaStatus(isPage, name, statusStr, statusUrl, statusType);
+		break;
+	default:
+		throw invalid_argument("invalid status type");
+	}
 }
 void UserInteraction::addUser()      
 {

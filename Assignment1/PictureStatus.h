@@ -15,7 +15,7 @@ public:
 	virtual void toOs(ostream& os) const override;
 	virtual ~PictureStatus() {}
 protected:
-	const string pictureString;
+	const string pictureUrl;
 };
 
 #endif
