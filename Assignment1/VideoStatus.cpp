@@ -3,6 +3,11 @@
 VideoStatus::VideoStatus(const string& videoString, const string& inputText) : Status(inputText) ,videoUrl(videoString)
 {
 }
+
+VideoStatus::VideoStatus(istream& in) : Status(in)
+{
+	in >> *this;
+}
 void VideoStatus::showVideo()  const
 {//check if valid
 	system("start keren-video.mp4");      
@@ -35,7 +40,6 @@ void VideoStatus::toOs(ostream& os) const
 	if (typeid(os) == typeid(ofstream))
 	{//if we are writing to file
 		os << video << endl;
-		os << videoUrl.size() << endl;
 		os << videoUrl << endl;
 	}
 	else
@@ -43,3 +47,9 @@ void VideoStatus::toOs(ostream& os) const
 		this->showVideo();
 	}
 }
+
+void VideoStatus::fromOs(istream& in)
+{
+	in >> videoUrl;
+}
+

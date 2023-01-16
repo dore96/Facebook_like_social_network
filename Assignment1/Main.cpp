@@ -9,7 +9,9 @@ void newTerminate()
 int main() 
 {
 	set_terminate(newTerminate);
-	Facebook myFacebook;
+	ifstream infile("saveFacebook.txt");
+	Facebook myFacebook(infile);
+	//Facebook myFacebook;
 	UserInteraction userInteraction(myFacebook);
 	userInteraction.runConsoleApp();
 	return 0;

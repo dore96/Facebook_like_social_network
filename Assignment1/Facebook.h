@@ -38,7 +38,6 @@ public:
 private:
 	list<User> usersInSystem;
 	list<Fanpage> fanpagesInSystem;
-	vector<const Status*> allStatuses;
 };
 
 #endif

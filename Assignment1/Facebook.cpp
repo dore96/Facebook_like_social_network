@@ -181,8 +181,7 @@ void Facebook::addTextStatus(bool isPage, const string& name, const string& text
 		{
 			throw notFoundException();
 		}
-		allStatuses.push_back(new Status(textStatus));
-		user->addStatus(allStatuses.back());
+		user->addStatus(new Status(textStatus));
 	}
 	else
 	{
@@ -191,8 +190,7 @@ void Facebook::addTextStatus(bool isPage, const string& name, const string& text
 		{
 			throw notFoundException();
 		}
-		allStatuses.push_back(new Status(textStatus));
-		fanpage->addStatus(allStatuses.back());
+		fanpage->addStatus(new Status(textStatus));
 	}
 }
 void Facebook::addMediaStatus(bool isPage, const string& name, const string& textStatus, string& url, int type) noexcept(false)
@@ -206,13 +204,11 @@ void Facebook::addMediaStatus(bool isPage, const string& name, const string& tex
 		}
 		if(type == video)
 		{
-			allStatuses.push_back(new VideoStatus(url, textStatus));
-			user->addStatus(allStatuses.back());
+			user->addStatus(new VideoStatus(url, textStatus));
 		}
 		else
 		{
-			allStatuses.push_back(new PictureStatus(url, textStatus));
-			user->addStatus(allStatuses.back());
+			user->addStatus(new PictureStatus(url, textStatus));
 		}
 	}
 	else
@@ -224,13 +220,11 @@ void Facebook::addMediaStatus(bool isPage, const string& name, const string& tex
 		}
 		if (type == video)
 		{
-			allStatuses.push_back(new VideoStatus(url, textStatus));
-			fanpage->addStatus(allStatuses.back());
+			fanpage->addStatus(new VideoStatus(url, textStatus));
 		}
 		else
 		{
-			allStatuses.push_back(new PictureStatus(url, textStatus));
-			fanpage->addStatus(allStatuses.back());
+			fanpage->addStatus(new PictureStatus(url, textStatus));
 		}
 	}
 }
@@ -326,41 +320,41 @@ void Facebook::cancelFriendship(const string& userName1, const string& userName2
 
 istream& operator>>(istream& in, Facebook& facebook)
 {
-	int numberofUsers , numberOfFanpages, nameLen;
+	int numberofUsers , numberOfFanpages;
+	string name, ignore;
+	User* user;
+	Fanpage* fanpage;
+
 	in >> numberofUsers >> numberOfFanpages;
-	char* name;
 	for (int i = 0; i < numberofUsers; i++)
 	{
-		int year, month, day;
-		in >> nameLen;
-		name = new char[nameLen];
-		in >> name;
-		name[nameLen] = '\0';
-		in >> day >> month >> year;
-		facebook.addUser(name, day, month, year);
-		delete[]name;
+		user = new User(in);
+		facebook.usersInSystem.push_back(*user);
 	}
 	for (int i = 0; i < numberOfFanpages; i++)
 	{
-		in >> nameLen;
-		name = new char[nameLen];
-		in >> name;
-		name[nameLen] = '\0';
-		facebook.addFanpage(name);
-		delete[]name;
+		fanpage = new Fanpage(in);
+		facebook.fanpagesInSystem.push_back(*fanpage);
 	}
+
 	list<User>::iterator itr = facebook.usersInSystem.begin();
 	list<User>::iterator enditr = facebook.usersInSystem.end();
-	list<Fanpage>::iterator itr2 = facebook.fanpagesInSystem.begin();
-	list<Fanpage>::iterator enditr2 = facebook.fanpagesInSystem.end();
 
 	for (; itr != enditr; ++itr)
 	{
-		in >> (*itr);
-	}
-	for (; itr2 != enditr2; ++itr2)
-	{
-		in >> (*itr2);
+		getline(in, ignore);
+		for (int i = 0; i < (*itr).getNumberOfFriends(); i++)
+		{
+			in >> name;
+			user = facebook.findUser(name);
+			(*itr).addFriend(*user);
+		}
+		for (int i = 0; i < (*itr).getNumberOfFanpaegs(); i++)
+		{
+			in >> name;
+			fanpage = facebook.findPage(name);
+			(*itr).likeAPage(*fanpage);
+		}
 	}
 	return in;
 }
@@ -374,30 +368,25 @@ ostream& operator<<(ostream& os, const Facebook& facebook)
 	list<Fanpage>::const_iterator itr2 = facebook.fanpagesInSystem.begin();
 	list<Fanpage>::const_iterator enditr2 = facebook.fanpagesInSystem.end();
 
-	os << endl << endl<< "names of fanpage and users: "  << endl;		/////////////////
-	for (; itr != enditr; ++itr)
-	{
-		os << (*itr).getName().size() << endl;
-		os << (*itr).getName() << endl;
-		os << (*itr).getBirthDate().getDay() << endl;
-		os << (*itr).getBirthDate().getMonth() << endl;
-		os << (*itr).getBirthDate().getYear() << endl;
-	}
-	for (; itr2 != enditr2; ++itr2)
-	{
-		os << (*itr2).getName() << endl;
-	}
-
-
-	os<< endl << endl << "users :" << endl ;			/////////////////
-	for(itr = facebook.usersInSystem.begin();itr != enditr; ++itr)
+	for(;itr != enditr; ++itr)
 	{
 		os << (*itr) << endl << endl << endl;
 	}
-	os << endl << endl << "fanpages :" << endl;           /////////////////
-	for (itr2 = facebook.fanpagesInSystem.begin(); itr2 != enditr2; ++itr2)
+	for (; itr2 != enditr2; ++itr2)
 	{
 		os << (*itr2) << endl << endl << endl;
+	}
+
+	for (itr = facebook.usersInSystem.begin(); itr != enditr; ++itr)
+	{
+		for(int i = 0; i < (*itr).getNumberOfFriends(); i++)
+		{
+			(*itr).showAllFriends(os);
+		}
+		for (int i = 0; i < (*itr).getNumberOfFanpaegs(); i++)
+		{
+			(*itr).showAllLikedPages(os);
+		}
 	}
 	return os;
 }
@@ -405,11 +394,4 @@ Facebook::~Facebook()
 {
 	ofstream outfile("saveFacebook.txt", ios::trunc);
 	outfile << *this << endl;
-
-	vector<const Status*>::const_iterator itr = allStatuses.begin();
-	vector<const Status*>::const_iterator end = allStatuses.end();
-	for (; itr != end; ++itr)
-	{
-		delete (*itr);
-	}
 }

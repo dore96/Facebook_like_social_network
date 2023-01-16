@@ -3,7 +3,9 @@
 Fanpage::Fanpage(const string& newName): Entity(newName)
 {
 }
-
+Fanpage::Fanpage(istream& in) : Entity(in)
+{
+}
 int Fanpage::getNumberOfFans()									const
 {
 	return ListOfFans.size();
@@ -51,18 +53,6 @@ void Fanpage::removeFan(User& fan)
 	}
 	ListOfFans.erase(itr);
 	fan.unlikeAPage(*this); // remove page from users fanpages
-}
-
-void Fanpage::toOs(ostream& os) const
-{
-	os << ListOfFans.size() << endl;
-	list<const User*>::const_iterator itr = ListOfFans.begin();
-	list<const User*>::const_iterator enditr = ListOfFans.end();
-	for (; itr != enditr; ++itr)
-	{
-		os << (*itr)->getName().size() << endl;
-		os << (*itr)->getName() << endl;
-	}
 }
 
 const Fanpage& Fanpage::operator+=(User& addfan)

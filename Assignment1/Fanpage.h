@@ -6,6 +6,7 @@ class Fanpage : public Entity
 {
 public:
 	Fanpage(const string& newName) noexcept(false);
+	Fanpage(istream& in);
 	int getNumberOfFans()									const;
 
 	//show funcs
@@ -17,7 +18,6 @@ public:
 	void addFan(User& fan);
 	void removeFan(User& fan);
 
-	virtual void toOs(ostream& os)const override;
 	//operators funcs
 	const Fanpage& operator+=(User& addfan);
 	bool operator >(const Fanpage& other)					const;

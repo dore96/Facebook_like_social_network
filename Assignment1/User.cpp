@@ -10,8 +10,9 @@ User::User(const string& inputName, const Date& inputDateOfBirth) noexcept(false
 		throw invalidYearException();
 	}
 }
-User::User(ifstream& in) : Entity(in)
+User::User(istream& in) : Entity(in) , dateOfBirth(in)
 {
+	in >> dateOfBirth;
 	in >> *this;
 }
 const Date& User::getBirthDate()							const
@@ -21,6 +22,10 @@ const Date& User::getBirthDate()							const
 int User::getNumberOfFriends()								const
 {
 	return friendsList.size();
+}
+int User::getNumberOfFanpaegs()								const
+{
+	return pageList.size();
 }
 void User::showFriendsStatus(int numberOfPrintStatus)	    const
 {//user can limit how many statuses he wants to print per user - otherwise it will prints all statuses.
@@ -51,6 +56,15 @@ void User::showAllFriends()									const
 		cout << "Friend number " << (i + 1) << " is: " << (*itr)->name << endl;
 	}
 }
+void User::showAllFriends(ostream& os)						 const
+{
+	list<const User*>::const_iterator itr = friendsList.begin();
+	list<const User*>::const_iterator enditr = friendsList.end();
+	for (int i = 0; itr != enditr; ++itr, ++i)
+	{
+		os << (*itr)->name << endl;
+	}
+}
 void User::showAllLikedPages()								const
 {
 	list<const Fanpage*>::const_iterator itr = pageList.begin();
@@ -58,6 +72,15 @@ void User::showAllLikedPages()								const
 	for (int i = 0; itr != enditr; ++itr, ++i)
 	{
 		cout << "Page number " << (i + 1) << " is: " << (*itr)->getName() << endl;
+	}
+}
+void User::showAllLikedPages(ostream& os)							const
+{
+	list<const Fanpage*>::const_iterator itr = pageList.begin();
+	list<const Fanpage*>::const_iterator enditr = pageList.end();
+	for (int i = 0; itr != enditr; ++itr, ++i)
+	{
+		os << (*itr)->getName() << endl;
 	}
 }
 
@@ -112,28 +135,6 @@ void User::unlikeAPage(Fanpage& page)
 void User::toOs(ostream& os) const
 {
 	os << dateOfBirth << endl;
-	os << friendsList.size() << endl;
-	os << pageList.size() << endl;
-
-	list<const User*>::const_iterator itr = friendsList.begin();
-	list<const User*>::const_iterator enditr = friendsList.end();
-	for (; itr != enditr; ++itr)
-	{
-		os << (*itr)->getName().size() << endl;
-		os << (*itr)->getName() << endl;
-	}
-
-	list<const Fanpage*>::const_iterator itr2 = pageList.begin();
-	list<const Fanpage*>::const_iterator enditr2 = pageList.end();
-	for (; itr2 != enditr2; ++itr2)
-	{
-		os << (*itr2)->getName().size() << endl;
-		os << (*itr2)->getName() << endl;
-	}
-}
-void User::fromOs(istream& in) : dateOfBirth(in)
-{
-
 }
 
 const User& User::operator+=(User& addfriend)  

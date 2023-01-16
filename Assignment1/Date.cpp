@@ -3,6 +3,10 @@ Date::Date(int inputDay, int inputMonth, int inputYear) noexcept(false)
 {
 	setDate(inputDay, inputMonth, inputYear);
 }
+Date::Date(istream& in)
+{
+	in >> *this;
+}
 void Date::setDate(int inputDay, int inputMonth, int inputYear) noexcept(false)
 {
 	setYear(inputYear);
@@ -43,19 +47,15 @@ void Date::setDay(int day)
 }
 ostream& operator <<(ostream& os, const Date& date)
 {
-	os << date.day << "/" << date.month << "/" << date.year;
+	os << date.day << "/" << date.month << "/" << date.year << endl;
 	return os;
 }
 
-char* getString(istream& in)
+istream& operator >>(istream& in, Date& date)
 {
-	char* res;
-	int Len;
-	in >> Len;
-	res = new char[Len];
-	in >> res;
-	res[Len] = '\0';
-	return res;
+	char ch;
+	in >> date.day >> ch >> date.month >> ch >> date.year;
+	return in;
 }
 
 void CleanBuffer()

@@ -4,7 +4,7 @@ Entity::Entity(const string& name) noexcept(false)
 {
 	setName(name);
 }
-Entity::Entity(ifstream& in)
+Entity::Entity(istream& in)
 {
 	in >> *this;
 }
@@ -47,7 +47,6 @@ void Entity::setName(const string& name)  noexcept(false)
 }
 ostream& operator<<(ostream& os, const Entity& Entity) 
 {
-	os << Entity.name.size() << endl;
 	os << Entity.name << endl;
 	os << Entity.statusVect.size() << endl;
 
@@ -62,14 +61,12 @@ ostream& operator<<(ostream& os, const Entity& Entity)
 }
 istream& operator>>(istream& in, Entity& Entity)
 {
-	char* name,*text,*url;
-	int Len, numberOfStatuses, statusType;
+	string name,text,url;
+	int numberOfStatuses, statusType;
 
-	name = getString(in);
-	Entity.name = name;
-	delete[]name;
-
+	in >> Entity.name;
 	in >> numberOfStatuses;
+
 	for (int i = 0 ; i < numberOfStatuses; i++)
 	{
 		in >> statusType;
@@ -86,6 +83,7 @@ istream& operator>>(istream& in, Entity& Entity)
 			break;
 		}
 	}
+	Entity.fromOs(in);
 
 	return in;
 }

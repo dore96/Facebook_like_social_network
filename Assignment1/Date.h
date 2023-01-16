@@ -10,6 +10,7 @@ class Date
 {
 public:
 	Date(int inputDay, int inputMonth, int inputYear) noexcept(false);
+	Date(istream& in);
 	//getters
 	int getYear()  const;
 	int getMonth() const;
@@ -20,6 +21,7 @@ public:
 	void setMonth(int month) noexcept(false);
 	void setDay(int day) noexcept(false);
 	friend ostream& operator <<(ostream& os, const Date& date);
+	friend istream& operator >>(istream& in, Date& date);
 private:
 	int year, month, day;
 };
