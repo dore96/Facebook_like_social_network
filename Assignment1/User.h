@@ -8,7 +8,7 @@ class User : public Entity
 {
 public:
 	User(const string& tryName, const Date &dateOfBirth); //constructor
-	User(istream& in);
+	User(istream& in, const string& tryName, const Date& dateOfBirth);
 	//getters
 	const Date& getBirthDate()								 const;
 	int getNumberOfFriends()								 const;
@@ -33,6 +33,7 @@ public:
 	void unlikeAPage(Fanpage& page);
 
 	virtual void toOs(ostream& os)const override;
+	virtual void fromOs(istream& in) override;
 	//Operators funcs
 	const User& operator+=(User& addfriend);
 	bool operator >(const User& other)						 const;

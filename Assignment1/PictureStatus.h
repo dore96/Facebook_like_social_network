@@ -6,12 +6,11 @@ class PictureStatus : public Status
 {
 public:
 	PictureStatus(const string& pictureString, const string& inputText) noexcept(false);
-	PictureStatus(istream& in);
+	PictureStatus(istream& in, const string& pictureString, const string& inputText, const Date& dateOfStatus);
 
 	virtual void showStatus()							const override;
 	void showPicture()									const;
 
-	virtual void fromOs(istream& in)						  override;
 	virtual void toOs(ostream& os)						const override;
 
 	//operators funcs
@@ -19,7 +18,7 @@ public:
 	virtual bool operator !=(const Status& other)		const override;
 	virtual ~PictureStatus() {}
 protected:
-	string pictureUrl;
+	const string pictureUrl;
 };
 
 #endif

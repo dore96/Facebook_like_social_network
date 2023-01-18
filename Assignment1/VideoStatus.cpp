@@ -4,9 +4,9 @@ VideoStatus::VideoStatus(const string& videoString, const string& inputText) : S
 {
 }
 
-VideoStatus::VideoStatus(istream& in) : Status(in)
+VideoStatus::VideoStatus(istream& in, const string& videoString, const string& inputText, const Date& dateOfStatus) :
+Status(in, inputText, dateOfStatus), videoUrl(videoString)
 {
-	in >> *this;
 }
 void VideoStatus::showVideo()  const
 {//check if valid
@@ -48,8 +48,4 @@ void VideoStatus::toOs(ostream& os) const
 	}
 }
 
-void VideoStatus::fromOs(istream& in)
-{
-	in >> videoUrl;
-}
 

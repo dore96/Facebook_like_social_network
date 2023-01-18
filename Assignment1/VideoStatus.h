@@ -6,19 +6,18 @@ class VideoStatus : public Status
 {
 public:
 	VideoStatus(const string& videoString, const string& inputText) noexcept(false);
-	VideoStatus(istream& in);
+	VideoStatus(istream& in, const string& videoString, const string& inputText, const Date& dateOfStatus);
 
 	virtual void showStatus()							const override;
 	void showVideo()									const;
 
-	virtual void fromOs(istream& in)						  override;
 	virtual void toOs(ostream& os)						const override;
 	//operators funcs
 	virtual bool operator ==(const Status& other)		const override;
 	virtual bool operator !=(const Status& other)		const override;
 	virtual ~VideoStatus(){}
 protected:
-	string videoUrl;
+	const string videoUrl;
 };
 
 #endif

@@ -4,7 +4,7 @@ Entity::Entity(const string& name) noexcept(false)
 {
 	setName(name);
 }
-Entity::Entity(istream& in)
+Entity::Entity(istream& in, const string& name) : name(name)
 {
 	in >> *this;
 }
@@ -48,6 +48,7 @@ void Entity::setName(const string& name)  noexcept(false)
 ostream& operator<<(ostream& os, const Entity& Entity) 
 {
 	os << Entity.name << endl;
+	Entity.toOs(os);
 	os << Entity.statusVect.size() << endl;
 
 	vector<const Status*>::const_iterator itr = Entity.statusVect.begin();
@@ -56,16 +57,15 @@ ostream& operator<<(ostream& os, const Entity& Entity)
 	{
 		os << *(*itr) << endl;
 	}
-	Entity.toOs(os);
 	return os;
 }
 istream& operator>>(istream& in, Entity& Entity)
 {
 	string name,text,url;
+	Date* date;
 	int numberOfStatuses, statusType;
-
-	in >> Entity.name;
 	in >> numberOfStatuses;
+	//Entity.fromOs(in);
 
 	for (int i = 0 ; i < numberOfStatuses; i++)
 	{
@@ -73,17 +73,29 @@ istream& operator>>(istream& in, Entity& Entity)
 		switch(statusType)
 		{
 		case eStatusType::text:
-			Entity.statusVect.push_back(new Status(in));
+			date = new Date(in);
+			getline(in, text);
+			getline(in, text);
+			Entity.statusVect.push_back(new Status(in, text,*date));
 			break;
 		case image:
-			Entity.statusVect.push_back(new PictureStatus(in));
+			getline(in, url);
+			getline(in, url);
+			date = new Date(in);
+			getline(in, text);
+			getline(in, text);
+			Entity.statusVect.push_back(new PictureStatus(in, url, text, *date));
 			break;
 		case video:
-			Entity.statusVect.push_back(new VideoStatus(in));
+			getline(in, url);
+			getline(in, url);
+			date = new Date(in);
+			getline(in, text);
+			getline(in, text);
+			Entity.statusVect.push_back(new VideoStatus(in, url ,text, *date));
 			break;
 		}
 	}
-	Entity.fromOs(in);
 
 	return in;
 }

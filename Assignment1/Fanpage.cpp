@@ -3,7 +3,7 @@
 Fanpage::Fanpage(const string& newName): Entity(newName)
 {
 }
-Fanpage::Fanpage(istream& in) : Entity(in)
+Fanpage::Fanpage(istream& in, const string& newName) : Entity(in, newName)
 {
 }
 int Fanpage::getNumberOfFans()									const

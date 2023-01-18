@@ -3,9 +3,8 @@
 PictureStatus::PictureStatus(const string& pictureString, const string& inputText) : Status(inputText), pictureUrl(pictureString)
 {
 }
-PictureStatus::PictureStatus(istream& in) : Status(in)
+PictureStatus::PictureStatus(istream& in, const string& pictureString, const string& inputText, const Date& dateOfStatus) : Status(in, inputText, dateOfStatus),pictureUrl(pictureString)
 {
-	in >> *this;
 }
 void PictureStatus::showPicture()						  const
 {//check if valid
@@ -44,8 +43,4 @@ void PictureStatus::toOs(ostream& os)					  const
 	{//to the screen
 		this->showPicture();
 	}
-}
-void PictureStatus::fromOs(istream& in)
-{
-	in >> pictureUrl;
 }

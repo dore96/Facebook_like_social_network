@@ -3,7 +3,7 @@ Status::Status(const string& inputText) noexcept(false)
 	: currentTime(time(NULL)), statusTime(*localtime(&currentTime)), dateOfStatus(statusTime.tm_mday, (statusTime.tm_mon) + 1, (statusTime.tm_year + 1900)),statusText(inputText)
 {
 }
-Status::Status(istream& in): dateOfStatus(in)
+Status::Status(istream& in, const string& inputText, const Date& dateOfStatus): dateOfStatus(dateOfStatus), statusText(inputText)
 {
 	in >> *this;
 }
@@ -43,11 +43,11 @@ ostream& operator <<(ostream& os, const Status& status)
 	status.toOs(os);
 	if(typeid(os) == typeid(ofstream))
 	{
-		os << status.getDate()  
-			 << status.statusTime.tm_hour << ":"
-			<< status.statusTime.tm_min << ":"
-			<< status.statusTime.tm_sec << endl;
+		os << status.getDate();
 		os << status.statusText << endl;
+		os << status.statusTime.tm_hour << ":"
+		<< status.statusTime.tm_min << ":"
+		<< status.statusTime.tm_sec;
 	}
 	else
 	{
@@ -59,13 +59,9 @@ istream& operator>>(istream& in, Status& status)
 {
 	char ch;
 	string ignor;
-	in
-		>> status.statusTime.tm_hour >> ch
+	in  >> status.statusTime.tm_hour >> ch
 		>> status.statusTime.tm_min >> ch
 		>> status.statusTime.tm_sec;
-	getline(in, ignor);
-	getline(in, status.statusText) ;
-	status.fromOs(in);
 	return in;
 }
 

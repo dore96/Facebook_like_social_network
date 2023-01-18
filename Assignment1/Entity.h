@@ -9,7 +9,7 @@ class Entity
 {
 public:
 	Entity(const string& name)								 noexcept(false); //constructor
-	Entity(istream& in);
+	Entity(istream& in, const string& name);
 	int getNumberOfStatus()		     						 const;
 	const string& getName()									 const;
 	void printName()										 const;

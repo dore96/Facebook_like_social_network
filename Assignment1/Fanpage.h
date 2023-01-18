@@ -6,7 +6,7 @@ class Fanpage : public Entity
 {
 public:
 	Fanpage(const string& newName) noexcept(false);
-	Fanpage(istream& in);
+	Fanpage(istream& in,const string& newName);
 	int getNumberOfFans()									const;
 
 	//show funcs

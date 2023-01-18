@@ -322,36 +322,44 @@ istream& operator>>(istream& in, Facebook& facebook)
 {
 	int numberofUsers , numberOfFanpages;
 	string name, ignore;
+	Date* date;
 	User* user;
 	Fanpage* fanpage;
 
 	in >> numberofUsers >> numberOfFanpages;
 	for (int i = 0; i < numberofUsers; i++)
 	{
-		user = new User(in);
+		getline(in, name);
+		getline(in, name);
+		date = new Date(in);
+		user = new User(in, name, *date);
 		facebook.usersInSystem.push_back(*user);
 	}
 	for (int i = 0; i < numberOfFanpages; i++)
 	{
-		fanpage = new Fanpage(in);
+		getline(in, name);
+		getline(in, name);
+		fanpage = new Fanpage(in, name);
 		facebook.fanpagesInSystem.push_back(*fanpage);
 	}
 
 	list<User>::iterator itr = facebook.usersInSystem.begin();
 	list<User>::iterator enditr = facebook.usersInSystem.end();
-
+	int numOfFriends, numOfPages;
 	for (; itr != enditr; ++itr)
 	{
-		getline(in, ignore);
-		for (int i = 0; i < (*itr).getNumberOfFriends(); i++)
+		//in.ignore(); לברר אם עובד
+		in >> numOfFriends >> numOfPages;
+		in.ignore();
+		for (int i = 0; i < numOfFriends; i++)
 		{
-			in >> name;
+			getline(in, name);
 			user = facebook.findUser(name);
 			(*itr).addFriend(*user);
 		}
-		for (int i = 0; i < (*itr).getNumberOfFanpaegs(); i++)
+		for (int i = 0; i < numOfPages; i++)
 		{
-			in >> name;
+			getline(in, name);
 			fanpage = facebook.findPage(name);
 			(*itr).likeAPage(*fanpage);
 		}
@@ -370,28 +378,24 @@ ostream& operator<<(ostream& os, const Facebook& facebook)
 
 	for(;itr != enditr; ++itr)
 	{
-		os << (*itr) << endl << endl << endl;
+		os << (*itr);
 	}
 	for (; itr2 != enditr2; ++itr2)
 	{
-		os << (*itr2) << endl << endl << endl;
+		os << (*itr2);
 	}
 
 	for (itr = facebook.usersInSystem.begin(); itr != enditr; ++itr)
 	{
-		for(int i = 0; i < (*itr).getNumberOfFriends(); i++)
-		{
-			(*itr).showAllFriends(os);
-		}
-		for (int i = 0; i < (*itr).getNumberOfFanpaegs(); i++)
-		{
-			(*itr).showAllLikedPages(os);
-		}
+		os << (*itr).getNumberOfFriends() << endl;
+		os << (*itr).getNumberOfFanpaegs() << endl;
+		(*itr).showAllFriends(os);
+		(*itr).showAllLikedPages(os);
 	}
 	return os;
 }
 Facebook::~Facebook()
 {
-	ofstream outfile("saveFacebook.txt", ios::trunc);
+	ofstream outfile("compSaveFacebook.txt", ios::trunc);
 	outfile << *this << endl;
 }

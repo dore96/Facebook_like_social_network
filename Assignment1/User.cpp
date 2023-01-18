@@ -10,10 +10,8 @@ User::User(const string& inputName, const Date& inputDateOfBirth) noexcept(false
 		throw invalidYearException();
 	}
 }
-User::User(istream& in) : Entity(in) , dateOfBirth(in)
+User::User(istream& in, const string& tryName, const Date& dateOfBirth) : Entity(in , tryName) , dateOfBirth(dateOfBirth)
 {
-	in >> dateOfBirth;
-	in >> *this;
 }
 const Date& User::getBirthDate()							const
 {
@@ -134,7 +132,18 @@ void User::unlikeAPage(Fanpage& page)
 
 void User::toOs(ostream& os) const
 {
-	os << dateOfBirth << endl;
+	os << dateOfBirth;
+	//os << friendsList.size() <<endl;
+	//os << pageList.size() << endl;
+}
+void User::fromOs(istream& in) 
+{
+	/*
+	int numOfFriends, numOfPages;
+	in >> numOfFriends;
+	in >> numOfPages;
+	friendsList.resize(numOfFriends);
+	pageList.resize(numOfPages);*/
 }
 
 const User& User::operator+=(User& addfriend)  
