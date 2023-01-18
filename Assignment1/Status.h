@@ -2,12 +2,12 @@
 #define __Status_H
 #define TIME_FORMAT_LEN 100
 #include "Date.h"
-enum eStatusType { text, image, video };
+enum eStatusType { text, image, video };//enum for status types
 class Status
 {
 public:
-	Status(const string& inputText) noexcept(false);
-	Status(istream& in, const string& inputText, const Date& dateOfStatus);
+	Status(const string& inputText) noexcept(false);//ctor
+	Status(istream& in, const string& inputText, const Date& dateOfStatus);//file ctor
 
 	const tm& getTime()						const;    //func returns the time ref , with no option to change it.
 	const Date& getDate()					const;

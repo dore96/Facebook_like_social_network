@@ -5,8 +5,8 @@
 class VideoStatus : public Status
 {
 public:
-	VideoStatus(const string& videoString, const string& inputText) noexcept(false);
-	VideoStatus(istream& in, const string& videoString, const string& inputText, const Date& dateOfStatus);
+	VideoStatus(const string& videoString, const string& inputText) noexcept(false);//ctor
+	VideoStatus(istream& in, const string& videoString, const string& inputText, const Date& dateOfStatus);//file ctor
 
 	virtual void showStatus()							const override;
 	void showVideo()									const;

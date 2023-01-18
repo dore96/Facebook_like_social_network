@@ -1,10 +1,10 @@
 #include "Entity.h"
-
-Entity::Entity(const string& name) noexcept(false)
+//father class for common needs of user and fanpage
+Entity::Entity(const string& name) noexcept(false)//ctor
 {
 	setName(name);
 }
-Entity::Entity(istream& in, const string& name) : name(name)
+Entity::Entity(istream& in, const string& name) : name(name)//file ctor
 {
 	in >> *this;
 }
@@ -20,7 +20,7 @@ void Entity::printName()										 const
 {
 	cout << name << endl;
 }
-void Entity::showStatuses(int numberOfPrintStatus)				 const
+void Entity::showStatuses(int numberOfPrintStatus)				 const//shows entity statuses
 {
 	cout << name << " had posted " << statusVect.size() << " statuses." << endl;
 	vector<const Status*>::const_iterator itr = statusVect.begin();
@@ -45,7 +45,7 @@ void Entity::setName(const string& name)  noexcept(false)
 	}
 	this->name = name;
 }
-ostream& operator<<(ostream& os, const Entity& Entity) 
+ostream& operator<<(ostream& os, const Entity& Entity) //prints entity
 {
 	os << Entity.name << endl;
 	Entity.toOs(os);
@@ -59,18 +59,17 @@ ostream& operator<<(ostream& os, const Entity& Entity)
 	}
 	return os;
 }
-istream& operator>>(istream& in, Entity& Entity)
+istream& operator>>(istream& in, Entity& Entity)//reads entity
 {
 	string name,text,url;
 	Date* date;
 	int numberOfStatuses, statusType;
 	in >> numberOfStatuses;
-	//Entity.fromOs(in);
 
 	for (int i = 0 ; i < numberOfStatuses; i++)
 	{
 		in >> statusType;
-		switch(statusType)
+		switch(statusType)//checks which status we read and handles accordingly
 		{
 		case eStatusType::text:
 			date = new Date(in);

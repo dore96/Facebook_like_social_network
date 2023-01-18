@@ -1,9 +1,9 @@
 #include "Date.h"
-Date::Date(int inputDay, int inputMonth, int inputYear) noexcept(false)
+Date::Date(int inputDay, int inputMonth, int inputYear) noexcept(false)//date ctor
 {
 	setDate(inputDay, inputMonth, inputYear);
 }
-Date::Date(istream& in)
+Date::Date(istream& in)//date file ctor
 {
 	in >> *this;
 }
@@ -31,7 +31,7 @@ void Date::setYear(int year)
 }
 void Date::setMonth(int month)
 {
-	if (!(month < 13 && month > 0))
+	if (!(month < 13 && month > 0))//checks valid month
 	{
 		throw invalidMonthException();
 	}
@@ -39,7 +39,7 @@ void Date::setMonth(int month)
 }
 void Date::setDay(int day)
 {
-	if (day <= 0 || day > monthLen[month])
+	if (day <= 0 || day > monthLen[month])//checks if in valid range of days in this month
 	{
 		throw invalidDayException();
 	}

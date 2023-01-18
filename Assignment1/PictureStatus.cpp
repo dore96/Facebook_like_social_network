@@ -7,11 +7,11 @@ PictureStatus::PictureStatus(istream& in, const string& pictureString, const str
 {
 }
 void PictureStatus::showPicture()						  const
-{//check if valid
+{//shows picture from file we provided
 	system("start OOP-CPP.jpg");
 }
 void PictureStatus::showStatus()						  const
-{
+{//shows status
 	Status::showStatus();
 	this->showPicture();
 }
@@ -21,7 +21,7 @@ bool PictureStatus::operator ==(const Status& other)	  const
 	{
 		return false;
 	}
-	const PictureStatus* temp = dynamic_cast<const PictureStatus*>(&other);
+	const PictureStatus* temp = dynamic_cast<const PictureStatus*>(&other);//checks type is equal
 	if (temp == NULL)
 	{
 		return false;

@@ -33,7 +33,7 @@ Facebook::Facebook(ifstream& in)
 
 }
 void Facebook::showAllUsers()										const
-{
+{//prints all users
 	list<User>::const_iterator itr = usersInSystem.begin();
 	list<User>::const_iterator enditr = usersInSystem.end();
 	cout << "Users: " << endl;
@@ -43,7 +43,7 @@ void Facebook::showAllUsers()										const
 	}
 }
 void Facebook::showAllFanpage()										const
-{
+{//prints all fanpages
 	list<Fanpage>::const_iterator itr = fanpagesInSystem.begin();
 	list<Fanpage>::const_iterator enditr = fanpagesInSystem.end();
 	cout << "Fanpages: " << endl;
@@ -53,7 +53,7 @@ void Facebook::showAllFanpage()										const
 	}
 }
 void Facebook::showAllUsersAndFanpages()							const
-{
+{//shows all entities
 	showAllUsers();
 	showAllFanpage();
 }
@@ -120,7 +120,7 @@ void Facebook::showAllFans(const string& pageName)				    const noexcept(false)
 }
 
 User* Facebook::findUser(const string& name)                        
-{
+{//finds user in system
 	list<User>::iterator itr = usersInSystem.begin();
 	list<User>::iterator end = usersInSystem.end();
 	for (int i = 0;itr != end; ++itr, i++)
@@ -133,7 +133,7 @@ User* Facebook::findUser(const string& name)
 	return nullptr;
 }
 const User* Facebook::findUser(const string& name)					const
-{
+{//finds user in system
 	list<User>::const_iterator itr = usersInSystem.begin();
 	list<User>::const_iterator end = usersInSystem.end();
 	for (int i = 0; itr != end; ++itr, i++)
@@ -146,7 +146,7 @@ const User* Facebook::findUser(const string& name)					const
 	return nullptr;
 }
 Fanpage* Facebook::findPage(const string& name)                   
-{
+{//finds page in system
 	list<Fanpage>::iterator itr = fanpagesInSystem.begin();
 	list<Fanpage>::iterator end = fanpagesInSystem.end();
 	for (; itr != end; ++itr)
@@ -159,7 +159,7 @@ Fanpage* Facebook::findPage(const string& name)
 	return nullptr;
 }
 const Fanpage* Facebook::findPage(const string& name)               const
-{
+{//finds page in system
 	list<Fanpage>::const_iterator itr = fanpagesInSystem.begin();
 	list<Fanpage>::const_iterator end = fanpagesInSystem.end();
 	for (; itr != end; ++itr)
@@ -173,7 +173,7 @@ const Fanpage* Facebook::findPage(const string& name)               const
 }
 
 void Facebook::addTextStatus(bool isPage, const string& name, const string& textStatus) noexcept(false)
-{
+{//adds text status to an entity
 	if (!isPage)
 	{
 		User* user = findUser(name);
@@ -194,7 +194,7 @@ void Facebook::addTextStatus(bool isPage, const string& name, const string& text
 	}
 }
 void Facebook::addMediaStatus(bool isPage, const string& name, const string& textStatus, string& url, int type) noexcept(false)
-{
+{//ads video or image status to entity
 	if (!isPage)
 	{
 		User* user = findUser(name);
@@ -229,7 +229,7 @@ void Facebook::addMediaStatus(bool isPage, const string& name, const string& tex
 	}
 }
 void Facebook::addUser(const string& userName, int day, int month, int year) noexcept(false)
-{
+{//ads user to system
 	User* user = findUser(userName);
 	if (user != nullptr)
 	{
@@ -257,7 +257,7 @@ void Facebook::addFanToPage(const string& pageName, const string& userName) noex
 	page->addFan(*user);
 }
 void Facebook::addFanpage(const string& pageName) noexcept(false)
-{
+{//adds fanpage to system
 	Fanpage* page = findPage(pageName);
 	if (page != nullptr)
 	{
@@ -266,7 +266,7 @@ void Facebook::addFanpage(const string& pageName) noexcept(false)
 	fanpagesInSystem.push_back(Fanpage(pageName));  //creats a fan page with given name - and use of default move ctor.
 }
 void Facebook::addFriendship(const string& userName1, const string& userName2) noexcept(false)
-{
+{//connects between 2 users
 	User* user1 = findUser(userName1);
 	User* user2 = findUser(userName2);
 	if (user1 == nullptr || user2 == nullptr)
@@ -303,7 +303,7 @@ void Facebook::removeFanFromPage(const string& pageName, const string& userName)
 	page->removeFan(*user);
 }
 void Facebook::cancelFriendship(const string& userName1, const string& userName2) noexcept(false)
-{
+{//cancel link between 2 users
 	User* user1 = findUser(userName1);
 	User* user2 = findUser(userName2);
 	if (user1==nullptr || user2 == nullptr)
@@ -318,7 +318,7 @@ void Facebook::cancelFriendship(const string& userName1, const string& userName2
 	user1->unFriend(*user2);
 }
 
-istream& operator>>(istream& in, Facebook& facebook)
+istream& operator>>(istream& in, Facebook& facebook)//read to system from file
 {
 	int numberofUsers , numberOfFanpages;
 	string name, ignore;
@@ -327,7 +327,7 @@ istream& operator>>(istream& in, Facebook& facebook)
 	Fanpage* fanpage;
 
 	in >> numberofUsers >> numberOfFanpages;
-	for (int i = 0; i < numberofUsers; i++)
+	for (int i = 0; i < numberofUsers; i++)//read userss
 	{
 		getline(in, name);
 		getline(in, name);
@@ -335,7 +335,7 @@ istream& operator>>(istream& in, Facebook& facebook)
 		user = new User(in, name, *date);
 		facebook.usersInSystem.push_back(*user);
 	}
-	for (int i = 0; i < numberOfFanpages; i++)
+	for (int i = 0; i < numberOfFanpages; i++)//read fanpages
 	{
 		getline(in, name);
 		getline(in, name);
@@ -346,7 +346,7 @@ istream& operator>>(istream& in, Facebook& facebook)
 	list<User>::iterator itr = facebook.usersInSystem.begin();
 	list<User>::iterator enditr = facebook.usersInSystem.end();
 	int numOfFriends, numOfPages;
-	for (; itr != enditr; ++itr)
+	for (; itr != enditr; ++itr)//read all links that exist in the system
 	{
 		//in.ignore(); לברר אם עובד
 		in >> numOfFriends >> numOfPages;
@@ -376,16 +376,16 @@ ostream& operator<<(ostream& os, const Facebook& facebook)
 	list<Fanpage>::const_iterator itr2 = facebook.fanpagesInSystem.begin();
 	list<Fanpage>::const_iterator enditr2 = facebook.fanpagesInSystem.end();
 
-	for(;itr != enditr; ++itr)
+	for(;itr != enditr; ++itr)//print all users
 	{
 		os << (*itr);
 	}
-	for (; itr2 != enditr2; ++itr2)
+	for (; itr2 != enditr2; ++itr2)//print all pages in system
 	{
 		os << (*itr2);
 	}
 
-	for (itr = facebook.usersInSystem.begin(); itr != enditr; ++itr)
+	for (itr = facebook.usersInSystem.begin(); itr != enditr; ++itr)//prints all links of entites
 	{
 		os << (*itr).getNumberOfFriends() << endl;
 		os << (*itr).getNumberOfFanpaegs() << endl;
@@ -394,7 +394,7 @@ ostream& operator<<(ostream& os, const Facebook& facebook)
 	}
 	return os;
 }
-Facebook::~Facebook()
+Facebook::~Facebook()//dtor
 {
 	ofstream outfile("compSaveFacebook.txt", ios::trunc);
 	outfile << *this << endl;

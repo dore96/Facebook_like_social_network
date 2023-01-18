@@ -12,7 +12,7 @@ const tm& Status::getTime()			const
 	return statusTime;
 }
 void Status::showTime()				const
-{
+{//prints formated time
 	char time_string[TIME_FORMAT_LEN];
 	strftime(time_string, TIME_FORMAT_LEN-1, "%T", &statusTime);
 	cout << time_string << endl;
@@ -38,7 +38,7 @@ bool Status::operator !=(const Status& other)		const
 	return !(*this == other);
 }
 
-ostream& operator <<(ostream& os, const Status& status)
+ostream& operator <<(ostream& os, const Status& status)//print operator
 {
 	status.toOs(os);
 	if(typeid(os) == typeid(ofstream))
@@ -55,7 +55,7 @@ ostream& operator <<(ostream& os, const Status& status)
 	}
 	return os;
 }
-istream& operator>>(istream& in, Status& status)
+istream& operator>>(istream& in, Status& status)//read opertaor
 {
 	char ch;
 	string ignor;
@@ -65,7 +65,7 @@ istream& operator>>(istream& in, Status& status)
 	return in;
 }
 
-void Status::toOs(ostream& os) const
+void Status::toOs(ostream& os) const//to allow child classes to add for print
 {
 	if (typeid(os) == typeid(ofstream))
 	{

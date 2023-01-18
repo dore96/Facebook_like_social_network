@@ -12,7 +12,7 @@ int Fanpage::getNumberOfFans()									const
 }
 
 void Fanpage::showAllFans()										const
-{
+{//shows all fans
 	list<const User*>::const_iterator itr = ListOfFans.begin();
 	list<const User*>::const_iterator enditr = ListOfFans.end();
 	for (int i = 0; itr != enditr; ++itr, ++i)
@@ -32,7 +32,7 @@ void Fanpage::showFansStatuses(int numberOfPrintStatus)			const
 }
 
 bool Fanpage::isAFan(const User& user)					    const
-{
+{//checks if a user is a fan of the page
 	return find(ListOfFans.begin(), ListOfFans.end(), &user) != ListOfFans.end();
 }
 void Fanpage::addFan(User& fan)

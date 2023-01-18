@@ -3,7 +3,7 @@
 
 User::User(const string& inputName, const Date& inputDateOfBirth) noexcept(false) : Entity(inputName),dateOfBirth(inputDateOfBirth)
 {
-	time_t currentTime = time(NULL);
+	time_t currentTime = time(NULL);//gets time for birthday
 	const tm birthdayTime = *localtime(&currentTime);
 	if ((inputDateOfBirth.getYear() < 1900 || inputDateOfBirth.getYear() > (birthdayTime.tm_year + 1900)))
 	{
@@ -83,11 +83,11 @@ void User::showAllLikedPages(ostream& os)							const
 }
 
 bool User::isFriendsWith(const User& isfriend)			const
-{
+{//checks if is firends with another user
 	return find(friendsList.begin(), friendsList.end(), &isfriend) != friendsList.end();
 }
 bool User::isFanOf(const Fanpage& page)                  const
-{
+{//checks if is a fan of a fanpage
 	return find(pageList.begin(), pageList.end(), &page) != pageList.end();
 }
 
@@ -101,7 +101,7 @@ void User::addFriend(User& addFriend)
 	addFriend.addFriend(*this);  //add myself to friend list.
 }
 void User::unFriend(User& friendToRemove)
-{
+{//remove friend from friends list
 	list<const User*>::const_iterator itr = find(friendsList.begin(), friendsList.end(), &friendToRemove);
 	if (itr == friendsList.end())
 	{
@@ -120,7 +120,7 @@ void User::likeAPage(Fanpage& page)
 	page.addFan(*this);  //add user to fans of fanpage.
 }
 void User::unlikeAPage(Fanpage& page)
-{
+{//remove page from page list
 	list<const Fanpage*>::const_iterator itr = find(pageList.begin(), pageList.end(), &page);
 	if (itr == pageList.end())
 	{

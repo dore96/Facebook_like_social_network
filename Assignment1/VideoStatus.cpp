@@ -9,11 +9,11 @@ Status(in, inputText, dateOfStatus), videoUrl(videoString)
 {
 }
 void VideoStatus::showVideo()  const
-{//check if valid
+{//plays the video from the file we provided
 	system("start keren-video.mp4");      
 }
 void VideoStatus::showStatus()				const
-{
+{//shows status
 	Status::showStatus();
 	this->showVideo();
 }
@@ -23,7 +23,7 @@ bool VideoStatus::operator ==(const Status& other)		const
 	{
 		return false;
 	}
-	const VideoStatus* temp = dynamic_cast<const VideoStatus*>(&other);
+	const VideoStatus* temp = dynamic_cast<const VideoStatus*>(&other);//checks type is equal
 	if(temp == NULL)
 	{
 		return false;

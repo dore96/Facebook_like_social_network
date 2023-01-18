@@ -9,7 +9,7 @@ class Entity
 {
 public:
 	Entity(const string& name)								 noexcept(false); //constructor
-	Entity(istream& in, const string& name);
+	Entity(istream& in, const string& name);// file ctor
 	int getNumberOfStatus()		     						 const;
 	const string& getName()									 const;
 	void printName()										 const;
@@ -22,6 +22,7 @@ public:
 	friend istream& operator>>(istream& in, Entity& Entity);
 	virtual ~Entity(){};
 protected:
+	//shared attributes of entities
 	string name;
 	vector<const Status*> statusVect;
 
