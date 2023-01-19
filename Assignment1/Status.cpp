@@ -58,7 +58,6 @@ ostream& operator <<(ostream& os, const Status& status)//print operator
 istream& operator>>(istream& in, Status& status)//read opertaor
 {
 	char ch;
-	string ignor;
 	in  >> status.statusTime.tm_hour >> ch
 		>> status.statusTime.tm_min >> ch
 		>> status.statusTime.tm_sec;

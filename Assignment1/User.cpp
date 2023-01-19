@@ -133,17 +133,6 @@ void User::unlikeAPage(Fanpage& page)
 void User::toOs(ostream& os) const
 {
 	os << dateOfBirth;
-	//os << friendsList.size() <<endl;
-	//os << pageList.size() << endl;
-}
-void User::fromOs(istream& in) 
-{
-	/*
-	int numOfFriends, numOfPages;
-	in >> numOfFriends;
-	in >> numOfPages;
-	friendsList.resize(numOfFriends);
-	pageList.resize(numOfPages);*/
 }
 
 const User& User::operator+=(User& addfriend)  

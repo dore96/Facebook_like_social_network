@@ -348,7 +348,6 @@ istream& operator>>(istream& in, Facebook& facebook)//read to system from file
 	int numOfFriends, numOfPages;
 	for (; itr != enditr; ++itr)//read all links that exist in the system
 	{
-		//in.ignore(); לברר אם עובד
 		in >> numOfFriends >> numOfPages;
 		in.ignore();
 		for (int i = 0; i < numOfFriends; i++)

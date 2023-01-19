@@ -33,7 +33,6 @@ public:
 	void unlikeAPage(Fanpage& page);
 
 	virtual void toOs(ostream& os)const override;
-	virtual void fromOs(istream& in) override;
 	//Operators funcs
 	const User& operator+=(User& addfriend);
 	bool operator >(const User& other)						 const;

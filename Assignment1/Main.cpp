@@ -10,10 +10,18 @@ int main()
 {
 	set_terminate(newTerminate);
 	ifstream infile("saveFacebook.txt");
-	Facebook myFacebook(infile);
-	//Facebook myFacebook;
-	UserInteraction userInteraction(myFacebook);
+	Facebook* myFacebook;
+	if(infile.fail())
+	{
+		myFacebook = new Facebook();
+	}
+	else
+	{
+		myFacebook = new Facebook(infile);
+	}
+	UserInteraction userInteraction(*myFacebook);
 	userInteraction.runConsoleApp();
+	delete myFacebook;
 	return 0;
 }
 
