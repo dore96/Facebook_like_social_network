@@ -202,7 +202,7 @@ void Facebook::addMediaStatus(bool isPage, const string& name, const string& tex
 		{
 			throw notFoundException();
 		}
-		if(type == video)
+		if((eStatusType)type == eStatusType::video)
 		{
 			user->addStatus(new VideoStatus(url, textStatus));
 		}
@@ -218,7 +218,7 @@ void Facebook::addMediaStatus(bool isPage, const string& name, const string& tex
 		{
 			throw notFoundException();
 		}
-		if (type == video)
+		if ((eStatusType)type == eStatusType::video)
 		{
 			fanpage->addStatus(new VideoStatus(url, textStatus));
 		}
@@ -322,25 +322,21 @@ istream& operator>>(istream& in, Facebook& facebook)//read to system from file
 {
 	int numberofUsers , numberOfFanpages;
 	string name, ignore;
-	Date* date;
 	User* user;
 	Fanpage* fanpage;
-
 	in >> numberofUsers >> numberOfFanpages;
 	for (int i = 0; i < numberofUsers; i++)//read userss
 	{
 		getline(in, name);
 		getline(in, name);
-		date = new Date(in);
-		user = new User(in, name, *date);
-		facebook.usersInSystem.push_back(*user);
+		Date date(in);
+		facebook.usersInSystem.push_back(User(in, name, date));
 	}
 	for (int i = 0; i < numberOfFanpages; i++)//read fanpages
 	{
 		getline(in, name);
 		getline(in, name);
-		fanpage = new Fanpage(in, name);
-		facebook.fanpagesInSystem.push_back(*fanpage);
+		facebook.fanpagesInSystem.push_back(Fanpage(in, name));
 	}
 
 	list<User>::iterator itr = facebook.usersInSystem.begin();
@@ -395,6 +391,7 @@ ostream& operator<<(ostream& os, const Facebook& facebook)
 }
 Facebook::~Facebook()//dtor
 {
-	ofstream outfile("compSaveFacebook.txt", ios::trunc);
+	ofstream outfile("saveFacebook.txt", ios::trunc);
 	outfile << *this << endl;
+	outfile.close();
 }

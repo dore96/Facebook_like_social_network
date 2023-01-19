@@ -1,5 +1,8 @@
 #ifndef __Exceptions_H
 #define __Exceptions_H
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
 #include "exception"
 #include "vector"
 #include "list"

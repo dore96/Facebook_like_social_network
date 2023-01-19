@@ -69,32 +69,47 @@ istream& operator>>(istream& in, Entity& Entity)//reads entity
 	for (int i = 0 ; i < numberOfStatuses; i++)
 	{
 		in >> statusType;
-		switch(statusType)//checks which status we read and handles accordingly
+		switch(eStatusType(statusType))//checks which status we read and handles accordingly
 		{
 		case eStatusType::text:
 			date = new Date(in);
 			getline(in, text);
 			getline(in, text);
 			Entity.statusVect.push_back(new Status(in, text,*date));
+			delete date;
 			break;
-		case image:
+		case eStatusType::image:
 			getline(in, url);
 			getline(in, url);
 			date = new Date(in);
 			getline(in, text);
 			getline(in, text);
 			Entity.statusVect.push_back(new PictureStatus(in, url, text, *date));
+			delete date;
 			break;
-		case video:
+		case eStatusType::video:
 			getline(in, url);
 			getline(in, url);
 			date = new Date(in);
 			getline(in, text);
 			getline(in, text);
 			Entity.statusVect.push_back(new VideoStatus(in, url ,text, *date));
+			delete date;
 			break;
 		}
 	}
 
 	return in;
 }
+Entity::~Entity()
+{
+	
+}
+
+/*Entity::~Entity()
+{
+	for (auto x : statusVect)
+	{
+		delete x;
+	}
+}*/

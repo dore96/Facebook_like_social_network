@@ -36,7 +36,7 @@ void PictureStatus::toOs(ostream& os)					  const
 {
 	if (typeid(os) == typeid(ofstream))
 	{//if we are writing to file
-		os << image << endl;
+		os << (int)eStatusType::image << endl;
 		os << pictureUrl << endl;
 	}
 	else

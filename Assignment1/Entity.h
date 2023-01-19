@@ -20,7 +20,7 @@ public:
 	virtual void fromOs(istream& in) {};
 	friend ostream& operator<<(ostream& os, const Entity& Entity);
 	friend istream& operator>>(istream& in, Entity& Entity);
-	virtual ~Entity(){};
+	virtual ~Entity();
 protected:
 	//shared attributes of entities
 	string name;

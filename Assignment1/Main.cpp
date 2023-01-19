@@ -14,6 +14,7 @@ int main()
 	if(infile.fail())
 	{
 		myFacebook = new Facebook();
+		infile.close();
 	}
 	else
 	{
@@ -22,6 +23,8 @@ int main()
 	UserInteraction userInteraction(*myFacebook);
 	userInteraction.runConsoleApp();
 	delete myFacebook;
+	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
+	_CrtDumpMemoryLeaks();
 	return 0;
 }
 

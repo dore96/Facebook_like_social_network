@@ -129,13 +129,13 @@ void UserInteraction::addStatus()
 	getline(cin, name);
 	cout << "Enter Status text: ";
 	getline(cin , statusStr);
-	switch(statusType)
+	switch(eStatusType(statusType))
 	{
-	case text:
+	case eStatusType::text:
 		facebook->addTextStatus(isPage, name, statusStr);  //adds a statusText to user/fanpage
 		break;
-	case image:
-	case video:
+	case eStatusType::image:
+	case eStatusType::video:
 		cout << "Enter Media url: ";
 		getline(cin, statusUrl);
 		facebook->addMediaStatus(isPage, name, statusStr, statusUrl, statusType);

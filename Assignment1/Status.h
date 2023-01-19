@@ -2,7 +2,7 @@
 #define __Status_H
 #define TIME_FORMAT_LEN 100
 #include "Date.h"
-enum eStatusType { text, image, video };//enum for status types
+enum class eStatusType { text, image, video };//enum for status types
 class Status
 {
 public:

@@ -68,6 +68,6 @@ void Status::toOs(ostream& os) const//to allow child classes to add for print
 {
 	if (typeid(os) == typeid(ofstream))
 	{
-		os << text << endl;
+		os << (int)eStatusType::text << endl;
 	}
 }
