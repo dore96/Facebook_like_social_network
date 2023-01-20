@@ -105,11 +105,3 @@ Entity::~Entity()
 {
 	
 }
-
-/*Entity::~Entity()
-{
-	for (auto x : statusVect)
-	{
-		delete x;
-	}
-}*/
