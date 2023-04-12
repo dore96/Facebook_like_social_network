@@ -22,7 +22,6 @@ git clone https://github.com/filipdutescu/modern-cpp-template/
 
 ## Running the tests
 
-```
 ## Authors
 * **Dor Edelman** - [@Dore96](https://github.com/dore96)
 * **Maor Halev** - [@Maor Halev](https://github.com/MaorHalev)
