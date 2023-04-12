@@ -11,8 +11,7 @@ Friends: can be added and is mutual, no need to be approved from the other perso
 It lasts forever, friendship never ends.  
 (https://www.youtube.com/watch?v=fw-QRyQcFH8&ab_channel=99tomson)       
 Fanpages: Bussniess pages of service providers, each has a unique name. 
-For a member to like a page it has to add it to its "interesting entities" list.  
-Every fanpage has a list of all its fans.   
+For a member to like a page it has to add it to its "interesting entities" list. Every fanpage has a list of all its fans.   
 
 Action menu:
 1. Add a member
