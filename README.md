@@ -13,16 +13,14 @@ You will need:
 ### Installing
 
 It is fairly easy to install the project, all you need to do is clone if from
-[GitHub](https://github.com/dore96/Facebook_like_social_network) or
-If you wish to clone the repository, you simply need to run:
+[GitHub](https://github.com/dore96/Facebook_like_social_network) or you can simply need to run:
 
 ```bash
-git clone https://github.com/filipdutescu/modern-cpp-template/
+git clone https://github.com/dore96/Facebook_like_social_network/
 ```
 
 ## Running the tests
-There is a test folder in the reposetory - w
----
+There is a test folder in the reposetory - plug the input text test as an argument. 
 
 ## Authors
 * **Dor Edelman** - [@Dore96](https://github.com/dore96)
