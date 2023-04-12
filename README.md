@@ -1,4 +1,4 @@
-## About the project
+## About the project 📚
 
 Our "Prtzof-Sefer" is a social network that lets its members to contact eachother.
 Each member is identified by a unique name and we will also save its birthday.
