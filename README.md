@@ -21,6 +21,7 @@ git clone https://github.com/filipdutescu/modern-cpp-template/
 ```
 
 ## Running the tests
+There is a test folder in the reposetory - w
 ---
 
 ## Authors
@@ -29,5 +30,4 @@ git clone https://github.com/filipdutescu/modern-cpp-template/
 
 ## License
 
-This project is licensed under the [Unlicense](https://unlicense.org/) - see the
-[LICENSE](LICENSE) file for details
+This project is licensed under the [Unlicense](https://unlicense.org/)
