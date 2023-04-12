@@ -9,7 +9,7 @@ After creating a status it can not be updated.
 For each member we will save all the statuses it ever posted and all the entities which he has interest in:   
 Friends: can be added and is mutual, no need to be approved from the other person.    
 It lasts forever, friendship never ends.  
-(https://www.youtube.com/watch?v=fw-QRyQcFH8&ab_channel=99tomson) 
+(https://www.youtube.com/watch?v=fw-QRyQcFH8&ab_channel=99tomson)       
 Fanpages: Bussniess pages of service providers, each has a unique name. 
 For a member to like a page it has to add it to its "interesting entities" list.  
 Every fanpage has a list of all its fans.   
