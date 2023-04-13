@@ -1,6 +1,8 @@
 ## About the project 😜📚
 
 "Prtzof-Sefer" is a social network that lets its members to contact eachother.  
+The network was developed in c++ , in OOP consept.
+
 Each member is identified by a unique name and we will also save its birthday.  
 Each Member has a post board where he can upload statuses, and for each status we save its time and date of which it was published. 
 Each status contains text,image or video.     
