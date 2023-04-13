@@ -21,7 +21,7 @@ Action menu:
 5. Show 10 latetst statuses of all friend of a member
 6. Link friends
 7. Cancel friendship
-8.Add a fan to page
+8. Add a fan to page
 9. Remove a fan from page
 10. Show all entities in system
 11. Show all friends of a member/ fans of a page
